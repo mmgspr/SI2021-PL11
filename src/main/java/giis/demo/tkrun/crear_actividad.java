@@ -115,7 +115,7 @@ public class crear_actividad {
 		
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-		spinner.setBounds(74, 308, 42, 20);
+		spinner.setBounds(74, 308, 61, 20);
 		panel.add(spinner);
 		
 		JLabel lblPrecio = new JLabel("\u2022 Precio:");
@@ -195,6 +195,16 @@ public class crear_actividad {
 		panel.add(btnNewButton_1_1_1);
 		
 		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBox_2.getSelectedIndex()==5) {
+					textField_3.setEnabled(true);
+					textField_4.setEnabled(true);
+					//lblFechaFinal.setEnabled(true);
+					//lblFechaFinal.setEnabled(true);
+				}
+			}
+		});
 		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un periodo>", "Verano", "Oto\u00F1o", "Invierno", "Primavera", "Otro..."}));
 		comboBox_2.setBounds(382, 149, 267, 21);
 		panel.add(comboBox_2);

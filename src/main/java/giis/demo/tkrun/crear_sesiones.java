@@ -12,7 +12,11 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.TextArea;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -22,6 +26,11 @@ import java.util.Date;
 import java.util.Calendar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.JTextPane;
 
 public class crear_sesiones {
 
@@ -98,27 +107,10 @@ public class crear_sesiones {
 		lblHoraFin.setBounds(10, 94, 67, 17);
 		panel.add(lblHoraFin);
 		
-		JButton btnNewButton = new JButton("Añadir");
-		btnNewButton.setBounds(10, 145, 89, 23);
-		panel.add(btnNewButton);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(10, 244, 89, 23);
-		panel.add(btnCancelar);
-		
-		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(585, 244, 89, 23);
-		panel.add(btnGuardar);
-		
 		JLabel lblSesiones = new JLabel("• Sesiones:");
 		lblSesiones.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblSesiones.setBounds(330, 14, 89, 17);
 		panel.add(lblSesiones);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(340, 42, 334, 191);
-		panel.add(textArea);
 		
 		textField = new JTextField();
 		textField.setBounds(95, 54, 104, 20);
@@ -129,5 +121,51 @@ public class crear_sesiones {
 		textField_1.setColumns(10);
 		textField_1.setBounds(77, 94, 104, 20);
 		panel.add(textField_1);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(340, 42, 334, 191);
+		panel.add(textArea);
+		
+		JButton btnNewButton = new JButton("Añadir");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBox.getSelectedIndex()==0) {
+					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nSelecciona un día.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nIntroduce una hora de inicio.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField_1.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nIntroduce una hora de fin.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					
+					textArea.setText(textArea.getText()+comboBox.getModel().getElementAt(comboBox.getSelectedIndex())+" de "+textField.getText()+" a "+textField_1.getText()+"\n");
+					//textField.getText();
+					//JOptionPane.showMessageDialog(null,"La sesión se ha añadido correctamente","Añadido",JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+			}
+		});
+		btnNewButton.setBounds(10, 145, 89, 23);
+		panel.add(btnNewButton);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(10, 244, 89, 23);
+		panel.add(btnCancelar);
+		
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,"Las sesiones se han guardado correctamento.","Guardado",JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		btnGuardar.setBounds(585, 244, 89, 23);
+		panel.add(btnGuardar);
+		
+		
+		
+		
 	}
 }

@@ -6,10 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class crear_periodo_inscripcion {
 
@@ -131,6 +135,26 @@ public class crear_periodo_inscripcion {
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Crear");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textField.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField_1.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha inicial de socios.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField_2.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha final de socios.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField_3.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha final de no socios","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"El periodo se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+			}
+		});
 		btnNewButton_1.setBounds(585, 227, 89, 23);
 		panel.add(btnNewButton_1);
 	}
