@@ -17,14 +17,14 @@ public class InstalacionesModel {
 	
 	
 	//SQL para ver todas las instalaciones
-	public static final String SQL_TODAS_INSTALACIONES = "SELECT nombre FROM instalacion";
+	public static final String SQL_TODAS_INSTALACIONES = "SELECT nombre FROM instalaciones";
 	public List<Object[]> getInstalaciones(){
 		
 		return db.executeQueryArray(SQL_TODAS_INSTALACIONES );
 	}
 	
 	//SQL para ver todas las instalaciones de un deporte
-		public static final String SQL_TODAS_INSTALACIONES_DEPORTE = "SELECT nombre FROM instalacion WHERE deporte=";
+		public static final String SQL_TODAS_INSTALACIONES_DEPORTE = "SELECT nombre FROM instalaciones WHERE deporte=";
 		public List<Object[]> getInstalacionesDeporte(String deporte){
 			
 			return db.executeQueryArray(SQL_TODAS_INSTALACIONES+"'"+deporte+"'");

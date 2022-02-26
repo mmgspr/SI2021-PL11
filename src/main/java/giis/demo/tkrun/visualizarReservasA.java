@@ -2,9 +2,8 @@ package giis.demo.tkrun;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-
-import javax.swing.JFrame;
 import java.awt.GridLayout;
+import java.sql.*;
 import java.awt.BorderLayout;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -12,15 +11,20 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.text.DateFormat;
 import java.awt.Color;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import giis.demo.tkrun.InstalacionesModel;
+import giis.demo.util.Database;
 public class visualizarReservasA {
 
 	private JFrame frmVisualizarReservas;
 	private JTable table;
-
+	private InstalacionesModel modelo = new InstalacionesModel();
+	Database db = new Database();
 	/**
 	 * Launch the application a
 	 */
@@ -47,11 +51,35 @@ public class visualizarReservasA {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	public static final String SQL_TODAS_INSTALACIONES = "SELECT nombre FROM instalaciones";
+	public List<Object[]> getInstalaciones(){
+		
+		return db.executeQueryArray(SQL_TODAS_INSTALACIONES );
+	}
 	private void initialize() {
 		frmVisualizarReservas = new JFrame();
 		frmVisualizarReservas.setTitle("Visualizar Reservas");
 		frmVisualizarReservas.setBounds(100, 100, 700, 500);
 		frmVisualizarReservas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		
+		
+		Connection con;
+		try {
+			String url = "jdbc:mysql://localhost:3306/db_test?useSSL=false";
+            String user = "uo275943";
+            String pass = "a@sZMj3U$hr7%X";
+            
+            con= DriverManager.getConnection(url, user, pass);
+		}
+		
+		catch (SQLException ex){
+			 con = null ;
+		}
+		
+		
+		
+		
 		
 		JPanel panel = new JPanel();
 		
@@ -60,9 +88,21 @@ public class visualizarReservasA {
 		JLabel LabelPeriodo = new JLabel("Instalación:");
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
+		List<Object[]> willyrex=modelo.getInstalaciones();
+		
+		String[] instalaciones=new String[willyrex.size()];
+		
+		Iterator<Object[]> iterador = willyrex.iterator();
+		
+		int i=0;
+		while(iterador.hasNext()) {
+			instalaciones[i]=iterador.next()[0].toString();
+			i++;
+		}
+		
 		JComboBox comboBoxPeriodo = new JComboBox();
 		comboBoxPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBoxPeriodo.setModel(new DefaultComboBoxModel(new String[] {""}));
+		comboBoxPeriodo.setModel(new DefaultComboBoxModel(instalaciones));
 		
 		JButton ButtonCancelar = new JButton("Cancelar");
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -75,8 +115,16 @@ public class visualizarReservasA {
 		table = new JTable();
 		Object[][] contenidos=generaContenido();
 		String[] titulos=generaTitulos();
-		table.setModel(new DefaultTableModel(
-			contenidos, titulos));
+		DefaultTableModel tableModel = new DefaultTableModel(
+				contenidos, titulos) {
+
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		table.setModel(tableModel);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		JScrollPane scrollPane = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setViewportView(table);
@@ -94,11 +142,11 @@ public class visualizarReservasA {
 		);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(10)
+							.addContainerGap()
 							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(10)
@@ -111,7 +159,7 @@ public class visualizarReservasA {
 							.addGap(32)
 							.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
 							.addGap(36)
-							.addComponent(comboBoxPeriodo, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(comboBoxPeriodo, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)))
 					.addGap(10))
 		);
 		gl_panel.setVerticalGroup(
@@ -123,9 +171,9 @@ public class visualizarReservasA {
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 							.addComponent(comboBoxPeriodo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
-					.addGap(12)
+					.addGap(15)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(ButtonCancelar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 						.addComponent(ButtonGuardar, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
@@ -163,4 +211,5 @@ public class visualizarReservasA {
 		}
 		return titulos;
 	}
+	
 }

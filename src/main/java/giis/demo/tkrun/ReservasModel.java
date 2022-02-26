@@ -8,9 +8,11 @@ public class ReservasModel {
 
 private Database db = new Database();
 	
-	
+	// buscar el sentido a db(de momento no tiene ninguno)
+
+
 	//SQL para ver todas las reservas de una instalacion
-	public static final String SQL_RESERVAS_INSTALACION = "SELECT id_reserva FROM db WHERE instalacion=";
+	public static final String SQL_RESERVAS_INSTALACION = "SELECT id_reserva FROM reservas WHERE instalacion=";
 	public List<Object[]> getReservasInstalacion(String instalacion){
 		
 		return db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'");
