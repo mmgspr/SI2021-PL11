@@ -48,7 +48,7 @@ public class Lista_Actividades_Administrador {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 541, 362);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
@@ -77,16 +77,16 @@ public class Lista_Actividades_Administrador {
 		
 		JButton ButtonCancelar = new JButton("Cancelar");
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonCancelar.setBounds(10, 233, 101, 31);
+		ButtonCancelar.setBounds(10, 286, 101, 29);
 		panel.add(ButtonCancelar);
 		
 		JButton ButtonGuardar = new JButton("Guardar");
 		ButtonGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonGuardar.setBounds(325, 234, 101, 29);
+		ButtonGuardar.setBounds(416, 286, 101, 29);
 		panel.add(ButtonGuardar);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 65, 416, 157);
+		scrollPane.setBounds(10, 65, 507, 211);
 		panel.add(scrollPane);
 		
 		table = new JTable();
