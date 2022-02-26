@@ -194,21 +194,6 @@ public class crear_actividad {
 		btnNewButton_1_1_1.setBounds(10, 346, 135, 21);
 		panel.add(btnNewButton_1_1_1);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(comboBox_2.getSelectedIndex()==5) {
-					textField_3.setEnabled(true);
-					textField_4.setEnabled(true);
-					//lblFechaFinal.setEnabled(true);
-					//lblFechaFinal.setEnabled(true);
-				}
-			}
-		});
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un periodo>", "Verano", "Oto\u00F1o", "Invierno", "Primavera", "Otro..."}));
-		comboBox_2.setBounds(382, 149, 267, 21);
-		panel.add(comboBox_2);
-		
 		JLabel lblFechaInicial = new JLabel("- Fecha inicial:");
 		lblFechaInicial.setEnabled(false);
 		lblFechaInicial.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -220,6 +205,29 @@ public class crear_actividad {
 		lblFechaFinal.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFechaFinal.setBounds(400, 215, 87, 17);
 		panel.add(lblFechaFinal);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBox_2.getSelectedIndex()==5) {
+					textField_3.setEnabled(true);
+					textField_4.setEnabled(true);
+					lblFechaInicial.setEnabled(true);
+					lblFechaFinal.setEnabled(true);
+				}
+				else {
+					textField_3.setEnabled(false);
+					textField_4.setEnabled(false);
+					lblFechaInicial.setEnabled(false);
+					lblFechaFinal.setEnabled(false);
+				}
+			}
+		});
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un periodo>", "Verano", "Oto\u00F1o", "Invierno", "Primavera", "Otro..."}));
+		comboBox_2.setBounds(382, 149, 267, 21);
+		panel.add(comboBox_2);
+		
+		
 		
 		textField_3 = new JTextField();
 		textField_3.setEnabled(false);

@@ -79,7 +79,7 @@ public class crear_sesiones {
 	private void initialize() {
 		frmCrearSesiones = new JFrame();
 		frmCrearSesiones.setTitle("Crear Sesiones");
-		frmCrearSesiones.setBounds(100, 100, 700, 500);
+		frmCrearSesiones.setBounds(100, 100, 700, 350);
 		frmCrearSesiones.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
@@ -152,7 +152,7 @@ public class crear_sesiones {
 		panel.add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(10, 244, 89, 23);
+		btnCancelar.setBounds(10, 277, 89, 23);
 		panel.add(btnCancelar);
 		
 		JButton btnGuardar = new JButton("Guardar");
@@ -161,7 +161,7 @@ public class crear_sesiones {
 				JOptionPane.showMessageDialog(null,"Las sesiones se han guardado correctamento.","Guardado",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		btnGuardar.setBounds(585, 244, 89, 23);
+		btnGuardar.setBounds(585, 277, 89, 23);
 		panel.add(btnGuardar);
 		
 		
