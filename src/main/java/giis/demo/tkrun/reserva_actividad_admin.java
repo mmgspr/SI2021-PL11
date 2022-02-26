@@ -93,5 +93,7 @@ public class reserva_actividad_admin {
 		JComboBox comboBox_2_1 = new JComboBox();
 		comboBox_2_1.setBounds(242, 296, 156, 22);
 		panel.add(comboBox_2_1);
+
+
 	}
 }
