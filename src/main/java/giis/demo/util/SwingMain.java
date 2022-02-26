@@ -43,7 +43,7 @@ public class SwingMain {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame.aaa
 	 */
 	private void initialize() {
 		frame = new JFrame();
