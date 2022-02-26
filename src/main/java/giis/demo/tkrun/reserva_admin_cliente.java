@@ -91,6 +91,7 @@ public class reserva_admin_cliente {
 		lblNewLabel_1.setBounds(65, 111, 100, 14);
 		panel.add(lblNewLabel_1);
 		
+		
 		textField_1 = new JTextField();
 		textField_1.setBounds(230, 95, 96, 20);
 		panel.add(textField_1);
