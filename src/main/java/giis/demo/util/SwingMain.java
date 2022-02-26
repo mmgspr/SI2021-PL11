@@ -18,7 +18,7 @@ import giis.demo.tkrun.*;
 public class SwingMain {
 
 	private JFrame frame;
-
+	private inicial vInicial;
 	/**
 	 * Launch the application.
 	 */
@@ -51,11 +51,14 @@ public class SwingMain {
 		frame.setBounds(0, 0, 287, 185);
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		
+		vInicial= new inicial(this);
 		JButton btnEjecutarTkrun = new JButton("Ejecutar giis.demo.tkrun");
 		btnEjecutarTkrun.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
 				CarrerasController controller=new CarrerasController(new CarrerasModel(), new CarrerasView());
 				controller.initController();
+				vInicial.getFrmIndex().setVisible(true);
+				
 			}
 		});
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
