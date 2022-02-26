@@ -124,7 +124,7 @@ CREATE TABLE db_test.actividad(
 
     deporte varchar(20), 
 
-    foreign key (instalacion) references instalacion(id_instalacion) 
+    foreign key (instalacion) references instalacion(id_instalacion), 
 
     foreign key (periodo_inscripcion) references periodo_inscripcion(id_periodo_inscripcion) 
 
