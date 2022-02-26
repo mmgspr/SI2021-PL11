@@ -13,8 +13,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Lista_Actividades_Admin {
+public class Reservar_Instalacion {
 
 	private JFrame frame;
 	private JTextField textFieldFecha;
@@ -29,7 +31,7 @@ public class Lista_Actividades_Admin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Lista_Actividades_Admin window = new Lista_Actividades_Admin();
+					Reservar_Instalacion window = new Reservar_Instalacion();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +43,7 @@ public class Lista_Actividades_Admin {
 	/**
 	 * Create the application.
 	 */
-	public Lista_Actividades_Admin() {
+	public Reservar_Instalacion() {
 		initialize();
 	}
 
@@ -133,6 +135,11 @@ public class Lista_Actividades_Admin {
 		panel.add(ButtonCancelar);
 		
 		JButton ButtonGuardar = new JButton("Guardar");
+		ButtonGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		ButtonGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ButtonGuardar.setBounds(316, 232, 85, 21);
 		panel.add(ButtonGuardar);
