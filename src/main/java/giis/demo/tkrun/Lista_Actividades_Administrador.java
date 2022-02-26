@@ -77,7 +77,7 @@ public class Lista_Actividades_Administrador {
 		
 		JButton ButtonCancelar = new JButton("Cancelar");
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonCancelar.setBounds(10, 232, 85, 31);
+		ButtonCancelar.setBounds(10, 233, 101, 31);
 		panel.add(ButtonCancelar);
 		
 		JButton ButtonGuardar = new JButton("Guardar");
