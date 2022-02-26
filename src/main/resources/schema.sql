@@ -1,11 +1,10 @@
-DROP TABLE socios;
-DROP TABLE clientes;
-DROP TABLE instalaciones;
-DROP TABLE reservas;
-DROP TABLE periodos_inscripcion;
-DROP TABLE actividades;
-DROP TABLE inscripciones;
-
+DROP TABLE IF EXISTS reservas;
+DROP TABLE IF EXISTS inscripciones;
+DROP TABLE IF EXISTS actividades;
+DROP TABLE IF EXISTS socios;
+DROP TABLE IF EXISTS periodos_inscripcion;
+DROP TABLE IF EXISTS clientes;
+DROP TABLE IF EXISTS instalaciones;
 CREATE TABLE socios( 
 
 id_socio integer unsigned auto_increment primary key, 
@@ -41,7 +40,11 @@ CREATE TABLE reservas(
 
 id_reserva integer unsigned auto_increment primary key, 
 
-    foreign key (socio) references socios(id_socio), 
+    persona integer unsigned,
+    
+    instalacion integer unsigned,
+
+    foreign key (persona) references socios(id_socio), 
 
     foreign key (instalacion) references instalaciones(id_instalacion), 
 
@@ -80,8 +83,12 @@ CREATE TABLE actividades(
     fecha_fin date, 
 
     deporte varchar(20), 
+    
+    instalacion integer unsigned,
+    
+    periodo_inscripcion integer unsigned,
 
-    foreign key (instalacion) references instalaciones(id_instalacion) 
+    foreign key (instalacion) references instalaciones(id_instalacion),
 
     foreign key (periodo_inscripcion) references periodos_inscripcion(id_periodo_inscripcion) 
 
@@ -90,7 +97,11 @@ CREATE TABLE inscripciones(
 
 id_inscripcion integer unsigned auto_increment primary key, 
 
-    foreign key (persona) references socios(dni), 
+    persona integer unsigned,
+    
+    actividad integer unsigned,
+
+    foreign key (persona) references socios(id_socio), 
 
     foreign key (actividad) references actividades(id_actividad), 
 
