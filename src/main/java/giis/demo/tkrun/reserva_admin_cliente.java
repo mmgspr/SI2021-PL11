@@ -21,16 +21,16 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSeparator;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class reserva_admin_cliente {
 
 	private JFrame frmReservaInstalacion;
 	private JTextField textField;
-	private JTextField textField_1;
 	private InstalacionesModel modelo = new InstalacionesModel();
 	private SwingMain principal;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
 
 	/**
 	 * Launch the application.
@@ -125,12 +125,6 @@ public class reserva_admin_cliente {
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(248, 123, 96, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
-		
 		//array para introducir todos 
 //		String[] instalaciones = new String[10];
 //		for(int i=0; i<instalaciones.length; i++) {
@@ -151,16 +145,6 @@ public class reserva_admin_cliente {
 		lblIntroduzcaAo.setBounds(113, 174, 107, 14);
 		panel.add(lblIntroduzcaAo);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(248, 148, 96, 20);
-		panel.add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(248, 173, 96, 20);
-		panel.add(textField_3);
-		
 		JLabel lblNewLabel_1 = new JLabel("Fecha de la reserva:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(40, 99, 157, 14);
@@ -171,14 +155,36 @@ public class reserva_admin_cliente {
 		lblNewLabel_1_1.setBounds(40, 236, 157, 14);
 		panel.add(lblNewLabel_1_1);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(182, 235, 96, 20);
-		panel.add(textField_4);
+		JComboBox<Integer> comboBoxDia = new JComboBox<Integer>();
+		comboBoxDia.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31}));
+		comboBoxDia.setBounds(260, 122, 114, 22);
+		panel.add(comboBoxDia);
+		
+		JComboBox<Integer> comboBoxMes = new JComboBox<Integer>();
+		comboBoxMes.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}));
+		comboBoxMes.setBounds(260, 147, 114, 22);
+		panel.add(comboBoxMes);
+		
+		JComboBox<Integer> comboBoxAño = new JComboBox<Integer>();
+		comboBoxAño.setModel(new DefaultComboBoxModel(new Integer[] {dateGetYear(), dateGetYear()+1}));
+		comboBoxAño.setBounds(260, 172, 114, 22);
+		panel.add(comboBoxAño);
+		
+		JComboBox comboBox_1_3 = new JComboBox();
+		comboBox_1_3.setBounds(173, 234, 114, 22);
+		panel.add(comboBox_1_3);
 	}
 
 	public Window getFrmReservaAdmin() {
 		// TODO Auto-generated method stub
 		return this.frmReservaInstalacion;
+	}
+	
+	public int dateGetYear(){
+	        Date date = new Date();
+	        ZoneId timeZone = ZoneId.systemDefault();
+	        LocalDate getLocalDate = date.toInstant().atZone(timeZone).toLocalDate();
+	        return getLocalDate.getYear();
+    
 	}
 }
