@@ -156,6 +156,7 @@ public class Reservar_Instalacion_Socio {
 		panel.add(LabelInstalacion);
 		
 		JComboBox comboBoxInstalaciones = new JComboBox();
+		comboBoxInstalaciones.setModel(new DefaultComboBoxModel(instalaciones));
 		comboBoxInstalaciones.setBounds(160, 135, 141, 21);
 		panel.add(comboBoxInstalaciones);
 		
