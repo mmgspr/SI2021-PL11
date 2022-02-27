@@ -59,6 +59,10 @@ CREATE TABLE periodos_inscripcion(
 
     id_periodo_inscripcion integer unsigned unique not null primary key, 
 
+	nombre varchar(50), 
+
+    descripcion varchar(200), 
+
     fecha_ini_socio date, 
 
     fecha_fin_socio date, 
