@@ -16,9 +16,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Reservar_Instalacion {
+public class Reservar_Instalacion_Socio {
 
-	private JFrame frame;
+	private JFrame frmReservarInstalacin;
 	private JTextField textFieldFecha;
 	private JTextField textFieldHoraIni;
 	private JTextField textFieldHoraFin;
@@ -31,8 +31,8 @@ public class Reservar_Instalacion {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Reservar_Instalacion window = new Reservar_Instalacion();
-					window.frame.setVisible(true);
+					Reservar_Instalacion_Socio window = new Reservar_Instalacion_Socio();
+					window.frmReservarInstalacin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,7 +43,7 @@ public class Reservar_Instalacion {
 	/**
 	 * Create the application.
 	 */
-	public Reservar_Instalacion() {
+	public Reservar_Instalacion_Socio() {
 		initialize();
 	}
 
@@ -51,40 +51,32 @@ public class Reservar_Instalacion {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmReservarInstalacin = new JFrame();
+		frmReservarInstalacin.setTitle("Reservar Instalación");
+		frmReservarInstalacin.setBounds(100, 100, 450, 300);
+		frmReservarInstalacin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		frmReservarInstalacin.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		
-		JLabel LabelTitulo = new JLabel("Reservar Instalación");
-		LabelTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelTitulo.setBounds(10, -8, 126, 42);
-		panel.add(LabelTitulo);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 26, 436, 8);
-		panel.add(separator);
 		
 		JLabel LabelFechadeReserva = new JLabel("Fecha de Reserva:");
 		LabelFechadeReserva.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelFechadeReserva.setBounds(10, 34, 126, 29);
+		LabelFechadeReserva.setBounds(10, 10, 126, 29);
 		panel.add(LabelFechadeReserva);
 		
 		textFieldFecha = new JTextField();
-		textFieldFecha.setBounds(127, 41, 126, 19);
+		textFieldFecha.setBounds(127, 17, 126, 19);
 		panel.add(textFieldFecha);
 		textFieldFecha.setColumns(10);
 		
 		JLabel LabelHoraIni = new JLabel("Hora de Inicio:");
 		LabelHoraIni.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelHoraIni.setBounds(10, 59, 113, 29);
+		LabelHoraIni.setBounds(10, 51, 113, 29);
 		panel.add(LabelHoraIni);
 		
 		textFieldHoraIni = new JTextField();
-		textFieldHoraIni.setBounds(127, 66, 126, 19);
+		textFieldHoraIni.setBounds(127, 58, 126, 19);
 		panel.add(textFieldHoraIni);
 		textFieldHoraIni.setColumns(10);
 		
