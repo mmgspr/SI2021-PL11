@@ -10,6 +10,7 @@ import java.awt.Window;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSeparator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import com.toedter.calendar.JCalendar;
@@ -34,9 +36,10 @@ import com.toedter.calendar.JDateChooser;
 public class reserva_admin_cliente {
 
 	private JFrame frmReservaInstalacion;
-	private JTextField textField;
+	private JTextField textFieldSocio;
 	private InstalacionesModel modelo = new InstalacionesModel();
 	private ReservasModel modeloReservas = new ReservasModel();
+	private ClientesModel modeloClientes = new ClientesModel();
 	private SwingMain principal;
 
 	/**
@@ -119,10 +122,10 @@ public class reserva_admin_cliente {
 		btnCancelar.setBounds(42, 398, 89, 23);
 		panel.add(btnCancelar);
 		
-		textField = new JTextField();
-		textField.setBounds(205, 230, 96, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		textFieldSocio = new JTextField();
+		textFieldSocio.setBounds(205, 230, 96, 20);
+		panel.add(textFieldSocio);
+		textFieldSocio.setColumns(10);
 		
 		//array para introducir todos 
 //		String[] instalaciones = new String[10];
@@ -177,8 +180,67 @@ public class reserva_admin_cliente {
 				String hora = (String)comboBoxHora.getSelectedItem();
 				String diaHora = date+" "+hora;
 				System.out.println(diaHora);
+				
+				//id del socio
+				String id_socio;
+				id_socio = textFieldSocio.getText();
+				
+				//fecha de hoy
+				Date d1 = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+				
+				//diferencia entre las dos fechas
+				long diferencia_dias= 0;
+				long diferencia_años= 0;
+				try {
+					//pasar de string a fecha
+		            Date d2 = sdf.parse(date);
+		  
+		            //Calcular la diferencia en milisegundos
+		            long difference_In_Time
+		                = d2.getTime() - d1.getTime();
+		  
+		            // Calcular la diferencia en segundos, minutos, horas, años y dias
+		            long difference_In_Seconds
+		                = (difference_In_Time
+		                   / 1000)
+		                  % 60;
+		  
+		            long difference_In_Minutes
+		                = (difference_In_Time
+		                   / (1000 * 60))
+		                  % 60;
+		  
+		            long difference_In_Hours
+		                = (difference_In_Time
+		                   / (1000 * 60 * 60))
+		                  % 24;
+		  
+		            long difference_In_Years
+		                = (difference_In_Time
+		                   / (1000l * 60 * 60 * 24 * 365));
+		  
+		            long difference_In_Days
+		                = (difference_In_Time
+		                   / (1000 * 60 * 60 * 24))
+		                  % 365;
+		            diferencia_dias = difference_In_Days;
+		            diferencia_años = difference_In_Years;
+		           
+		        }
+		  
+		        // Catch the Exception
+		        catch (ParseException excepcion) {
+		            excepcion.printStackTrace();
+		        }
+				
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
-					System.out.println("Correcto, has podido reservar");
+					if (modeloClientes.validarId(id_socio))
+						if (diferencia_dias <= 15 || diferencia_años>0)
+							System.out.println("Correcto, has podido reservar");
+						else
+							System.out.println("No puedes reservar con más de 15 días de antelación.");
+					else
+						System.out.println("Introduce un número de socio válido.");
 					
 				}
 				else System.out.println("Está ocupado");
