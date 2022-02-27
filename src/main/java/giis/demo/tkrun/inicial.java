@@ -20,6 +20,7 @@ public class inicial {
 	private SwingMain ventanaMain;
 	private visualizarReservasA vVisualizarReservasA;
 	private reserva_admin_cliente vReservaAdmin;
+	private crear_actividad vCrearActividad;
 	/**
 	 * Launch the application.
 	 */
@@ -43,6 +44,7 @@ public class inicial {
 		initialize();
 	}
 
+	
 	public inicial(SwingMain vSM) {
 		this.ventanaMain=vSM;
 		initialize();
@@ -112,6 +114,12 @@ public class inicial {
 		panel.add(btnNewButton_1_4);
 		
 		JButton btnNewButton_1_5 = new JButton("Planificar Actividad\r\n");
+		btnNewButton_1_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vCrearActividad = new crear_actividad(ventanaMain);
+				vCrearActividad.getFrmCrearActividad().setVisible(true);
+			}
+		});
 		btnNewButton_1_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_5.setBounds(248, 77, 181, 23);
 		panel.add(btnNewButton_1_5);

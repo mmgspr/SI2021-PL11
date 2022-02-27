@@ -80,7 +80,7 @@ public class crear_sesiones {
 		frmCrearSesiones = new JFrame();
 		frmCrearSesiones.setTitle("Crear Sesiones");
 		frmCrearSesiones.setBounds(100, 100, 700, 350);
-		frmCrearSesiones.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCrearSesiones.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmCrearSesiones.getContentPane().add(panel, BorderLayout.CENTER);
