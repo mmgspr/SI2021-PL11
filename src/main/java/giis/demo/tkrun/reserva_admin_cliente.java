@@ -6,10 +6,17 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+
+import giis.demo.util.SwingMain;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -18,6 +25,8 @@ public class reserva_admin_cliente {
 	private JFrame frmReservaInstalacion;
 	private JTextField textField;
 	private JTextField textField_1;
+	private InstalacionesModel modelo = new InstalacionesModel();
+	private SwingMain principal;
 
 	/**
 	 * Launch the application.
@@ -42,6 +51,10 @@ public class reserva_admin_cliente {
 	public reserva_admin_cliente() {
 		initialize();
 	}
+	public reserva_admin_cliente(SwingMain principal) {
+		initialize();
+		this.principal = principal;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -51,6 +64,20 @@ public class reserva_admin_cliente {
 		frmReservaInstalacion.setTitle("RESERVA INSTALACION");
 		frmReservaInstalacion.setBounds(100, 100, 700, 500);
 		frmReservaInstalacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//obtener todas las instalaciones
+		List<Object[]> lista=modelo.getInstalaciones();
+		
+		String[] instalaciones=new String[lista.size()];
+		
+		Iterator<Object[]> iterador = lista.iterator();
+		
+		int i=0;
+		while(iterador.hasNext()) {
+			instalaciones[i]=iterador.next()[0].toString();
+			i++;
+		}
+		
 		
 		JPanel panel = new JPanel();
 		frmReservaInstalacion.getContentPane().add(panel, BorderLayout.CENTER);
@@ -99,13 +126,18 @@ public class reserva_admin_cliente {
 		textField_1.setColumns(10);
 		
 		//array para introducir todos 
-		String[] instalaciones = new String[10];
-		for(int i=0; i<instalaciones.length; i++) {
-			instalaciones[i]="HOla"; //cambiar hola por el elemento de la lista del modelo que toque
-		}
+//		String[] instalaciones = new String[10];
+//		for(int i=0; i<instalaciones.length; i++) {
+//			instalaciones[i]="HOla"; //cambiar hola por el elemento de la lista del modelo que toque
+//		}
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(instalaciones));
 		comboBox.setBounds(205, 35, 107, 22);
 		panel.add(comboBox);
+	}
+
+	public Window getFrmReservaAdmin() {
+		// TODO Auto-generated method stub
+		return this.frmReservaInstalacion;
 	}
 }

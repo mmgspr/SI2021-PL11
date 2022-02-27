@@ -19,6 +19,7 @@ public class inicial {
 	private JFrame frmIndex;
 	private SwingMain ventanaMain;
 	private visualizarReservasA vVisualizarReservasA;
+	private reserva_admin_cliente vReservaAdmin;
 	/**
 	 * Launch the application.
 	 */
@@ -79,6 +80,13 @@ public class inicial {
 		panel.add(btnDisponibilidadInstalaciones);
 		
 		JButton btnNewButton_1_1 = new JButton("Reservar Instalación\r\n\r\n");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//lleva a reserva_admin_cliente
+				vReservaAdmin = new reserva_admin_cliente(ventanaMain);
+				vReservaAdmin.getFrmReservaAdmin().setVisible(true);
+			}
+		});
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_1.setBounds(10, 44, 207, 23);
 		panel.add(btnNewButton_1_1);
