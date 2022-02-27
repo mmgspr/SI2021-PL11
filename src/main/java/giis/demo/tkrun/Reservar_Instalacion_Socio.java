@@ -54,7 +54,7 @@ public class Reservar_Instalacion_Socio {
 		frmReservarInstalacin = new JFrame();
 		frmReservarInstalacin.setTitle("Reservar Instalación");
 		frmReservarInstalacin.setBounds(100, 100, 450, 300);
-		frmReservarInstalacin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmReservarInstalacin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmReservarInstalacin.getContentPane().add(panel, BorderLayout.CENTER);
@@ -102,7 +102,7 @@ public class Reservar_Instalacion_Socio {
 		
 		JLabel LabelMetododePago = new JLabel("Método de Pago:");
 		LabelMetododePago.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelMetododePago.setBounds(10, 190, 113, 29);
+		LabelMetododePago.setBounds(47, 227, 113, 29);
 		panel.add(LabelMetododePago);
 		
 		JCheckBox CheckBoxEstaLibre = new JCheckBox("Está libre");

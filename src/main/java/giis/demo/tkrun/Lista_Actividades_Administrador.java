@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JSplitPane;
 
 public class Lista_Actividades_Administrador {
 
@@ -50,7 +51,7 @@ public class Lista_Actividades_Administrador {
 		frmListaDeActividades = new JFrame();
 		frmListaDeActividades.setTitle("Lista de Actividades");
 		frmListaDeActividades.setBounds(100, 100, 541, 362);
-		frmListaDeActividades.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmListaDeActividades.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmListaDeActividades.getContentPane().add(panel, BorderLayout.CENTER);

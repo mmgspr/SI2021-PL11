@@ -63,7 +63,7 @@ public class reserva_admin_cliente {
 		frmReservaInstalacion = new JFrame();
 		frmReservaInstalacion.setTitle("RESERVA INSTALACION");
 		frmReservaInstalacion.setBounds(100, 100, 700, 500);
-		frmReservaInstalacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmReservaInstalacion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//obtener todas las instalaciones
 		List<Object[]> lista=modelo.getInstalaciones();
