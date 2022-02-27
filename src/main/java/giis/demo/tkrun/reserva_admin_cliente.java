@@ -19,6 +19,7 @@ import giis.demo.util.SwingMain;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JSeparator;
 
 public class reserva_admin_cliente {
 
@@ -27,6 +28,9 @@ public class reserva_admin_cliente {
 	private JTextField textField_1;
 	private InstalacionesModel modelo = new InstalacionesModel();
 	private SwingMain principal;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
 
 	/**
 	 * Launch the application.
@@ -63,7 +67,7 @@ public class reserva_admin_cliente {
 		frmReservaInstalacion = new JFrame();
 		frmReservaInstalacion.setTitle("RESERVA INSTALACION");
 		frmReservaInstalacion.setBounds(100, 100, 700, 500);
-		frmReservaInstalacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmReservaInstalacion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//obtener todas las instalaciones
 		List<Object[]> lista=modelo.getInstalaciones();
@@ -88,14 +92,14 @@ public class reserva_admin_cliente {
 		lblNewLabel.setBounds(42, 37, 178, 14);
 		panel.add(lblNewLabel);
 		
-		JLabel lblSeleccioneFechaY = new JLabel("Introduzca fecha y hora:");
+		JLabel lblSeleccioneFechaY = new JLabel("Introduzca día:");
 		lblSeleccioneFechaY.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblSeleccioneFechaY.setBounds(42, 96, 178, 14);
+		lblSeleccioneFechaY.setBounds(113, 124, 107, 14);
 		panel.add(lblSeleccioneFechaY);
 		
 		JLabel lblNDeSocio = new JLabel("N\u00BA de socio:");
 		lblNDeSocio.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNDeSocio.setBounds(42, 157, 178, 14);
+		lblNDeSocio.setBounds(42, 291, 96, 14);
 		panel.add(lblNDeSocio);
 		
 		JButton btnNewButton = new JButton("Reservar");
@@ -107,21 +111,23 @@ public class reserva_admin_cliente {
 		panel.add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//borrar la ventana
+				frmReservaInstalacion.dispose();
+			}
+		});
 		btnCancelar.setBounds(42, 398, 89, 23);
 		panel.add(btnCancelar);
 		
 		textField = new JTextField();
-		textField.setBounds(150, 156, 96, 20);
+		textField.setBounds(148, 290, 96, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("(dd/mm/aa hh/mm)");
-		lblNewLabel_1.setBounds(65, 111, 100, 14);
-		panel.add(lblNewLabel_1);
-		
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(230, 95, 96, 20);
+		textField_1.setBounds(248, 123, 96, 20);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -132,8 +138,43 @@ public class reserva_admin_cliente {
 //		}
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(instalaciones));
-		comboBox.setBounds(205, 35, 107, 22);
+		comboBox.setBounds(205, 35, 169, 22);
 		panel.add(comboBox);
+		
+		JLabel lblIntroduzcaMes = new JLabel("Introduzca mes:");
+		lblIntroduzcaMes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblIntroduzcaMes.setBounds(113, 149, 107, 14);
+		panel.add(lblIntroduzcaMes);
+		
+		JLabel lblIntroduzcaAo = new JLabel("Introduzca año:");
+		lblIntroduzcaAo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblIntroduzcaAo.setBounds(113, 174, 107, 14);
+		panel.add(lblIntroduzcaAo);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(248, 148, 96, 20);
+		panel.add(textField_2);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(248, 173, 96, 20);
+		panel.add(textField_3);
+		
+		JLabel lblNewLabel_1 = new JLabel("Fecha de la reserva:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(40, 99, 157, 14);
+		panel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Hora de la reserva:");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_1.setBounds(40, 236, 157, 14);
+		panel.add(lblNewLabel_1_1);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(182, 235, 96, 20);
+		panel.add(textField_4);
 	}
 
 	public Window getFrmReservaAdmin() {
