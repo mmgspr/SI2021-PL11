@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
@@ -20,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import giis.demo.util.Database;
+import giis.demo.util.SwingMain;
 
 public class crear_actividad {
 
@@ -33,6 +36,7 @@ public class crear_actividad {
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
+	private SwingMain principal;
 
 	/**
 	 * Launch the application.
@@ -56,6 +60,11 @@ public class crear_actividad {
 	public crear_actividad() {
 		initialize();
 	}
+	
+	public crear_actividad(SwingMain principal) {
+		initialize();
+		this.principal = principal;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -64,7 +73,7 @@ public class crear_actividad {
 		frmCrearActividad = new JFrame();
 		frmCrearActividad.setTitle("Crear Actividad");
 		frmCrearActividad.setBounds(100, 100, 700, 500);
-		frmCrearActividad.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCrearActividad.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		vSesiones= new crear_sesiones(this);
 		vPeriodoIns= new crear_periodo_inscripcion(this);
@@ -110,7 +119,7 @@ public class crear_actividad {
 		}
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel());
+		comboBox.setModel(new DefaultComboBoxModel(instalaciones));
 		comboBox.setBounds(96, 215, 199, 21);
 		panel.add(comboBox);
 		
@@ -198,6 +207,11 @@ public class crear_actividad {
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("Cancelar");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmCrearActividad.dispose();
+			}
+		});
 		btnNewButton_1_1.setBounds(10, 432, 85, 21);
 		panel.add(btnNewButton_1_1);
 		
@@ -256,6 +270,11 @@ public class crear_actividad {
 		textField_4.setColumns(10);
 		textField_4.setBounds(497, 216, 152, 19);
 		panel.add(textField_4);
+	}
+
+	public Window getFrmCrearActividad() {
+		// TODO Auto-generated method stub
+		return this.frmCrearActividad;
 	}
 }
 

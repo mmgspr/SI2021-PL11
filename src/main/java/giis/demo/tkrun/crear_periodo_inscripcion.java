@@ -65,7 +65,7 @@ public class crear_periodo_inscripcion {
 		frmCrearPeriodoDe = new JFrame();
 		frmCrearPeriodoDe.setTitle("Crear Periodo de Inscripción");
 		frmCrearPeriodoDe.setBounds(100, 100, 700, 300);
-		frmCrearPeriodoDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCrearPeriodoDe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmCrearPeriodoDe.getContentPane().add(panel, BorderLayout.CENTER);
