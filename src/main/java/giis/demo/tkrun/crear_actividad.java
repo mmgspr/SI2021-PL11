@@ -120,7 +120,7 @@ public class crear_actividad {
 		panel.add(lblDeporte);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un deporte>", "P\u00E1del", "Tenis", "F\u00FAtbol"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Pádel", "Tenis", "Fútbol"}));
 		comboBox_1.setBounds(84, 264, 199, 21);
 		panel.add(comboBox_1);
 		
@@ -180,7 +180,7 @@ public class crear_actividad {
 		panel.add(lblPeriodoDe);
 		
 		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un periodo de inscripci\u00F3n>"}));
+		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un periodo de inscripción>"}));
 		comboBox_1_1.setBounds(382, 291, 267, 21);
 		panel.add(comboBox_1_1);
 		
@@ -239,7 +239,7 @@ public class crear_actividad {
 				}
 			}
 		});
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un periodo>", "Verano", "Oto\u00F1o", "Invierno", "Primavera", "Otro..."}));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Verano", "Otoño", "Invierno", "Primavera", "Otro..."}));
 		comboBox_2.setBounds(382, 149, 267, 21);
 		panel.add(comboBox_2);
 		
