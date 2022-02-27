@@ -29,9 +29,6 @@ public class Reservar_Instalacion_Socio {
 	private InstalacionesModel modelo = new InstalacionesModel();
 	private CosteModel modeloCoste = new CosteModel();
 	private JFrame frmReservarInstalacin;
-	private JTextField textFieldFecha;
-	private JTextField textFieldHoraIni;
-	private JTextField textFieldHoraFin;
 	private JTextField textFieldCoste;
 	private SwingMain principal;
 
@@ -91,35 +88,10 @@ public class Reservar_Instalacion_Socio {
 		frmReservarInstalacin.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel LabelFechadeReserva = new JLabel("Fecha de Reserva:");
+		JLabel LabelFechadeReserva = new JLabel("Fecha Inicio Reserva:");
 		LabelFechadeReserva.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelFechadeReserva.setBounds(10, 10, 126, 29);
+		LabelFechadeReserva.setBounds(10, 10, 141, 27);
 		panel.add(LabelFechadeReserva);
-		
-		textFieldFecha = new JTextField();
-		textFieldFecha.setBounds(127, 17, 126, 19);
-		panel.add(textFieldFecha);
-		textFieldFecha.setColumns(10);
-		
-		JLabel LabelHoraIni = new JLabel("Hora de Inicio:");
-		LabelHoraIni.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelHoraIni.setBounds(10, 51, 113, 29);
-		panel.add(LabelHoraIni);
-		
-		textFieldHoraIni = new JTextField();
-		textFieldHoraIni.setBounds(127, 58, 126, 19);
-		panel.add(textFieldHoraIni);
-		textFieldHoraIni.setColumns(10);
-		
-		JLabel LabelHoraFin = new JLabel("Hora de Fin:");
-		LabelHoraFin.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelHoraFin.setBounds(10, 90, 91, 19);
-		panel.add(LabelHoraFin);
-		
-		textFieldHoraFin = new JTextField();
-		textFieldHoraFin.setBounds(127, 92, 126, 19);
-		panel.add(textFieldHoraFin);
-		textFieldHoraFin.setColumns(10);
 		
 		JLabel LabelCoste = new JLabel("Coste de la Reserva:");
 		LabelCoste.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -127,6 +99,7 @@ public class Reservar_Instalacion_Socio {
 		panel.add(LabelCoste);
 		
 		textFieldCoste = new JTextField();
+		textFieldCoste.setEditable(false);
 		//textFieldCoste.setModel(new DefaultComboBoxModel(instalaciones));
 		textFieldCoste.setBounds(146, 166, 126, 19);
 		panel.add(textFieldCoste);
@@ -138,13 +111,15 @@ public class Reservar_Instalacion_Socio {
 		panel.add(LabelMetododePago);
 		
 		JCheckBox CheckBoxEstaLibre = new JCheckBox("Está libre");
+		CheckBoxEstaLibre.setEnabled(false);
 		CheckBoxEstaLibre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		CheckBoxEstaLibre.setBounds(285, 30, 93, 21);
+		CheckBoxEstaLibre.setBounds(41, 92, 93, 21);
 		panel.add(CheckBoxEstaLibre);
 		
 		JCheckBox CheckBoxPuedesReservar = new JCheckBox("Puedes Reservar");
+		CheckBoxPuedesReservar.setEnabled(false);
 		CheckBoxPuedesReservar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		CheckBoxPuedesReservar.setBounds(284, 75, 152, 21);
+		CheckBoxPuedesReservar.setBounds(164, 92, 152, 21);
 		panel.add(CheckBoxPuedesReservar);
 		
 		JComboBox comboBoxMetodo = new JComboBox();
@@ -175,17 +150,26 @@ public class Reservar_Instalacion_Socio {
 		
 		JLabel LabelInstalacion = new JLabel("Seleccione Instalación:");
 		LabelInstalacion.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelInstalacion.setBounds(10, 119, 152, 30);
+		LabelInstalacion.setBounds(10, 126, 152, 30);
 		panel.add(LabelInstalacion);
 		
 		JComboBox comboBoxInstalaciones = new JComboBox();
 		comboBoxInstalaciones.setModel(new DefaultComboBoxModel(instalaciones));
-		comboBoxInstalaciones.setBounds(157, 126, 141, 21);
+		comboBoxInstalaciones.setBounds(160, 135, 141, 21);
 		panel.add(comboBoxInstalaciones);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(273, 144, 113, 19);
-		panel.add(dateChooser);
+		JDateChooser dateChooserInicio = new JDateChooser();
+		dateChooserInicio.setBounds(159, 18, 113, 19);
+		panel.add(dateChooserInicio);
+		
+		JLabel LabelHoraIni = new JLabel("Hora de Inicio:\r\n");
+		LabelHoraIni.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		LabelHoraIni.setBounds(10, 47, 113, 19);
+		panel.add(LabelHoraIni);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(158, 48, 85, 21);
+		panel.add(comboBox);
 	}
 
 
