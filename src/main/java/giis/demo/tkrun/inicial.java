@@ -63,7 +63,7 @@ public class inicial {
 		frmIndex = new JFrame();
 		frmIndex.setTitle("Índice");
 		frmIndex.setBounds(100, 100, 531, 363);
-		frmIndex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmIndex.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmIndex.getContentPane().add(panel, BorderLayout.CENTER);

@@ -60,14 +60,6 @@ public class visualizarReservasA {
 	}
 	
 	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	public static final String SQL_TODAS_INSTALACIONES = "SELECT nombre FROM instalaciones";
-	public List<Object[]> getInstalaciones(){
-		
-		return principal.db.executeQueryArray(SQL_TODAS_INSTALACIONES );
-	}
 	private void initialize() {
 		frmVisualizarReservas = new JFrame();
 		frmVisualizarReservas.setTitle("Visualizar Reservas");
@@ -105,11 +97,11 @@ public class visualizarReservasA {
 		//principal.db.loadDatabase();
 		
 		
-		List<Object[]> willyrex=modelo.getInstalaciones();
+		List<Object[]> lista=modelo.getInstalaciones();
 		
-		String[] instalaciones=new String[willyrex.size()];
+		String[] instalaciones=new String[lista.size()];
 		
-		Iterator<Object[]> iterador = willyrex.iterator();
+		Iterator<Object[]> iterador = lista.iterator();
 		
 		int i=0;
 		while(iterador.hasNext()) {
