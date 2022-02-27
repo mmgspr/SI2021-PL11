@@ -10,6 +10,9 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.JSeparator;
+import javax.swing.JLabel;
 
 public class inicial {
 
@@ -52,67 +55,86 @@ public class inicial {
 	 */
 	private void initialize() {
 		frmIndex = new JFrame();
-		frmIndex.setTitle("index");
-		frmIndex.setBounds(100, 100, 450, 300);
+		frmIndex.setTitle("Índice");
+		frmIndex.setBounds(100, 100, 531, 363);
 		frmIndex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmIndex.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Inscripcion actividad");
-		btnNewButton.setBounds(10, 11, 181, 23);
+		JButton btnNewButton = new JButton("Inscripcion Actividad\r\n\r\n");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton.setBounds(10, 77, 207, 23);
 		panel.add(btnNewButton);
 		
-		JButton btnDisponibilidadInstalaciones = new JButton("Disponibilidad instalaciones");
+		JButton btnDisponibilidadInstalaciones = new JButton("Disponibilidad Instalaciones\r\n");
+		btnDisponibilidadInstalaciones.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnDisponibilidadInstalaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnDisponibilidadInstalaciones.setBounds(10, 56, 181, 23);
+		btnDisponibilidadInstalaciones.setBounds(10, 225, 207, 23);
 		panel.add(btnDisponibilidadInstalaciones);
 		
-		JButton btnNewButton_1_1 = new JButton("Admin reserva instalacion");
-		btnNewButton_1_1.setBounds(10, 95, 181, 23);
+		JButton btnNewButton_1_1 = new JButton("Reservar Instalación\r\n\r\n");
+		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_1.setBounds(10, 44, 207, 23);
 		panel.add(btnNewButton_1_1);
 		
-		JButton btnNewButton_1_2 = new JButton("Reservar instalacion");
-		btnNewButton_1_2.setBounds(10, 139, 181, 23);
+		JButton btnNewButton_1_2 = new JButton("Reservar Instalacion\r\n");
+		btnNewButton_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1_2.setBounds(10, 192, 207, 23);
 		panel.add(btnNewButton_1_2);
 		
-		JButton btnNewButton_1_4 = new JButton("Visualizar reservas");
-		btnNewButton_1_4.setBounds(225, 11, 181, 23);
+		JButton btnNewButton_1_4 = new JButton("Visualizar Reservas\r\n\r\n");
+		btnNewButton_1_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_4.setBounds(248, 44, 181, 23);
 		panel.add(btnNewButton_1_4);
 		
-		JButton btnNewButton_1_5 = new JButton("Planificar actividad");
-		btnNewButton_1_5.setBounds(225, 56, 181, 23);
+		JButton btnNewButton_1_5 = new JButton("Planificar Actividad\r\n");
+		btnNewButton_1_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_5.setBounds(248, 77, 181, 23);
 		panel.add(btnNewButton_1_5);
 		
-		JButton btnNewButton_1_6 = new JButton("Reserva para actividad");
+		JButton btnNewButton_1_6 = new JButton("Reserva para Actividad\r\n\r\n");
+		btnNewButton_1_6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1_6.setBounds(225, 95, 181, 23);
+		btnNewButton_1_6.setBounds(248, 110, 181, 23);
 		panel.add(btnNewButton_1_6);
 		
-		JButton btnNewButton_1_7 = new JButton("Lista actividades");
+		JButton btnNewButton_1_7 = new JButton("Lista Actividades\r\n\r\n");
+		btnNewButton_1_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1_7.setBounds(225, 139, 181, 23);
+		btnNewButton_1_7.setBounds(10, 110, 207, 23);
 		panel.add(btnNewButton_1_7);
 		
-		JButton btnCrearBase = new JButton("crear base");
-		btnCrearBase.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//Database db = new Database();
-				
-			}
-		});
-		btnCrearBase.setBounds(269, 211, 89, 23);
-		panel.add(btnCrearBase);
+		JSeparator separator = new JSeparator();
+		separator.setBounds(0, 30, 517, 2);
+		panel.add(separator);
+		
+		JLabel lblNewLabel = new JLabel("Administración");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(10, 10, 114, 24);
+		panel.add(lblNewLabel);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(0, 182, 517, 15);
+		panel.add(separator_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("Socios\r\n");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(10, 159, 83, 23);
+		panel.add(lblNewLabel_1);
 	}
-	
 }

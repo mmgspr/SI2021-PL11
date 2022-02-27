@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class Lista_Actividades_Administrador {
 
-	private JFrame frame;
+	private JFrame frmListaDeActividades;
 	private JTable table;
 
 	/**
@@ -28,7 +28,7 @@ public class Lista_Actividades_Administrador {
 			public void run() {
 				try {
 					Lista_Actividades_Administrador window = new Lista_Actividades_Administrador();
-					window.frame.setVisible(true);
+					window.frmListaDeActividades.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,32 +47,24 @@ public class Lista_Actividades_Administrador {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 541, 362);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmListaDeActividades = new JFrame();
+		frmListaDeActividades.setTitle("Lista de Actividades");
+		frmListaDeActividades.setBounds(100, 100, 541, 362);
+		frmListaDeActividades.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		frmListaDeActividades.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		
-		JLabel LabelTitulo = new JLabel("Lista de Actividades");
-		LabelTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelTitulo.setBounds(10, 0, 124, 38);
-		panel.add(LabelTitulo);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 28, 436, 2);
-		panel.add(separator);
 		
 		JLabel LabelPeriodo = new JLabel("Periodo:");
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelPeriodo.setBounds(10, 36, 57, 20);
+		LabelPeriodo.setBounds(10, 20, 57, 20);
 		panel.add(LabelPeriodo);
 		
 		JComboBox comboBoxPeriodo = new JComboBox();
 		comboBoxPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBoxPeriodo.setModel(new DefaultComboBoxModel(new String[] {"<selecciona uno>", "Primavera", "Verano", "Otoño", "Invierno"}));
-		comboBoxPeriodo.setBounds(69, 36, 148, 21);
+		comboBoxPeriodo.setBounds(69, 20, 148, 21);
 		panel.add(comboBoxPeriodo);
 		
 		JButton ButtonCancelar = new JButton("Cancelar");
@@ -86,7 +78,7 @@ public class Lista_Actividades_Administrador {
 		panel.add(ButtonGuardar);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 65, 507, 211);
+		scrollPane.setBounds(10, 58, 507, 218);
 		panel.add(scrollPane);
 		
 		table = new JTable();
