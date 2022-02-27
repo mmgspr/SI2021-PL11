@@ -27,7 +27,6 @@ public class reserva_actividad_admin {
 					e.printStackTrace();
 				}
 			} 
-		
 		});
 	}
 
