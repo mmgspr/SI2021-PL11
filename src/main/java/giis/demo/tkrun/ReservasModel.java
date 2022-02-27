@@ -26,7 +26,7 @@ private Database db = new Database();
 		//public static final String SQL_RESERVADA = "SELECT id_reserva FROM reservas WHERE instalacion=?";
 		List<Object[]> lista;
 		public boolean comprobarDisponibilidad(String instalacion, String diaHora){
-			lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+3+"'"+ SQL_RESERVADA+"'"+diaHora+"'");
+			lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'"+ SQL_RESERVADA+"'"+diaHora+"'");
 			
 			if (lista.size() == 0) {
 				//System.out.println(lista.get(0)[0]);
