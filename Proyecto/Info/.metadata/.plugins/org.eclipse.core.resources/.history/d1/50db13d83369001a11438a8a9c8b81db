@@ -1,0 +1,158 @@
+package giis.proyecto.controlador;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
+
+import giis.proyecto.modelo.ModeloAsignarReportajes;
+import giis.proyecto.util.EventoDisplayDTO;
+import giis.proyecto.util.ImagenDisplayDTO;
+import giis.proyecto.util.VideoDisplayDTO;
+import giis.proyecto.vista.VistaAsignarReportajes;
+
+
+public class ControladorAsignarReportajes {
+
+	private ModeloAsignarReportajes modelo;
+	private VistaAsignarReportajes vista;
+
+
+	public ControladorAsignarReportajes(ModeloAsignarReportajes modelo, VistaAsignarReportajes vista) {
+		this.modelo = modelo;
+		this.vista = vista;
+		addListenerMVC();
+	}
+
+
+	public void addListenerMVC() {
+
+		vista.btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				reiniciarJTableEvento();
+				verEventos();			
+			}
+		});
+
+
+		vista.btnAñadir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String titulo= vista.TFTitulo.getText();
+				String subtitulo= vista.TFSubtitulo.getText();
+				String cuerpo= vista.TFCuerpo.getText();
+				int seleccionado = (int) vista.tabEventos.getValueAt(vista.tabEventos.getSelectedRow(), 0);
+				modelo.asignarReportaje(seleccionado, titulo, subtitulo, cuerpo);
+				vista.TFTitulo.setText(null);
+				vista.TFSubtitulo.setText(null);
+				vista.TFCuerpo.setText(null);
+			}
+		});
+
+		
+		vista.btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vista.frame.setVisible(false);
+			}
+		});
+		
+		vista.btnAñadirImag.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int seleccionado = (int) vista.tabEventos.getValueAt(vista.tabEventos.getSelectedRow(), 0);
+				String imagen= vista.TFImagenes.getText();
+				modelo.anyadirMultimediaImag(modelo.num_reportaje(seleccionado), imagen);
+				reiniciarJTableImagenes();
+				verImagenes();
+			}
+		});
+		
+		vista.btnAñadirVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String video= vista.TFVideos.getText();
+				int seleccionado = (int) vista.tabEventos.getValueAt(vista.tabEventos.getSelectedRow(), 0);
+				modelo.anyadirMultimediaVideos(modelo.num_reportaje(seleccionado), video);
+				reiniciarJTableVideos();
+				verVideos();
+			}
+		});
+	}
+
+
+	public void verEventos() {
+
+		int id = Integer.parseInt(vista.TFID.getText());
+
+		ArrayList<EventoDisplayDTO> list= ModeloAsignarReportajes.getListaEventos(id);
+
+		DefaultTableModel model= (DefaultTableModel)vista.tabEventos.getModel();
+
+		Object [] row = new Object[6];
+		for (int i=0;i<list.size();i++) {
+
+			row[0]=list.get(i).getID_evento();
+			row[1]=list.get(i).getNombre();
+			row[2]=list.get(i).getLugar();
+			row[4]=list.get(i).getDuracion();
+			row[5]=list.get(i).getID_agencia();
+			
+
+			model.addRow(row);
+		}
+	}
+	
+	public void verImagenes() {
+
+		int seleccionado = (int) vista.tabEventos.getValueAt(vista.tabEventos.getSelectedRow(), 0);
+		
+		ArrayList<ImagenDisplayDTO> list= modelo.getListaImagenes(seleccionado);
+
+		DefaultTableModel model= (DefaultTableModel)vista.tableImag.getModel();
+
+		Object [] row = new Object[1];
+		for (int i=0;i<list.size();i++) {
+
+			row[0]=list.get(i).getImagen();
+
+			model.addRow(row);
+		}
+	}
+
+	public void verVideos() {
+
+		int seleccionado = (int) vista.tabEventos.getValueAt(vista.tabEventos.getSelectedRow(), 0);
+		
+		ArrayList<VideoDisplayDTO> list= modelo.getListaVideos(seleccionado);
+
+		DefaultTableModel model= (DefaultTableModel)vista.tableVideos.getModel();
+
+		Object [] row = new Object[1];
+		for (int i=0;i<list.size();i++) {
+
+			row[0]=list.get(i).getVideo();
+
+			model.addRow(row);
+		}
+	}
+
+	public  void reiniciarJTableEvento (){
+		DefaultTableModel modelo = (DefaultTableModel) vista.tabEventos.getModel();
+		while(modelo.getRowCount()>0)modelo.removeRow(0);
+	}
+	
+	public  void reiniciarJTableImagenes(){
+		DefaultTableModel modelo = (DefaultTableModel) vista.tableImag.getModel();
+		while(modelo.getRowCount()>0)modelo.removeRow(0);
+	}
+	
+	public  void reiniciarJTableVideos(){
+		DefaultTableModel modelo = (DefaultTableModel) vista.tableVideos.getModel();
+		while(modelo.getRowCount()>0)modelo.removeRow(0);
+	}
+
+
+
+	public void initController() {
+		vista.frame.setVisible(true);
+
+	}
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="giis.proyecto.vista.VistaAsignarReporteros"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloFinalizarAsignacion"/>
+    <fullyQualifiedTypeName name="giis.proyecto.vista.VistaAsignarReportajes"/>
+    <fullyQualifiedTypeName name="javax.swing.JButton"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="giis.proyecto.util.ImagenDisplayDTO"/>
+    <fullyQualifiedTypeName name="giis.proyecto.util.VideoDisplayDTO"/>
+    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="giis.proyecto.controlador.ControladorGenerarInforme"/>
+    <fullyQualifiedTypeName name="giis.proyecto.vista.VistaGenerarInforme"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloAsignarRepoLocalizacion"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloGenerarInforme"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloAsignarReporteros"/>
+    <fullyQualifiedTypeName name="giis.proyecto.util.ReporteroDisplayDTO"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="giis.proyecto.controlador.ControladorVerDietas"/>
+    <fullyQualifiedTypeName name="giis.proyecto.vista.VistaVerDietas"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloVerDietas"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloDistribuirReportaje"/>
+    <fullyQualifiedTypeName name="giis.proyecto.util.ReportajeDTO"/>
+    <fullyQualifiedTypeName name="giis.proyecto.controlador.ControladorInformeReportajes"/>
+    <fullyQualifiedTypeName name="giis.proyecto.vista.VistaInformeReportajes"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloInformeReportajes"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloGestionarEventos"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="giis.proyecto.modelo.ModeloOfrecerEvenFinalizado"/>
+    <fullyQualifiedTypeName name="giis.proyecto.util.EventosDTO"/>
+</qualifiedTypeNameHistroy>

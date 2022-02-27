@@ -1,0 +1,110 @@
+package giis.proyecto.modelo;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import giis.demo.util.Database;
+import giis.proyecto.util.EmpresaDisplayDTO;
+import giis.proyecto.util.EventoDisplayDTO;
+
+public class ModeloDistribuirReportaje {
+	
+	private static Database db = new Database();
+
+
+	//Consulta ver eventos que tienen reportaje asignado y finalizado
+
+		public static ArrayList<EventoDisplayDTO> getEventosConReportaje(){
+			Connection dbConnection=null;
+			PreparedStatement preparedStatement=null;
+
+			ArrayList<EventoDisplayDTO> ListaEventos= new ArrayList<>();
+
+			String sql = "SELECT evento.ID_evento, evento.nombre, evento.lugar, evento.fecha_inicio, evento.fecha_fin, evento.duracion, evento.estado, evento.ID_agencia FROM evento "
+
+						+ "INNER JOIN reportaje WHERE reportaje.ID_evento = evento.ID_evento AND reportaje.estado = 1";
+
+			try {
+				dbConnection =db.getConnection();
+
+				preparedStatement = dbConnection.prepareStatement(sql);
+				ResultSet rs= preparedStatement.executeQuery();
+
+
+				EventoDisplayDTO RDdto;
+				while (rs.next()) {
+					RDdto= new EventoDisplayDTO(rs.getInt("ID_evento"),rs.getString("nombre"),rs.getString("lugar"), rs.getString("fecha_inicio"), rs.getString("fecha_fin"), rs.getInt("duracion"), rs.getInt("estado"), rs.getInt("ID_agencia"));
+					ListaEventos.add(RDdto);
+				}
+			}
+			catch(Exception e){
+				System.out.println(e.getMessage());
+			}
+			return ListaEventos;
+		}
+		
+		//Consulta las empresas que acpetaron el reportaje
+		
+		public static ArrayList<EmpresaDisplayDTO> getEmpresasReportaje(String estado,int ID_evento){
+			Connection dbConnection=null;
+			PreparedStatement preparedStatement=null;
+
+			ArrayList<EmpresaDisplayDTO> ListaEmpresas= new ArrayList<>();
+
+			String sql = "SELECT empresa.ID_empresa, empresa.nombre, empresa.localizacion, empresa.ID_acceso FROM empresa "
+
+						+ "INNER JOIN oferta on oferta.ID_empresa= empresa.ID_empresa WHERE oferta.estado =? AND oferta.ID_evento = ?";
+
+			try {
+				dbConnection =db.getConnection();
+
+				preparedStatement = dbConnection.prepareStatement(sql);
+				preparedStatement.setString(1, estado);
+				preparedStatement.setInt(2, ID_evento);
+				
+				ResultSet rs= preparedStatement.executeQuery();
+
+
+				EmpresaDisplayDTO RDdto;
+				while (rs.next()) {
+					RDdto= new EmpresaDisplayDTO(rs.getInt("ID_empresa"),rs.getString("nombre"),rs.getString("localizacion"),rs.getInt("ID_acceso"));
+					ListaEmpresas.add(RDdto);
+				}
+			}
+			catch(Exception e){
+				System.out.println(e.getMessage());
+			}
+			return ListaEmpresas;
+		}
+		
+		
+
+		//Dar acceso a una empresa al reportaje
+
+		public void darAcceso(int ID_acceso) {
+
+			Connection dbConnection=null;
+			PreparedStatement preparedStatement=null;
+
+			String sql = "UPDATE acceso SET estado = 1 WHERE ID_acceso = ?";
+
+			try {
+				dbConnection =db.getConnection();
+
+				preparedStatement = dbConnection.prepareStatement(sql);
+				preparedStatement.setInt(1, ID_acceso);
+
+				preparedStatement.executeUpdate();
+				dbConnection.close();
+			}
+			catch(Exception e){
+				System.out.println(e.getMessage());
+			}
+		}
+
+
+		
+		
+}
