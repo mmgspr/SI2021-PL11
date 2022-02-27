@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS clientes;
 DROP TABLE IF EXISTS instalaciones;
 CREATE TABLE socios( 
 
-id_socio integer unsigned auto_increment primary key, 
+id_socio integer unsigned unique not null primary key, 
 
     nombre varchar(50), 
 
@@ -18,7 +18,7 @@ id_socio integer unsigned auto_increment primary key,
 );
 CREATE TABLE clientes( 
 
-id_dni_cliente varchar(9) unique primary key, 
+id_cliente integer unique unique not null primary key, 
 
     nombre varchar(50), 
 
@@ -27,7 +27,7 @@ id_dni_cliente varchar(9) unique primary key,
 ); 
 CREATE TABLE instalaciones( 
 
-    id_instalacion integer unsigned auto_increment primary key, 
+    id_instalacion integer unsigned unique not null primary key, 
 
     nombre varchar(50), 
 
@@ -38,7 +38,7 @@ CREATE TABLE instalaciones(
    );
 CREATE TABLE reservas( 
 
-id_reserva integer unsigned auto_increment primary key, 
+id_reserva integer unsigned unique not null primary key, 
 
     persona integer unsigned,
     
@@ -55,7 +55,7 @@ id_reserva integer unsigned auto_increment primary key,
    ); 
 CREATE TABLE periodos_inscripcion( 
 
-    id_periodo_inscripcion integer unsigned auto_increment primary key, 
+    id_periodo_inscripcion integer unsigned unique not null primary key, 
 
     fecha_ini_socio date, 
 
@@ -66,7 +66,7 @@ CREATE TABLE periodos_inscripcion(
 ); 
 CREATE TABLE actividades( 
 
-    id_actividad  integer unsigned auto_increment primary key, 
+    id_actividad  integer unsigned unique not null primary key, 
 
     nombre varchar(50), 
 
@@ -95,7 +95,7 @@ CREATE TABLE actividades(
     );
 CREATE TABLE inscripciones( 
 
-id_inscripcion integer unsigned auto_increment primary key, 
+id_inscripcion integer unsigned unique not null primary key, 
 
     persona integer unsigned,
     
