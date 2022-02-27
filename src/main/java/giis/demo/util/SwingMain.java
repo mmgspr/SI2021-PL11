@@ -20,6 +20,7 @@ public class SwingMain {
 	private JFrame frame;
 	private inicial vInicial;
 	public Database db;
+	
 	/**
 	 * Launch the application.
 	 */
