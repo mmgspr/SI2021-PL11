@@ -47,7 +47,7 @@ public class visualizarReservasA {
 	public visualizarReservasA() {
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -64,19 +64,19 @@ public class visualizarReservasA {
 	
 		
 		
-		Connection con;
-		try {
-			String url = "jdbc:mysql://localhost:3306/db_test?useSSL=false";
-            String user = "uo275943";
-            String pass = "a@sZMj3U$hr7%X";
-            
-            con= DriverManager.getConnection(url, user, pass);
-		}
-		
-		catch (SQLException ex){
-			 con = null ;
-		}
-		
+//		Connection con;
+//		try {
+//			String url = "jdbc:mysql://localhost:3306/db_test?useSSL=false";
+//            String user = "uo275943";
+//            String pass = "a@sZMj3U$hr7%X";
+//            
+//            con= DriverManager.getConnection(url, user, pass);
+//		}
+//		
+//		catch (SQLException ex){
+//			 con = null ;
+//		}
+//		
 		
 		
 		
@@ -87,6 +87,11 @@ public class visualizarReservasA {
 		
 		JLabel LabelPeriodo = new JLabel("Instalación:");
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		
+		db.createDatabase(false);
+		db.loadDatabase();
+		
 		
 		List<Object[]> willyrex=modelo.getInstalaciones();
 		
