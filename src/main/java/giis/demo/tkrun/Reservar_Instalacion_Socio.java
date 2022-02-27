@@ -19,7 +19,11 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -115,13 +119,13 @@ public class Reservar_Instalacion_Socio {
 		JCheckBox CheckBoxEstaLibre = new JCheckBox("Está libre");
 		CheckBoxEstaLibre.setEnabled(false);
 		CheckBoxEstaLibre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		CheckBoxEstaLibre.setBounds(161, 108, 93, 21);
+		CheckBoxEstaLibre.setBounds(161, 139, 93, 21);
 		panel.add(CheckBoxEstaLibre);
 		
 		JCheckBox CheckBoxPuedesReservar = new JCheckBox("Puedes Reservar");
 		CheckBoxPuedesReservar.setEnabled(false);
 		CheckBoxPuedesReservar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		CheckBoxPuedesReservar.setBounds(264, 108, 152, 21);
+		CheckBoxPuedesReservar.setBounds(278, 137, 152, 21);
 		panel.add(CheckBoxPuedesReservar);
 		
 		JComboBox comboBoxMetodo = new JComboBox();
@@ -152,12 +156,12 @@ public class Reservar_Instalacion_Socio {
 		
 		JLabel LabelInstalacion = new JLabel("Seleccione Instalación:");
 		LabelInstalacion.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelInstalacion.setBounds(10, 126, 152, 30);
+		LabelInstalacion.setBounds(10, 103, 152, 30);
 		panel.add(LabelInstalacion);
 		
 		JComboBox comboBoxInstalaciones = new JComboBox();
 		comboBoxInstalaciones.setModel(new DefaultComboBoxModel(instalaciones));
-		comboBoxInstalaciones.setBounds(160, 135, 141, 21);
+		comboBoxInstalaciones.setBounds(161, 110, 141, 21);
 		panel.add(comboBoxInstalaciones);
 		
 		JDateChooser dateChooserInicio = new JDateChooser();
@@ -203,17 +207,85 @@ public class Reservar_Instalacion_Socio {
 				id = nombre[0];
 				System.out.println(id);
 				
+				
+				
 				//fecha
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String date = sdf.format(dateChooserInicio.getDate());
 				String hora = (String)comboBoxHoraIni.getSelectedItem();
 				String diaHora = date+" "+hora;
 				System.out.println(diaHora);
-				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
-					CheckBoxEstaLibre.setSelected(true);
-					
-				}
-				else System.out.println("Está ocupado");
+				
+				
+				//id del socio
+				//String id_socio;
+				//id_socio = textFieldSocio.getText();
+				
+				
+				//fecha de hoy
+				Date d1 = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+				
+				
+				//diferencia entre las dos fechas
+				long diferencia_dias= 0;
+				long diferencia_años= 0;
+				try {
+					//pasar de string a fecha
+		            Date d2 = sdf.parse(date);
+		  
+		            //Calcular la diferencia en milisegundos
+		            long difference_In_Time
+		                = d2.getTime() - d1.getTime();
+		  
+		            // Calcular la diferencia en segundos, minutos, horas, años y dias
+		            long difference_In_Seconds
+		                = (difference_In_Time
+		                   / 1000)
+		                  % 60;
+		  
+		            long difference_In_Minutes
+		                = (difference_In_Time
+		                   / (1000 * 60))
+		                  % 60;
+		  
+		            long difference_In_Hours
+		                = (difference_In_Time
+		                   / (1000 * 60 * 60))
+		                  % 24;
+		  
+		            long difference_In_Years
+		                = (difference_In_Time
+		                   / (1000l * 60 * 60 * 24 * 365));
+		  
+		            long difference_In_Days
+		                = (difference_In_Time
+		                   / (1000 * 60 * 60 * 24))
+		                  % 365;
+		            diferencia_dias = difference_In_Days;
+		            diferencia_años = difference_In_Years;
+		           
+		        }
+		  
+		        // Catch the Exception
+		        catch (ParseException excepcion) {
+		            excepcion.printStackTrace();
+		        }										
+					if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {				
+							if (diferencia_dias <= 15 || diferencia_años>0) {
+								 CheckBoxEstaLibre.setSelected(true);
+								 System.out.println("Correcto, está libre");
+							}
+							else {
+								System.out.println("No puedes reservar con más de 15 días de antelación.");
+							    CheckBoxEstaLibre.setSelected(false);
+							}
+						
+						
+					}
+					else {
+						System.out.println("Está ocupado");
+					    CheckBoxEstaLibre.setSelected(false);
+					}
 				
 				
 				
@@ -221,7 +293,7 @@ public class Reservar_Instalacion_Socio {
 			}
 		});
 		ButtonComprobar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonComprobar.setBounds(10, 108, 113, 21);
+		ButtonComprobar.setBounds(10, 135, 113, 21);
 		panel.add(ButtonComprobar);
 	}
 
