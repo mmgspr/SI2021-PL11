@@ -18,6 +18,7 @@ public class inicial {
 
 	private JFrame frmIndex;
 	private SwingMain ventanaMain;
+	private visualizarReservasA vVisualizarReservasA;
 	/**
 	 * Launch the application.
 	 */
@@ -92,6 +93,12 @@ public class inicial {
 		panel.add(btnNewButton_1_2);
 		
 		JButton btnNewButton_1_4 = new JButton("Visualizar Reservas\r\n\r\n");
+		btnNewButton_1_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vVisualizarReservasA = new visualizarReservasA(ventanaMain);
+				vVisualizarReservasA.getFrmVisualizarReservas().setVisible(true);
+			}
+		});
 		btnNewButton_1_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_4.setBounds(248, 44, 181, 23);
 		panel.add(btnNewButton_1_4);

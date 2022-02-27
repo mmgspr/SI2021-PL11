@@ -19,6 +19,7 @@ public class SwingMain {
 
 	private JFrame frame;
 	private inicial vInicial;
+	public Database db;
 	/**
 	 * Launch the application.
 	 */
@@ -68,7 +69,7 @@ public class SwingMain {
 		JButton btnInicializarBaseDeDatos = new JButton("Inicializar Base de Datos en Blanco");
 		btnInicializarBaseDeDatos.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
-				Database db=new Database();
+				db=new Database();
 				db.createDatabase(false);
 			}
 		});
@@ -77,7 +78,7 @@ public class SwingMain {
 		JButton btnCargarDatosIniciales = new JButton("Cargar Datos Iniciales para Pruebas");
 		btnCargarDatosIniciales.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
-				Database db=new Database();
+				db=new Database();
 				db.createDatabase(false);
 				db.loadDatabase();
 			}

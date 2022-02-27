@@ -3,6 +3,7 @@ package giis.demo.tkrun;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.sql.*;
 import java.awt.BorderLayout;
 import javax.swing.*;
@@ -19,12 +20,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import giis.demo.tkrun.InstalacionesModel;
 import giis.demo.util.Database;
+import giis.demo.util.SwingMain;
 public class visualizarReservasA {
 
 	private JFrame frmVisualizarReservas;
 	private JTable table;
 	private InstalacionesModel modelo = new InstalacionesModel();
-	Database db = new Database();
+	private SwingMain principal;
 	/**
 	 * Launch the application a
 	 */
@@ -47,6 +49,16 @@ public class visualizarReservasA {
 	public visualizarReservasA() {
 		initialize();
 	}
+	public visualizarReservasA(SwingMain principal) {
+		initialize();
+		this.principal = principal;
+	}
+	
+	
+	public JFrame getFrmVisualizarReservas() {
+		return this.frmVisualizarReservas;
+	}
+	
 	
 	/**
 	 * Initialize the contents of the frame.
@@ -54,7 +66,7 @@ public class visualizarReservasA {
 	public static final String SQL_TODAS_INSTALACIONES = "SELECT nombre FROM instalaciones";
 	public List<Object[]> getInstalaciones(){
 		
-		return db.executeQueryArray(SQL_TODAS_INSTALACIONES );
+		return principal.db.executeQueryArray(SQL_TODAS_INSTALACIONES );
 	}
 	private void initialize() {
 		frmVisualizarReservas = new JFrame();
@@ -89,8 +101,8 @@ public class visualizarReservasA {
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
-		db.createDatabase(false);
-		db.loadDatabase();
+		//principal.db.createDatabase(false);
+		//principal.db.loadDatabase();
 		
 		
 		List<Object[]> willyrex=modelo.getInstalaciones();
@@ -216,5 +228,7 @@ public class visualizarReservasA {
 		}
 		return titulos;
 	}
+
+	
 	
 }
