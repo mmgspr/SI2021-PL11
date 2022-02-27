@@ -7,22 +7,32 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
+import giis.demo.util.SwingMain;
+
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class Reservar_Instalacion_Socio {
 
+	private InstalacionesModel modelo = new InstalacionesModel();
+	private CosteModel modeloCoste = new CosteModel();
 	private JFrame frmReservarInstalacin;
 	private JTextField textFieldFecha;
 	private JTextField textFieldHoraIni;
 	private JTextField textFieldHoraFin;
 	private JTextField textFieldCoste;
+	private SwingMain principal;
 
 	/**
 	 * Launch the application.
@@ -46,7 +56,10 @@ public class Reservar_Instalacion_Socio {
 	public Reservar_Instalacion_Socio() {
 		initialize();
 	}
-
+	public Reservar_Instalacion_Socio(SwingMain principal) {
+		initialize();
+		this.principal = principal;
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -54,7 +67,24 @@ public class Reservar_Instalacion_Socio {
 		frmReservarInstalacin = new JFrame();
 		frmReservarInstalacin.setTitle("Reservar Instalación");
 		frmReservarInstalacin.setBounds(100, 100, 450, 300);
-		frmReservarInstalacin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmReservarInstalacin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		
+		//obtener todas las instalaciones
+				List<Object[]> lista=modelo.getInstalaciones();
+				
+				String[] instalaciones=new String[lista.size()];
+				
+				Iterator<Object[]> iterador = lista.iterator();
+				
+				int i=0;
+				while(iterador.hasNext()) {
+					instalaciones[i]=iterador.next()[0].toString();
+					i++;
+				}
+				
+	 //Obetener coste de la instalacion seleccionada
+				
 		
 		JPanel panel = new JPanel();
 		frmReservarInstalacin.getContentPane().add(panel, BorderLayout.CENTER);
@@ -96,23 +126,24 @@ public class Reservar_Instalacion_Socio {
 		panel.add(LabelCoste);
 		
 		textFieldCoste = new JTextField();
+		//textFieldCoste.setModel(new DefaultComboBoxModel(instalaciones));
 		textFieldCoste.setBounds(146, 166, 126, 19);
 		panel.add(textFieldCoste);
 		textFieldCoste.setColumns(10);
 		
 		JLabel LabelMetododePago = new JLabel("Método de Pago:");
 		LabelMetododePago.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelMetododePago.setBounds(10, 190, 113, 29);
+		LabelMetododePago.setBounds(10, 192, 113, 29);
 		panel.add(LabelMetododePago);
 		
 		JCheckBox CheckBoxEstaLibre = new JCheckBox("Está libre");
 		CheckBoxEstaLibre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		CheckBoxEstaLibre.setBounds(69, 130, 93, 21);
+		CheckBoxEstaLibre.setBounds(285, 30, 93, 21);
 		panel.add(CheckBoxEstaLibre);
 		
 		JCheckBox CheckBoxPuedesReservar = new JCheckBox("Puedes Reservar");
 		CheckBoxPuedesReservar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		CheckBoxPuedesReservar.setBounds(239, 130, 152, 21);
+		CheckBoxPuedesReservar.setBounds(284, 75, 152, 21);
 		panel.add(CheckBoxPuedesReservar);
 		
 		JComboBox comboBoxMetodo = new JComboBox();
@@ -122,8 +153,13 @@ public class Reservar_Instalacion_Socio {
 		panel.add(comboBoxMetodo);
 		
 		JButton ButtonCancelar = new JButton("Cancelar\r\n");
+		ButtonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmReservarInstalacin.dispose();
+			}
+		});
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonCancelar.setBounds(182, 232, 85, 21);
+		ButtonCancelar.setBounds(182, 232, 103, 21);
 		panel.add(ButtonCancelar);
 		
 		JButton ButtonGuardar = new JButton("Guardar");
@@ -135,5 +171,22 @@ public class Reservar_Instalacion_Socio {
 		ButtonGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ButtonGuardar.setBounds(316, 232, 85, 21);
 		panel.add(ButtonGuardar);
+		
+		JLabel LabelInstalacion = new JLabel("Seleccione Instalación:");
+		LabelInstalacion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		LabelInstalacion.setBounds(10, 119, 152, 30);
+		panel.add(LabelInstalacion);
+		
+		JComboBox comboBoxInstalaciones = new JComboBox();
+		comboBoxInstalaciones.setModel(new DefaultComboBoxModel(instalaciones));
+		comboBoxInstalaciones.setBounds(157, 126, 141, 21);
+		panel.add(comboBoxInstalaciones);
+	}
+
+
+
+	public Window getFrmReservarInstalacin() {
+		// TODO Auto-generated method stub
+		return this.frmReservarInstalacin;
 	}
 }

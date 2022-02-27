@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -15,10 +17,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import giis.demo.util.SwingMain;
+
+import javax.swing.JSplitPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class Lista_Actividades_Administrador {
 
 	private JFrame frmListaDeActividades;
 	private JTable table;
+	private SwingMain principal;
 
 	/**
 	 * Launch the application.
@@ -42,6 +51,10 @@ public class Lista_Actividades_Administrador {
 	public Lista_Actividades_Administrador() {
 		initialize();
 	}
+	public Lista_Actividades_Administrador(SwingMain principal) {
+		initialize();
+		this.principal = principal;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -50,7 +63,7 @@ public class Lista_Actividades_Administrador {
 		frmListaDeActividades = new JFrame();
 		frmListaDeActividades.setTitle("Lista de Actividades");
 		frmListaDeActividades.setBounds(100, 100, 541, 362);
-		frmListaDeActividades.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmListaDeActividades.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmListaDeActividades.getContentPane().add(panel, BorderLayout.CENTER);
@@ -68,6 +81,11 @@ public class Lista_Actividades_Administrador {
 		panel.add(comboBoxPeriodo);
 		
 		JButton ButtonCancelar = new JButton("Cancelar");
+		ButtonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmListaDeActividades.dispose();
+			}
+		});
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ButtonCancelar.setBounds(10, 286, 101, 29);
 		panel.add(ButtonCancelar);
@@ -103,5 +121,13 @@ public class Lista_Actividades_Administrador {
 			}
 		));
 		scrollPane.setViewportView(table);
+		
+		
+		
+	}
+
+	public Window getFrmListaDeActividades() {
+		// TODO Auto-generated method stub
+		return this.frmListaDeActividades;
 	}
 }
