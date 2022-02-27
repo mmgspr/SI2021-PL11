@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class Reservar_Instalacion_Socio {
 
@@ -181,6 +182,10 @@ public class Reservar_Instalacion_Socio {
 		comboBoxInstalaciones.setModel(new DefaultComboBoxModel(instalaciones));
 		comboBoxInstalaciones.setBounds(157, 126, 141, 21);
 		panel.add(comboBoxInstalaciones);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(273, 144, 113, 19);
+		panel.add(dateChooser);
 	}
 
 
