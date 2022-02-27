@@ -5,24 +5,26 @@ DROP TABLE IF EXISTS socios;
 DROP TABLE IF EXISTS periodos_inscripcion;
 DROP TABLE IF EXISTS clientes;
 DROP TABLE IF EXISTS instalaciones;
-CREATE TABLE socios( 
+-- CREATE TABLE socios( 
 
-id_socio integer unsigned unique not null primary key, 
+-- id_socio integer unsigned unique not null primary key, 
 
-    nombre varchar(50), 
+--    nombre varchar(50), 
 
-    fecha_nacimiento date, 
+--    fecha_nacimiento date, 
 
-    dni varchar(9) 
+--     dni varchar(9) 
 
-);
+-- );
 CREATE TABLE clientes( 
 
-id_cliente integer unique unique not null primary key, 
+    dni varchar(9) unique not null primary key,
+
+    id_socio integer unsigned unique, 
 
     nombre varchar(50), 
 
-    fecha_nacimiento date 
+    fecha_nacimiento date
 
 ); 
 CREATE TABLE instalaciones( 
@@ -38,13 +40,13 @@ CREATE TABLE instalaciones(
    );
 CREATE TABLE reservas( 
 
-id_reserva integer unsigned unique not null primary key, 
+    id_reserva integer unsigned unique not null primary key, 
 
     persona integer unsigned,
     
     instalacion integer unsigned,
 
-    foreign key (persona) references socios(id_socio), 
+    foreign key (persona) references clientes(id_socio), 
 
     foreign key (instalacion) references instalaciones(id_instalacion), 
 
@@ -95,13 +97,13 @@ CREATE TABLE actividades(
     );
 CREATE TABLE inscripciones( 
 
-id_inscripcion integer unsigned unique not null primary key, 
+    id_inscripcion integer unsigned unique not null primary key, 
 
-    persona integer unsigned,
+    persona varchar(9),
     
     actividad integer unsigned,
 
-    foreign key (persona) references socios(id_socio), 
+    foreign key (persona) references clientes(dni), 
 
     foreign key (actividad) references actividades(id_actividad), 
 
