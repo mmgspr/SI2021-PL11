@@ -24,6 +24,8 @@ import javax.swing.JSeparator;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDayChooser;
 
 public class reserva_admin_cliente {
 
@@ -92,14 +94,9 @@ public class reserva_admin_cliente {
 		lblNewLabel.setBounds(42, 37, 178, 14);
 		panel.add(lblNewLabel);
 		
-		JLabel lblSeleccioneFechaY = new JLabel("Introduzca día:");
-		lblSeleccioneFechaY.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblSeleccioneFechaY.setBounds(113, 124, 107, 14);
-		panel.add(lblSeleccioneFechaY);
-		
 		JLabel lblNDeSocio = new JLabel("N\u00BA de socio:");
 		lblNDeSocio.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNDeSocio.setBounds(42, 291, 96, 14);
+		lblNDeSocio.setBounds(42, 315, 96, 14);
 		panel.add(lblNDeSocio);
 		
 		JButton btnNewButton = new JButton("Reservar");
@@ -121,7 +118,7 @@ public class reserva_admin_cliente {
 		panel.add(btnCancelar);
 		
 		textField = new JTextField();
-		textField.setBounds(148, 290, 96, 20);
+		textField.setBounds(148, 314, 96, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -135,16 +132,6 @@ public class reserva_admin_cliente {
 		comboBox.setBounds(205, 35, 169, 22);
 		panel.add(comboBox);
 		
-		JLabel lblIntroduzcaMes = new JLabel("Introduzca mes:");
-		lblIntroduzcaMes.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblIntroduzcaMes.setBounds(113, 149, 107, 14);
-		panel.add(lblIntroduzcaMes);
-		
-		JLabel lblIntroduzcaAo = new JLabel("Introduzca año:");
-		lblIntroduzcaAo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblIntroduzcaAo.setBounds(113, 174, 107, 14);
-		panel.add(lblIntroduzcaAo);
-		
 		JLabel lblNewLabel_1 = new JLabel("Fecha de la reserva:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(40, 99, 157, 14);
@@ -152,27 +139,17 @@ public class reserva_admin_cliente {
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Hora de la reserva:");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(40, 236, 157, 14);
+		lblNewLabel_1_1.setBounds(42, 275, 157, 14);
 		panel.add(lblNewLabel_1_1);
 		
-		JComboBox<Integer> comboBoxDia = new JComboBox<Integer>();
-		comboBoxDia.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31}));
-		comboBoxDia.setBounds(260, 122, 114, 22);
-		panel.add(comboBoxDia);
-		
-		JComboBox<Integer> comboBoxMes = new JComboBox<Integer>();
-		comboBoxMes.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}));
-		comboBoxMes.setBounds(260, 147, 114, 22);
-		panel.add(comboBoxMes);
-		
-		JComboBox<Integer> comboBoxAño = new JComboBox<Integer>();
-		comboBoxAño.setModel(new DefaultComboBoxModel(new Integer[] {dateGetYear(), dateGetYear()+1}));
-		comboBoxAño.setBounds(260, 172, 114, 22);
-		panel.add(comboBoxAño);
-		
 		JComboBox comboBox_1_3 = new JComboBox();
-		comboBox_1_3.setBounds(173, 234, 114, 22);
+		comboBox_1_3.setBounds(178, 273, 114, 22);
 		panel.add(comboBox_1_3);
+		
+		JCalendar calendar = new JCalendar();
+		calendar.setBounds(42, 124, 212, 136);
+		panel.add(calendar);
+		
 	}
 
 	public Window getFrmReservaAdmin() {
