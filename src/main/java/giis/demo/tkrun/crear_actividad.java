@@ -72,7 +72,7 @@ public class crear_actividad {
 	 */
 	private void initialize() {
 		frmCrearActividad = new JFrame();
-		frmCrearActividad.setTitle("Crear Actividad");
+		frmCrearActividad.setTitle("Planificar Actividad");
 		frmCrearActividad.setBounds(100, 100, 700, 500);
 		frmCrearActividad.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -240,7 +240,7 @@ public class crear_actividad {
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox_2.getSelectedIndex()==5) {
+				if(comboBox_2.getSelectedIndex()==4) {
 					textField_3.setEnabled(true);
 					textField_4.setEnabled(true);
 					lblFechaInicial.setEnabled(true);

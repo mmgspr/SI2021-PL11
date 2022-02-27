@@ -131,6 +131,11 @@ public class crear_periodo_inscripcion {
 		panel.add(textField_3);
 		
 		JButton btnNewButton = new JButton("Cancelar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmCrearPeriodoDe.dispose();
+			}
+		});
 		btnNewButton.setBounds(10, 227, 89, 23);
 		panel.add(btnNewButton);
 		

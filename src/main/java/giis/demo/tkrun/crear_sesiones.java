@@ -152,6 +152,11 @@ public class crear_sesiones {
 		panel.add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmCrearSesiones.dispose();
+			}
+		});
 		btnCancelar.setBounds(10, 277, 89, 23);
 		panel.add(btnCancelar);
 		
