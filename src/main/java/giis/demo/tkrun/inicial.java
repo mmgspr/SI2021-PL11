@@ -44,6 +44,7 @@ public class inicial {
 		initialize();
 	}
 
+	
 	public inicial(SwingMain vSM) {
 		this.ventanaMain=vSM;
 		initialize();
