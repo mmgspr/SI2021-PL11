@@ -93,7 +93,7 @@ public class crear_sesiones {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un día>", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"}));
 		comboBox.setBounds(62, 10, 146, 22);
 		panel.add(comboBox);
 		
@@ -130,10 +130,7 @@ public class crear_sesiones {
 		JButton btnNewButton = new JButton("Añadir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox.getSelectedIndex()==0) {
-					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nSelecciona un día.","Error",JOptionPane.ERROR_MESSAGE);
-				}
-				else if(textField.getText().equals("")) {
+				if(textField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nIntroduce una hora de inicio.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_1.getText().equals("")) {
