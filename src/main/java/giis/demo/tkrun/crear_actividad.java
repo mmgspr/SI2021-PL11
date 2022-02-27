@@ -32,7 +32,8 @@ public class crear_actividad {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private InstalacionesModel modelo = new InstalacionesModel();
+	private InstalacionesModel modeloIns = new InstalacionesModel();
+	private PeriodosInscripcionModel modeloPer = new PeriodosInscripcionModel();
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
@@ -107,16 +108,16 @@ public class crear_actividad {
 		lblInstalacin.setBounds(10, 215, 87, 17);
 		panel.add(lblInstalacin);
 		
-		List<Object[]> modIns=modelo.getInstalaciones();
+		List<Object[]> modIns=modeloIns.getInstalaciones();
 		
 		String[] instalaciones=new String[modIns.size()];
 		
-		Iterator<Object[]> iterador = modIns.iterator();
+		Iterator<Object[]> iteradorIns = modIns.iterator();
 		
-		int i=0;
-		while(iterador.hasNext()) {
-			instalaciones[i]=iterador.next()[0].toString();
-			i++;
+		int iIns=0;
+		while(iteradorIns.hasNext()) {
+			instalaciones[iIns]=iteradorIns.next()[0].toString();
+			iIns++;
 		}
 		
 		JComboBox comboBox = new JComboBox();
@@ -189,8 +190,21 @@ public class crear_actividad {
 		lblPeriodoDe.setBounds(372, 264, 172, 17);
 		panel.add(lblPeriodoDe);
 		
+		List<Object[]> modPer=modeloPer.getPeriodosIns();
+		
+		String[] periodosIns=new String[modPer.size()];
+		
+		Iterator<Object[]> iteradorPer = modPer.iterator();
+		
+		int iPer=0;
+		while(iteradorPer.hasNext()) {
+			periodosIns[iPer]=iteradorPer.next()[0].toString();
+			iPer++;
+		}
+		
+		
 		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un periodo de inscripción>"}));
+		comboBox_1_1.setModel(new DefaultComboBoxModel(periodosIns));
 		comboBox_1_1.setBounds(382, 291, 267, 21);
 		panel.add(comboBox_1_1);
 		
