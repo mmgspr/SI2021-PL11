@@ -122,6 +122,11 @@ public class Reservar_Instalacion_Socio {
 		panel.add(comboBoxMetodo);
 		
 		JButton ButtonCancelar = new JButton("Cancelar\r\n");
+		ButtonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmReservarInstalacin.dispose();
+			}
+		});
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ButtonCancelar.setBounds(182, 232, 85, 21);
 		panel.add(ButtonCancelar);

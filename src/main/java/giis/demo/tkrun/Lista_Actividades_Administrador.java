@@ -15,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JSplitPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Lista_Actividades_Administrador {
 
@@ -69,6 +71,11 @@ public class Lista_Actividades_Administrador {
 		panel.add(comboBoxPeriodo);
 		
 		JButton ButtonCancelar = new JButton("Cancelar");
+		ButtonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmListaDeActividades.dispose();
+			}
+		});
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ButtonCancelar.setBounds(10, 286, 101, 29);
 		panel.add(ButtonCancelar);

@@ -85,6 +85,7 @@ public class inicial {
 				//lleva a reserva_admin_cliente
 				vReservaAdmin = new reserva_admin_cliente(ventanaMain);
 				vReservaAdmin.getFrmReservaAdmin().setVisible(true);
+			
 			}
 		});
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
