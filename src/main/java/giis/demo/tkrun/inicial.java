@@ -20,7 +20,9 @@ public class inicial {
 	private SwingMain ventanaMain;
 	private visualizarReservasA vVisualizarReservasA;
 	private reserva_admin_cliente vReservaAdmin;
+	private Reservar_Instalacion_Socio vReservarInstalacionS;
 	private crear_actividad vCrearActividad;
+	private Lista_Actividades_Administrador vListaActividadesA;
 	/**
 	 * Launch the application.
 	 */
@@ -98,6 +100,10 @@ public class inicial {
 		btnNewButton_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//lleva a Reservar_Instalacion_Socio
+				vReservarInstalacionS = new Reservar_Instalacion_Socio(ventanaMain);
+				vReservarInstalacionS.getFrmReservarInstalacin().setVisible(true);
+				
 			}
 		});
 		btnNewButton_1_2.setBounds(10, 192, 207, 23);
@@ -138,6 +144,10 @@ public class inicial {
 		btnNewButton_1_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//lleva a Lista_Actividades_Administrador
+				vListaActividadesA = new Lista_Actividades_Administrador(ventanaMain);
+				vListaActividadesA.getFrmListaDeActividades().setVisible(true);
+			
 			}
 		});
 		btnNewButton_1_7.setBounds(10, 110, 207, 23);

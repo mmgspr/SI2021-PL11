@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -14,6 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import giis.demo.util.SwingMain;
+
 import javax.swing.JSplitPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,6 +27,7 @@ public class Lista_Actividades_Administrador {
 
 	private JFrame frmListaDeActividades;
 	private JTable table;
+	private SwingMain principal;
 
 	/**
 	 * Launch the application.
@@ -44,6 +50,10 @@ public class Lista_Actividades_Administrador {
 	 */
 	public Lista_Actividades_Administrador() {
 		initialize();
+	}
+	public Lista_Actividades_Administrador(SwingMain principal) {
+		initialize();
+		this.principal = principal;
 	}
 
 	/**
@@ -111,5 +121,13 @@ public class Lista_Actividades_Administrador {
 			}
 		));
 		scrollPane.setViewportView(table);
+		
+		
+		
+	}
+
+	public Window getFrmListaDeActividades() {
+		// TODO Auto-generated method stub
+		return this.frmListaDeActividades;
 	}
 }

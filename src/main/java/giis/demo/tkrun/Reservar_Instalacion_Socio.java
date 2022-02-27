@@ -7,8 +7,13 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
+import giis.demo.util.SwingMain;
+
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -23,6 +28,7 @@ public class Reservar_Instalacion_Socio {
 	private JTextField textFieldHoraIni;
 	private JTextField textFieldHoraFin;
 	private JTextField textFieldCoste;
+	private SwingMain principal;
 
 	/**
 	 * Launch the application.
@@ -46,7 +52,10 @@ public class Reservar_Instalacion_Socio {
 	public Reservar_Instalacion_Socio() {
 		initialize();
 	}
-
+	public Reservar_Instalacion_Socio(SwingMain principal) {
+		initialize();
+		this.principal = principal;
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -128,7 +137,7 @@ public class Reservar_Instalacion_Socio {
 			}
 		});
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonCancelar.setBounds(182, 232, 85, 21);
+		ButtonCancelar.setBounds(182, 232, 103, 21);
 		panel.add(ButtonCancelar);
 		
 		JButton ButtonGuardar = new JButton("Guardar");
@@ -140,5 +149,12 @@ public class Reservar_Instalacion_Socio {
 		ButtonGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ButtonGuardar.setBounds(316, 232, 85, 21);
 		panel.add(ButtonGuardar);
+	}
+
+
+
+	public Window getFrmReservarInstalacin() {
+		// TODO Auto-generated method stub
+		return this.frmReservarInstalacin;
 	}
 }
