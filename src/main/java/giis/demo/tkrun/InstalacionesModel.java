@@ -27,8 +27,15 @@ public class InstalacionesModel {
 		public static final String SQL_TODAS_INSTALACIONES_DEPORTE = "SELECT nombre FROM instalaciones WHERE deporte=";
 		public List<Object[]> getInstalacionesDeporte(String deporte){
 			
-			return db.executeQueryArray(SQL_TODAS_INSTALACIONES+"'"+deporte+"'");
+			return db.executeQueryArray(SQL_TODAS_INSTALACIONES_DEPORTE+"'"+deporte+"'");
 		}
+		
+		//SQL para obtener el id de una instalacion
+				public static final String SQL_ID_INSTALACION = "SELECT id_instalacion FROM instalaciones WHERE nombre=";
+				public List<Object[]> getIdInstalacion(String nombre){
+					
+					return db.executeQueryArray(SQL_ID_INSTALACION+"'"+nombre+"'");
+				}
 	
 	
 	
