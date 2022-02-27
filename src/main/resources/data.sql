@@ -40,7 +40,7 @@ INSERT INTO reservas(id_reserva, persona, instalacion, fecha, fecha_reserva) VAL
 (3,2, 3,'2022-2-26 20:05:23', '2022-2-27 19:00:00'); 
 INSERT INTO periodos_inscripcion(id_periodo_inscripcion, nombre, descripcion, fecha_ini_socio, fecha_fin_socio, fecha_fin_no_socio) VALUES 
 
-(1, 'Periodo 1', 'Periodo para verano', 2022-2-24', '2022-3-24', '2022-3-30'), 
+(1, 'Periodo 1', 'Periodo para verano', '2022-2-24', '2022-3-24', '2022-3-30'), 
 
 (2, 'Periodo 2', 'Periodo para otoño','2022-2-27', '2022-3-30', '2022-4-30'), 
 
