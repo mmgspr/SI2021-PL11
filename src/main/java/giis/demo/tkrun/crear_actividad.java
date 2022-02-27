@@ -16,7 +16,10 @@ import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import giis.demo.util.Database;
 
 public class crear_actividad {
 
@@ -26,6 +29,7 @@ public class crear_actividad {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private InstalacionesModel modelo = new InstalacionesModel();
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
@@ -93,8 +97,20 @@ public class crear_actividad {
 		lblInstalacin.setBounds(10, 215, 87, 17);
 		panel.add(lblInstalacin);
 		
+		List<Object[]> modIns=modelo.getInstalaciones();
+		
+		String[] instalaciones=new String[modIns.size()];
+		
+		Iterator<Object[]> iterador = modIns.iterator();
+		
+		int i=0;
+		while(iterador.hasNext()) {
+			instalaciones[i]=iterador.next()[0].toString();
+			i++;
+		}
+		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<selecciona una instalaci\u00F3n>", "Pista p\u00E1del 1", "Pista p\u00E1del 2", "Pista tenis 1", "Pista tenis 2"}));
+		comboBox.setModel(new DefaultComboBoxModel());
 		comboBox.setBounds(96, 215, 199, 21);
 		panel.add(comboBox);
 		
