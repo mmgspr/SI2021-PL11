@@ -55,7 +55,7 @@ public class SwingMain {
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		
 		vInicial= new inicial(this);
-		JButton btnEjecutarTkrun = new JButton("Ejecutar giis.demo.tkrun");
+		JButton btnEjecutarTkrun = new JButton("Ejecutar sistema");
 		btnEjecutarTkrun.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
 				//CarrerasController controller=new CarrerasController(new CarrerasModel(), new CarrerasView());

@@ -21,6 +21,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import giis.demo.tkrun.InstalacionesModel;
 import giis.demo.util.Database;
 import giis.demo.util.SwingMain;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 public class visualizarReservasA {
 
 	private JFrame frmVisualizarReservas;
@@ -64,27 +66,9 @@ public class visualizarReservasA {
 		frmVisualizarReservas = new JFrame();
 		frmVisualizarReservas.setTitle("Visualizar Reservas");
 		frmVisualizarReservas.setBounds(100, 100, 700, 500);
-		frmVisualizarReservas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
-		
-		
-//		Connection con;
-//		try {
-//			String url = "jdbc:mysql://localhost:3306/db_test?useSSL=false";
-//            String user = "uo275943";
-//            String pass = "a@sZMj3U$hr7%X";
-//            
-//            con= DriverManager.getConnection(url, user, pass);
-//		}
-//		
-//		catch (SQLException ex){
-//			 con = null ;
-//		}
-//		
-		
-		
-		
-		
+		frmVisualizarReservas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+
 		JPanel panel = new JPanel();
 		
 		JSeparator separator = new JSeparator();
@@ -113,11 +97,13 @@ public class visualizarReservasA {
 		comboBoxPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBoxPeriodo.setModel(new DefaultComboBoxModel(instalaciones));
 		
-		JButton ButtonCancelar = new JButton("Cancelar");
+		JButton ButtonCancelar = new JButton("Salir");
+		ButtonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmVisualizarReservas.dispose();
+			}
+		});
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JButton ButtonGuardar = new JButton("Guardar");
-		ButtonGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
 		
@@ -159,10 +145,7 @@ public class visualizarReservasA {
 							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(10)
-							.addComponent(ButtonCancelar)
-							.addPreferredGap(ComponentPlacement.RELATED, 489, Short.MAX_VALUE)
-							.addComponent(ButtonGuardar, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED))
+							.addComponent(ButtonCancelar))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(32)
@@ -183,9 +166,7 @@ public class visualizarReservasA {
 					.addGap(15)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(ButtonCancelar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ButtonGuardar, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addComponent(ButtonCancelar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 					.addGap(15))
 		);
 		panel.setLayout(gl_panel);
