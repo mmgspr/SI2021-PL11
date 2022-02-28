@@ -164,7 +164,7 @@ public class visualizarReservasS {
 				if(txtIDSocio.getText().equals("")) {id_socio=-1;}
 				else {
 					id_socio=Integer.parseInt(txtIDSocio.getText());
-					System.out.print(id_socio+"\n");
+					
 				}}});
 		
 		txtIDSocio.setColumns(10);
@@ -284,8 +284,6 @@ public class visualizarReservasS {
 			vector=iterador.next();
 			if(vector[0]!=null)persona=(long)vector[0];
 			boolean esReservaPropia=false;
-			System.out.print(persona+"\n");
-			System.out.print(id_socio+"\n");
 			if(persona==id_socio) esReservaPropia=true;
 			actividad= (long)vector[2];
 			boolean esActividad=false;
