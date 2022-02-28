@@ -251,16 +251,39 @@ public class reserva_admin_cliente {
 										+"\n  Reserva para: "+diaHora);
 								//System.out.printf("Correcto, has podido reservar, y tiene un coste de %s.\n",precio);
 							}
-							else
-								System.out.println("No puedes reservar con más de 15 días de antelación.");
+							else {
+								JOptionPane.showMessageDialog(frmReservaInstalacion,
+									    "No puedes reservar con más de 15 días de antelación.",
+									    "Error al reservar",
+									    JOptionPane.ERROR_MESSAGE);
+								//System.out.println("No puedes reservar con más de 15 días de antelación.");
+							}	
 						}
-						else
-							System.out.println("No puedes reservar para una fecha ya pasada.");
-					else
-						System.out.println("Introduce un número de socio válido.");
+						else {
+							JOptionPane.showMessageDialog(frmReservaInstalacion,
+								    "No puedes reservar para una fecha ya pasada.",
+								    "Error al reservar",
+								    JOptionPane.ERROR_MESSAGE);
+							//System.out.println("No puedes reservar para una fecha ya pasada.");
+						}
+							
+					else {
+						JOptionPane.showMessageDialog(frmReservaInstalacion,
+							    "Introduce un número de socio válido.",
+							    "Error al reservar",
+							    JOptionPane.ERROR_MESSAGE);
+						//System.out.println("Introduce un número de socio válido.");
+					}
+						
 					
 				}
-				else System.out.println("Está ocupado");
+				else {
+					JOptionPane.showMessageDialog(frmReservaInstalacion,
+						    "Está ocupado.",
+						    "Error al reservar",
+						    JOptionPane.ERROR_MESSAGE);
+					//System.out.println("Está ocupado.");
+				}
 			}
 		});
 
