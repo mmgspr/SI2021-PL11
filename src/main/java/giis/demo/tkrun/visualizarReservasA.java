@@ -202,6 +202,6 @@ public class visualizarReservasA {
 		return titulos;
 	}
 
-	
+	public void 
 	
 }
