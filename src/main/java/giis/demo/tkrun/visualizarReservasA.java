@@ -181,9 +181,9 @@ public class visualizarReservasA {
 			contenido[i][0]=Integer.toString(i+9) + ":00";
 		}
 		
-		for(int i=1; i<13;i++) {
+		for(int i=0; i<13;i++) {
 			for(int j=1; j<31; j++) {
-				contenido[i][j]=null;
+				contenido[i][j]="Libre";
 			}
 			
 		}
@@ -202,6 +202,5 @@ public class visualizarReservasA {
 		return titulos;
 	}
 
-	public void 
 	
 }

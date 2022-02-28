@@ -52,7 +52,11 @@ CREATE TABLE reservas(
 
     fecha datetime, 
 
-    fecha_reserva datetime 
+    fecha_reserva datetime, 
+    
+    precio varchar(10), 
+    
+    actividad integer unsigned
 
    ); 
 CREATE TABLE periodos_inscripcion( 

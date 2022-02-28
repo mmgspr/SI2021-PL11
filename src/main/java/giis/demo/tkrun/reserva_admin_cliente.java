@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Window;
 
@@ -41,6 +43,7 @@ public class reserva_admin_cliente {
 	private ReservasModel modeloReservas = new ReservasModel();
 	private ClientesModel modeloClientes = new ClientesModel();
 	private SwingMain principal;
+	private String precio="";
 
 	/**
 	 * Launch the application.
@@ -233,12 +236,20 @@ public class reserva_admin_cliente {
 		            excepcion.printStackTrace();
 		        }
 				
+				//obtener el precio de la instalacion seleccionada
+				precio = modelo.getPrecio((String)comboBox.getSelectedItem());
+						
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
 					if (modeloClientes.validarId(id_socio))
 						if (diferencia_dias >= 0 && diferencia_años >= 0) {
 							if (diferencia_dias <= 15 || diferencia_años>0) {
-								modeloReservas.nuevaReserva(Integer.parseInt(id_socio), Integer.parseInt(id), sdf.format(d1), diaHora);
-								System.out.println("Correcto, has podido reservar");
+								modeloReservas.nuevaReserva(Integer.parseInt(id_socio), Integer.parseInt(id), sdf.format(d1), diaHora, precio ,0);
+								JOptionPane.showMessageDialog(frmReservaInstalacion, "Éxito al reservar.\n"
+										+ "  Precio de la reserva: "+precio
+										+"\n  Socio que lo solicita: "+id_socio
+										+"\n  Instalación reservada: "+id
+										+"\n  Reserva para: "+diaHora);
+								//System.out.printf("Correcto, has podido reservar, y tiene un coste de %s.\n",precio);
 							}
 							else
 								System.out.println("No puedes reservar con más de 15 días de antelación.");
