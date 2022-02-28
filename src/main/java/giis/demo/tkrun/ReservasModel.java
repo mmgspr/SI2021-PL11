@@ -19,6 +19,12 @@ private Database db = new Database();
 		//return db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'");
 		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
 	}
+	public static final String SQL_RESERVAS_MANU= "SELECT id_reserva FROM reservas WHERE instalacion=";
+	public List<Object[]> getReservasManu(String instalacion){
+		
+		//return db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'");
+		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
+	}
 	
 	//SQL para comprobar si una instalacion está reservada un día a una hora
 	//retorna true si no está reservado y se puede reservar

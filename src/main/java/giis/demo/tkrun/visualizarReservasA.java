@@ -185,7 +185,8 @@ public class visualizarReservasA {
 			for(int j=1; j<31; j++) {
 				contenido[i][j]="Libre";
 			}
-			
+		
+		
 		}
 		return contenido;
 	}
