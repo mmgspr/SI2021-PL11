@@ -407,6 +407,10 @@ public class Reservar_Instalacion_Socio {
 		        catch (ParseException excepcion) {
 		            excepcion.printStackTrace();
 		        }
+				//Compobamos si está al corriente de pago
+				if (modeloClientes.DebeDinero(id_socio))
+					CheckBoxPuedesReservar.setSelected(true);
+										
 				//obtener el precio de la instalacion seleccionada
 				precio = modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem());
 				
