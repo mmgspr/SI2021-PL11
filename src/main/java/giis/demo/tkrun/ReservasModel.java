@@ -19,11 +19,9 @@ private Database db = new Database();
 		//return db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'");
 		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
 	}
-	public static final String SQL_RESERVAS_MANU= "SELECT id_reserva FROM reservas WHERE instalacion=";
-	public List<Object[]> getReservasManu(String instalacion){
-		
-		//return db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'");
-		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
+	public static final String SQL_RESERVAS_MANU= "SELECT persona, fecha_reserva, actividad FROM reservas WHERE instalacion=";
+	public List<Object[]> getReservasManu(long id_instalacion){
+		return db.executeQueryArray(SQL_RESERVAS_MANU+ id_instalacion);
 	}
 	
 	//SQL para comprobar si una instalacion está reservada un día a una hora
@@ -56,6 +54,12 @@ private Database db = new Database();
 		List<Object[]> lista;
 		lista = db.executeQueryArray(SQL_SIGUIENTE_ID);
 		return (long)lista.get(0)[0] + 1;
+	}
+	
+	public static final String SQL_ACTIVIDAD = "SELECT nombre FROM actividades WHERE id_actividad=";
+	
+	public List<Object[]> getActividad(long id_actividad){
+		return db.executeQueryArray(SQL_ACTIVIDAD+id_actividad);	
 	}
 
 }
