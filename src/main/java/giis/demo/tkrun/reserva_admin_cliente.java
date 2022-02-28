@@ -235,8 +235,10 @@ public class reserva_admin_cliente {
 				
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
 					if (modeloClientes.validarId(id_socio))
-						if (diferencia_dias <= 15 || diferencia_años>0)
+						if (diferencia_dias <= 15 || diferencia_años>0) {
+							modeloReservas.nuevaReserva(Integer.parseInt(id_socio), Integer.parseInt(id), sdf.format(d1), diaHora);
 							System.out.println("Correcto, has podido reservar");
+						}
 						else
 							System.out.println("No puedes reservar con más de 15 días de antelación.");
 					else

@@ -34,4 +34,23 @@ private Database db = new Database();
 			}
 			return false;
 		}
+		
+	//Método para instertar una nueva reserva
+	public static final String SQL_NUEVA_RESERVA = "INSERT INTO reservas (id_reserva, persona, instalacion, fecha, fecha_reserva) VALUES (?, ?, ?, ?, ?);";
+	public void nuevaReserva(int socio, int instalacion, String fecha, String fecha_reserva) {
+		long id;
+		id = siguienteIdReserva()
+;		db.executeUpdate(SQL_NUEVA_RESERVA,id, socio,instalacion, fecha, fecha_reserva);
+	}
+	
+	
+	//Método para obtener siguiente id
+	public static final String SQL_SIGUIENTE_ID = "SELECT MAX(id_reserva) from reservas;";
+	public long siguienteIdReserva() {
+		List<Object[]> lista;
+		lista = db.executeQueryArray(SQL_SIGUIENTE_ID);
+		return (long)lista.get(0)[0] + 1;
+	}
+	
 }
+

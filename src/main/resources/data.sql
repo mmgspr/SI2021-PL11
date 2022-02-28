@@ -33,11 +33,11 @@ INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES
 (4, 'Pista de fútbol 1', 'padel', 3.50);  
 INSERT INTO reservas(id_reserva, persona, instalacion, fecha, fecha_reserva) VALUES 
 
-(1,1, 1, '2022-2-23 17:15:10', '2022-2-24 17:00:00'), 
+(1,1, 1, '2022-2-23', '2022-2-24 17:00:00'), 
 
-(2,2, 2,'2022-2-25 18:50:41', '2022-2-27 20:00:00'), 
+(2,2, 2,'2022-2-25', '2022-2-27 20:00:00'), 
 
-(3,2, 3,'2022-2-26 20:05:23', '2022-2-27 19:00:00'); 
+(3,2, 3,'2022-2-26', '2022-2-27 19:00:00'); 
 INSERT INTO periodos_inscripcion(id_periodo_inscripcion, nombre, descripcion, fecha_ini_socio, fecha_fin_socio, fecha_fin_no_socio) VALUES 
 
 (1, 'Periodo 1', 'Periodo para verano', '2022-2-24', '2022-3-24', '2022-3-30'), 
