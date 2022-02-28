@@ -38,6 +38,17 @@ public class InstalacionesModel {
 		return db.executeQueryArray(SQL_ID_INSTALACION+"'"+nombre+"'");	
 	}
 	
+	//obtener el precio de una instalacion
+	public static final String SQL_PRECIO = "SELECT precio FROM instalaciones WHERE nombre=";
+	
+	public String getPrecio(String nombre){
+		List<Object[]> lista;
+		String precio;
+		lista= db.executeQueryArray(SQL_PRECIO+"'"+nombre+"'");	
+		precio = lista.get(0)[0].toString();
+		return precio;
+	}
+	
 	
 	
 			

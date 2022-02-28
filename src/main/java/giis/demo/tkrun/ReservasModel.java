@@ -36,11 +36,11 @@ private Database db = new Database();
 		}
 		
 	//Método para instertar una nueva reserva
-	public static final String SQL_NUEVA_RESERVA = "INSERT INTO reservas (id_reserva, persona, instalacion, fecha, fecha_reserva) VALUES (?, ?, ?, ?, ?);";
-	public void nuevaReserva(int socio, int instalacion, String fecha, String fecha_reserva) {
+	public static final String SQL_NUEVA_RESERVA = "INSERT INTO reservas (id_reserva, persona, instalacion, fecha, fecha_reserva, precio, actividad) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	public void nuevaReserva(int socio, int instalacion, String fecha, String fecha_reserva, String precio, int actividad) {
 		long id;
 		id = siguienteIdReserva()
-;		db.executeUpdate(SQL_NUEVA_RESERVA,id, socio,instalacion, fecha, fecha_reserva);
+;		db.executeUpdate(SQL_NUEVA_RESERVA,id, socio,instalacion, fecha, fecha_reserva, precio, actividad);
 	}
 	
 	
