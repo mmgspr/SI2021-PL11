@@ -144,15 +144,16 @@ public class Reservar_Instalacion_Socio {
 		ButtonCancelar.setBounds(182, 232, 103, 21);
 		panel.add(ButtonCancelar);
 		
-		JButton ButtonGuardar = new JButton("Guardar");
-		ButtonGuardar.addActionListener(new ActionListener() {
+		JButton ButtonReservar = new JButton("Reservar\r\n");
+		ButtonReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				
 			}
 		});
-		ButtonGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonGuardar.setBounds(316, 232, 85, 21);
-		panel.add(ButtonGuardar);
+		ButtonReservar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ButtonReservar.setBounds(316, 232, 110, 21);
+		panel.add(ButtonReservar);
 		
 		JLabel LabelInstalacion = new JLabel("Seleccione Instalación:");
 		LabelInstalacion.setFont(new Font("Tahoma", Font.PLAIN, 14));
