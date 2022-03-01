@@ -45,6 +45,7 @@ public class ClientesModel {
 					}
 					return true;
 				}
+			
 	
 	/*
 	//SQL para ver todas las instalaciones de un deporte

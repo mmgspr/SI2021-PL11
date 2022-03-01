@@ -171,7 +171,7 @@ public class Reservar_Instalacion_Socio {
 		panel.add(LabelHoraIni);
 		
 		JComboBox comboBoxHoraIni = new JComboBox();
-		comboBoxHoraIni.setModel(new DefaultComboBoxModel(new String[] {"10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00", "21:00:00", "22:00:00"}));
+		comboBoxHoraIni.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"}));
 		comboBoxHoraIni.setBounds(158, 48, 85, 21);
 		panel.add(comboBoxHoraIni);
 		
@@ -181,7 +181,7 @@ public class Reservar_Instalacion_Socio {
 		panel.add(LabelFin);
 		
 		JComboBox comboBoxHoraFin = new JComboBox();
-		comboBoxHoraFin.setModel(new DefaultComboBoxModel(new String[] {"10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00", "21:00:00", "22:00:00"}));
+		comboBoxHoraFin.setModel(new DefaultComboBoxModel(new String[] {"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"}));
 		comboBoxHoraFin.setBounds(159, 79, 85, 21);
 		panel.add(comboBoxHoraFin);
 		

@@ -21,7 +21,7 @@ INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso) VALUES
 
 ('46739273H',2,'Roberto', '1972-7-15', false ), 
 
-('52347843G',NULL,'Martín', '2006-6-24', false );
+('52347843G',NULL,'Martín', '2006-6-24', true );
 INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES 
 
 (1,'Pista de tenis 1', 'tenis', 7), 
