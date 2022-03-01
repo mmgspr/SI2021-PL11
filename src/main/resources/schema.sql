@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS sesiones;
 DROP TABLE IF EXISTS reservas;
 DROP TABLE IF EXISTS inscripciones;
 DROP TABLE IF EXISTS actividades;
@@ -118,3 +119,19 @@ CREATE TABLE inscripciones(
     fecha datetime 
 
    ); 
+   
+CREATE TABLE sesiones( 
+
+    id_sesion integer unsigned unique not null primary key, 
+
+	dia varchar(50),  
+
+    hora_ini time, 
+
+    hora_fin time,
+    
+    actividad integer unsigned,
+    
+    foreign key (actividad) references actividades(id_actividad) 
+
+); 
