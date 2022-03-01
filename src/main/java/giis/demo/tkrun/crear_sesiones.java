@@ -118,7 +118,7 @@ public class crear_sesiones {
 		panel.add(comboBox_1);
 		
 		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"}));
+		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"}));
 		comboBox_1_1.setBounds(87, 93, 89, 22);
 		panel.add(comboBox_1_1);
 		
