@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.Window;
@@ -226,6 +227,28 @@ List<Object[]> modDep=modeloIns.getDeportes();
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Crear");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if(textField.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
+				}	
+				else if(textArea.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField_1.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio para socios.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField_2.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio para no socios.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					
+					JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+					frmCrearActividad.dispose();
+				}
+			}
+		});
 		btnNewButton_1.setBounds(591, 432, 85, 21);
 		panel.add(btnNewButton_1);
 		

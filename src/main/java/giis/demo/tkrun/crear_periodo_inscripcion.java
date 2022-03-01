@@ -195,8 +195,6 @@ public class crear_periodo_inscripcion {
 					frmCrearPeriodoDe.dispose();
 				}
 				
-				
-				
 			}
 		});
 		btnNewButton_1.setBounds(585, 227, 89, 23);
