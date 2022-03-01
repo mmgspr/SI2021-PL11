@@ -161,10 +161,8 @@ public class crear_periodo_inscripcion {
 				Date dateIniSoc = dateChooser.getDate();
 				Date dateFinSoc = dateChooser_1.getDate();
 				Date dateFinNoSoc = dateChooser_2.getDate();
-				//String fecha = sdf.format(date);
-				//System.out.println(date);
 				//fecha de hoy
-				//Date d1 = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+				Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 				if(textField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
 				}	
@@ -179,6 +177,21 @@ public class crear_periodo_inscripcion {
 				}
 				else if(dateFinNoSoc==null) {
 					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha final de no socios","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(dateIniSoc.getTime()-dateHoy.getTime()<0) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha inicial de socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(dateFinSoc.getTime()-dateHoy.getTime()<0) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final de socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(dateFinNoSoc.getTime()-dateHoy.getTime()<0) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final de no socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(dateFinSoc.getTime()-dateIniSoc.getTime()<0) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(dateFinNoSoc.getTime()-dateIniSoc.getTime()<0) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					String nombre=textField.getText();
