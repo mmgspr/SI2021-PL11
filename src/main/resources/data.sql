@@ -31,15 +31,18 @@ INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES
 
 (3, 'Pista de padel 1', 'Padel', 10.50),
 
-(4, 'Pista de fútbol 1', 'Futbol', 3.50);  
+(4, 'Pista de futbol 1', 'Futbol', 3.50);  
 INSERT INTO reservas(id_reserva, persona, instalacion, fecha, fecha_reserva, precio,actividad) VALUES 
 
-(1,NULL, 1, '2022-2-23', '2022-3-25 17:00:00', '6.25' ,3), 
+(1,NULL, 3, '2022-2-23', '2022-3-25 17:00:00', '6.25' ,1), 
 
 (2,2, 2,'2022-2-25', '2022-3-27 20:00:00', '4.5' ,0), 
 
-(3,2, 3,'2022-2-26', '2022-3-24 19:00:00', '3.2' ,0), 
-(4,NULL, 3,'2022-2-26', '2022-3-24 15:00:00', '3.2' ,1); 
+(3,2, 3,'2022-2-26', '2022-3-24 19:00:00', '3.2' ,0),
+ 
+(4,NULL, 4,'2022-2-26', '2022-3-24 15:00:00', '3.2' ,3),
+
+(5,NULL, 1, '2022-2-23', '2022-3-25 17:00:00', '6.25' ,2); 
 INSERT INTO periodos_inscripcion(id_periodo_inscripcion, nombre, descripcion, fecha_ini_socio, fecha_fin_socio, fecha_fin_no_socio) VALUES 
 
 (1, 'Periodo 1', 'Periodo para verano', '2022-2-24', '2022-3-24', '2022-3-30'), 
@@ -53,7 +56,9 @@ INSERT INTO actividades(id_actividad, nombre, descripcion, aforo, precio_socio, 
 
 (2,'Torneo Tenis I', 'Primer torneo de tenis.' , '24', '10.00', '15.00', '2022-2-27', '2022-3-10', 'Tenis', '1', '2'), 
 
-(3,'Torneo Futbol I', 'Primer torneo de futbol.' , '100', '6.50', '10.00', '2022-3-17', '2022-3-27', 'Futbol', '4', '3'); 
+(3,'Torneo Futbol I', 'Primer torneo de futbol.' , '100', '6.50', '10.00', '2022-3-17', '2022-3-27', 'Futbol', '4', '3'),
+
+(4,'Torneo Futbol II', 'Segundo torneo de futbol.' , '50', '7.50', '15.00', '2022-3-24', '2022-3-30', 'Futbol', '4', '3'); 
 
 INSERT INTO inscripciones(id_inscripcion, persona, actividad, fecha) VALUES 
 
