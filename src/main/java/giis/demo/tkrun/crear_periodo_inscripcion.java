@@ -9,10 +9,21 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
+
+import giis.demo.util.SwingMain;
+
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class crear_periodo_inscripcion {
@@ -21,9 +32,8 @@ public class crear_periodo_inscripcion {
 	
 	private crear_actividad ventanaCrearActividad;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private PeriodosInscripcionModel modeloPer = new PeriodosInscripcionModel();
+	private SwingMain principal;
 
 	/**
 	 * Launch the application.
@@ -45,6 +55,11 @@ public class crear_periodo_inscripcion {
 		this.ventanaCrearActividad=vSM;
 		initialize();
 		
+	}
+	
+	public crear_periodo_inscripcion(SwingMain principal) {
+		initialize();
+		this.principal = principal;
 	}
 
 	/**
@@ -115,20 +130,20 @@ public class crear_periodo_inscripcion {
 		lblFechaFin_1.setBounds(479, 50, 73, 14);
 		panel.add(lblFechaFin_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(302, 77, 119, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(302, 75, 135, 19);
+		panel.add(dateChooser);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(302, 136, 119, 20);
-		panel.add(textField_2);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(489, 77, 119, 20);
-		panel.add(textField_3);
+		
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(302, 136, 135, 19);
+		panel.add(dateChooser_1);
+		
+		JDateChooser dateChooser_2 = new JDateChooser();
+		dateChooser_2.setBounds(489, 75, 135, 19);
+		panel.add(dateChooser_2);
 		
 		JButton btnNewButton = new JButton("Cancelar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -142,25 +157,55 @@ public class crear_periodo_inscripcion {
 		JButton btnNewButton_1 = new JButton("Crear");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date dateIniSoc = dateChooser.getDate();
+				Date dateFinSoc = dateChooser_1.getDate();
+				Date dateFinNoSoc = dateChooser_2.getDate();
+				//String fecha = sdf.format(date);
+				//System.out.println(date);
+				//fecha de hoy
+				//Date d1 = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 				if(textField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
+				}	
+				else if(textArea.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
 				}
-				else if(textField_1.getText().equals("")) {
+				else if(dateIniSoc==null) {
 					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha inicial de socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
-				else if(textField_2.getText().equals("")) {
+				else if(dateFinSoc==null) {
 					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha final de socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
-				else if(textField_3.getText().equals("")) {
+				else if(dateFinNoSoc==null) {
 					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha final de no socios","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					JOptionPane.showMessageDialog(null,"El periodo se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);
+					String nombre=textField.getText();
+					String descripcion=textArea.getText();
+					String fecha_ini_soc=sdf.format(dateIniSoc);
+					String fecha_fin_soc=sdf.format(dateFinSoc);
+					String fecha_fin_no_soc=sdf.format(dateFinNoSoc);
+					modeloPer.nuevoPeriodoIns(nombre, descripcion, fecha_ini_soc, fecha_fin_soc, fecha_fin_no_soc);
+					JOptionPane.showMessageDialog(null,"El periodo se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+					if(ventanaCrearActividad!=null) {
+						ventanaCrearActividad.getPeriodosIns();
+						ventanaCrearActividad.comboBox_1_1.setSelectedIndex(ventanaCrearActividad.comboBox_1_1.getItemCount()-1);
+					}
+					frmCrearPeriodoDe.dispose();
 				}
+				
+				
 				
 			}
 		});
 		btnNewButton_1.setBounds(585, 227, 89, 23);
 		panel.add(btnNewButton_1);
+		
+		
+	}
+
+	public Window getFrmCrearActividad() {
+		return this.getFrmCrearPeriodoDe();
 	}
 }

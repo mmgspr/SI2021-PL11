@@ -24,6 +24,14 @@ public class InstalacionesModel {
 		return db.executeQueryArray(SQL_TODAS_INSTALACIONES );
 	}
 	
+	//SQL para ver todas las instalaciones
+		public static final String SQL_TODOS_DEPORTES = "SELECT DISTINCT deporte FROM instalaciones";
+		
+		public List<Object[]> getDeportes(){
+			
+			return db.executeQueryArray(SQL_TODOS_DEPORTES );
+		}
+	
 	//SQL para ver todas las instalaciones de un deporte
 	public static final String SQL_TODAS_INSTALACIONES_DEPORTE = "SELECT nombre FROM instalaciones WHERE deporte=";
 	

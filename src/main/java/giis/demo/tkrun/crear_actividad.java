@@ -38,6 +38,9 @@ public class crear_actividad {
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
 	private SwingMain principal;
+	
+	JComboBox comboBox_1_1;
+	String[] periodosIns;
 
 	/**
 	 * Launch the application.
@@ -130,8 +133,20 @@ public class crear_actividad {
 		lblDeporte.setBounds(10, 264, 73, 17);
 		panel.add(lblDeporte);
 		
+List<Object[]> modDep=modeloIns.getDeportes();
+		
+		String[] deportes=new String[modDep.size()];
+		
+		Iterator<Object[]> iteradorDep = modDep.iterator();
+		
+		int iDep=0;
+		while(iteradorDep.hasNext()) {
+			deportes[iDep]=iteradorDep.next()[0].toString();
+			iDep++;
+		}
+		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Pádel", "Tenis", "Fútbol"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(deportes));
 		comboBox_1.setBounds(84, 264, 199, 21);
 		panel.add(comboBox_1);
 		
@@ -190,21 +205,14 @@ public class crear_actividad {
 		lblPeriodoDe.setBounds(372, 264, 172, 17);
 		panel.add(lblPeriodoDe);
 		
-		List<Object[]> modPer=modeloPer.getPeriodosIns();
-		
-		String[] periodosIns=new String[modPer.size()];
-		
-		Iterator<Object[]> iteradorPer = modPer.iterator();
-		
-		int iPer=0;
-		while(iteradorPer.hasNext()) {
-			periodosIns[iPer]=iteradorPer.next()[0].toString();
-			iPer++;
-		}
 		
 		
-		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setModel(new DefaultComboBoxModel(periodosIns));
+		
+		
+		comboBox_1_1 = new JComboBox();
+		getPeriodosIns();
+		
+		
 		comboBox_1_1.setBounds(382, 291, 267, 21);
 		panel.add(comboBox_1_1);
 		
@@ -290,6 +298,22 @@ public class crear_actividad {
 	public Window getFrmCrearActividad() {
 		// TODO Auto-generated method stub
 		return this.frmCrearActividad;
+	}
+	
+	public void getPeriodosIns() {
+		List<Object[]> modPer=modeloPer.getPeriodosIns();
+		
+		periodosIns=new String[modPer.size()];
+		
+		Iterator<Object[]> iteradorPer = modPer.iterator();
+		
+		int iPer=0;
+		while(iteradorPer.hasNext()) {
+			periodosIns[iPer]=iteradorPer.next()[0].toString();
+			iPer++;
+		}
+		
+		comboBox_1_1.setModel(new DefaultComboBoxModel(periodosIns));
 	}
 }
 
