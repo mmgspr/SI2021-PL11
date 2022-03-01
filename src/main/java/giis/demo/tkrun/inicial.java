@@ -19,10 +19,12 @@ public class inicial {
 	private JFrame frmIndex;
 	private SwingMain ventanaMain;
 	private visualizarReservasA vVisualizarReservasA;
+	private visualizarReservasS vVisualizarReservasS;
 	private reserva_admin_cliente vReservaAdmin;
 	private Reservar_Instalacion_Socio vReservarInstalacionS;
 	private crear_actividad vCrearActividad;
 	private Lista_Actividades_Administrador vListaActividadesA;
+	private crear_periodo_inscripcion vCrearPeriodoInscripcion;
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +71,13 @@ public class inicial {
 		frmIndex.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Inscripcion Actividad\r\n\r\n");
+		JButton btnNewButton = new JButton("Crear Periodo de Inscripcion");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vCrearPeriodoInscripcion = new crear_periodo_inscripcion(ventanaMain);
+				vCrearPeriodoInscripcion.getFrmCrearActividad().setVisible(true);
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton.setBounds(10, 77, 207, 23);
 		panel.add(btnNewButton);
@@ -78,6 +86,8 @@ public class inicial {
 		btnDisponibilidadInstalaciones.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnDisponibilidadInstalaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vVisualizarReservasS = new visualizarReservasS(ventanaMain);
+				vVisualizarReservasS.getFrmVisualizarReservas().setVisible(true);
 			}
 		});
 		btnDisponibilidadInstalaciones.setBounds(10, 225, 207, 23);
