@@ -34,6 +34,18 @@ public class ClientesModel {
 			}
 			return true;
 		}
+		
+		//SQL para comprobar si debe alguna cuota
+				public static final String SQL_MOROSO = "SELECT moroso FROM clientes WHERE id_socio =";
+				public boolean DebeDinero(String id){
+					List<Object[]> lista;
+					lista = db.executeQueryArray(SQL_MOROSO+"'"+id+"'");
+					if (lista.size() == 0){
+						return false;
+					}
+					return true;
+				}
+			
 	
 	/*
 	//SQL para ver todas las instalaciones de un deporte

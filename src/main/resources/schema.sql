@@ -25,7 +25,9 @@ CREATE TABLE clientes(
 
     nombre varchar(50), 
 
-    fecha_nacimiento date
+    fecha_nacimiento date,
+    
+    moroso boolean
 
 ); 
 CREATE TABLE instalaciones( 
