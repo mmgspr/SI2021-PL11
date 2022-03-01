@@ -17,7 +17,7 @@ import giis.demo.tkrun.*;
  */
 public class SwingMain {
 
-	private JFrame frame;
+	private JFrame frmVentanaDeCarga;
 	private inicial vInicial;
 	public Database db;
 	
@@ -29,7 +29,7 @@ public class SwingMain {
 			public void run() {
 				try {
 					SwingMain window = new SwingMain();
-					window.frame.setVisible(true);
+					window.frmVentanaDeCarga.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace(); //NOSONAR codigo autogenerado
 				}
@@ -49,13 +49,13 @@ public class SwingMain {
 	 * Initialize the contents of the frame.aaa
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setTitle("Main");
-		frame.setBounds(0, 0, 287, 185);
-		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		frmVentanaDeCarga = new JFrame();
+		frmVentanaDeCarga.setTitle("Ventana de carga");
+		frmVentanaDeCarga.setBounds(0, 0, 287, 185);
+		frmVentanaDeCarga.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		
 		vInicial= new inicial(this);
-		JButton btnEjecutarTkrun = new JButton("Ejecutar giis.demo.tkrun");
+		JButton btnEjecutarTkrun = new JButton("Ejecutar sistema");
 		btnEjecutarTkrun.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
 			public void actionPerformed(ActionEvent e) {
 				//CarrerasController controller=new CarrerasController(new CarrerasModel(), new CarrerasView());
@@ -64,8 +64,8 @@ public class SwingMain {
 				
 			}
 		});
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-		frame.getContentPane().add(btnEjecutarTkrun);
+		frmVentanaDeCarga.getContentPane().setLayout(new BoxLayout(frmVentanaDeCarga.getContentPane(), BoxLayout.Y_AXIS));
+		frmVentanaDeCarga.getContentPane().add(btnEjecutarTkrun);
 		
 			
 		JButton btnInicializarBaseDeDatos = new JButton("Inicializar Base de Datos en Blanco");
@@ -75,7 +75,7 @@ public class SwingMain {
 				db.createDatabase(false);
 			}
 		});
-		frame.getContentPane().add(btnInicializarBaseDeDatos);
+		frmVentanaDeCarga.getContentPane().add(btnInicializarBaseDeDatos);
 			
 		JButton btnCargarDatosIniciales = new JButton("Cargar Datos Iniciales para Pruebas");
 		btnCargarDatosIniciales.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
@@ -85,9 +85,9 @@ public class SwingMain {
 				db.loadDatabase();
 			}
 		});
-		frame.getContentPane().add(btnCargarDatosIniciales);
+		frmVentanaDeCarga.getContentPane().add(btnCargarDatosIniciales);
 	}
 
-	public JFrame getFrame() { return this.frame; }
+	public JFrame getFrame() { return this.frmVentanaDeCarga; }
 	
 }

@@ -19,6 +19,10 @@ private Database db = new Database();
 		//return db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'");
 		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
 	}
+	public static final String SQL_RESERVAS_MANU= "SELECT persona, fecha_reserva, actividad FROM reservas WHERE instalacion=";
+	public List<Object[]> getReservasManu(long id_instalacion){
+		return db.executeQueryArray(SQL_RESERVAS_MANU+ id_instalacion);
+	}
 	
 	//SQL para comprobar si una instalacion está reservada un día a una hora
 	//retorna true si no está reservado y se puede reservar
@@ -34,4 +38,28 @@ private Database db = new Database();
 			}
 			return false;
 		}
+
+	//Método para instertar una nueva reserva
+	public static final String SQL_NUEVA_RESERVA = "INSERT INTO reservas (id_reserva, persona, instalacion, fecha, fecha_reserva, precio, actividad) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	public void nuevaReserva(int socio, int instalacion, String fecha, String fecha_reserva, String precio, int actividad) {
+		long id;
+		id = siguienteIdReserva()
+;		db.executeUpdate(SQL_NUEVA_RESERVA,id, socio,instalacion, fecha, fecha_reserva, precio, actividad);
+	}
+	
+	
+	//Método para obtener siguiente id
+	public static final String SQL_SIGUIENTE_ID = "SELECT MAX(id_reserva) from reservas;";
+	public long siguienteIdReserva() {
+		List<Object[]> lista;
+		lista = db.executeQueryArray(SQL_SIGUIENTE_ID);
+		return (long)lista.get(0)[0] + 1;
+	}
+	
+	public static final String SQL_ACTIVIDAD = "SELECT nombre FROM actividades WHERE id_actividad=";
+	
+	public List<Object[]> getActividad(long id_actividad){
+		return db.executeQueryArray(SQL_ACTIVIDAD+id_actividad);	
+	}
+
 }

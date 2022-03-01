@@ -19,6 +19,7 @@ public class inicial {
 	private JFrame frmIndex;
 	private SwingMain ventanaMain;
 	private visualizarReservasA vVisualizarReservasA;
+	private visualizarReservasS vVisualizarReservasS;
 	private reserva_admin_cliente vReservaAdmin;
 	private Reservar_Instalacion_Socio vReservarInstalacionS;
 	private crear_actividad vCrearActividad;
@@ -78,6 +79,8 @@ public class inicial {
 		btnDisponibilidadInstalaciones.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnDisponibilidadInstalaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vVisualizarReservasS = new visualizarReservasS(ventanaMain);
+				vVisualizarReservasS.getFrmVisualizarReservas().setVisible(true);
 			}
 		});
 		btnDisponibilidadInstalaciones.setBounds(10, 225, 207, 23);
