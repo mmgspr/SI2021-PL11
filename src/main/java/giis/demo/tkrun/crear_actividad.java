@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.Window;
@@ -17,12 +18,21 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.SpinnerNumberModel;
+
+import com.toedter.calendar.JDateChooser;
+
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import giis.demo.util.Database;
 import giis.demo.util.SwingMain;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class crear_actividad {
 
@@ -32,11 +42,15 @@ public class crear_actividad {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private InstalacionesModel modelo = new InstalacionesModel();
+	private InstalacionesModel modeloIns = new InstalacionesModel();
+	private PeriodosInscripcionModel modeloPer = new PeriodosInscripcionModel();
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
 	private SwingMain principal;
+	
+	JComboBox comboBox_1_1;
+	String[] periodosIns;
 
 	/**
 	 * Launch the application.
@@ -72,7 +86,7 @@ public class crear_actividad {
 	 */
 	private void initialize() {
 		frmCrearActividad = new JFrame();
-		frmCrearActividad.setTitle("Crear Actividad");
+		frmCrearActividad.setTitle("Planificar Actividad");
 		frmCrearActividad.setBounds(100, 100, 700, 500);
 		frmCrearActividad.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -107,16 +121,16 @@ public class crear_actividad {
 		lblInstalacin.setBounds(10, 215, 87, 17);
 		panel.add(lblInstalacin);
 		
-		List<Object[]> modIns=modelo.getInstalaciones();
+		List<Object[]> modIns=modeloIns.getInstalaciones();
 		
 		String[] instalaciones=new String[modIns.size()];
 		
-		Iterator<Object[]> iterador = modIns.iterator();
+		Iterator<Object[]> iteradorIns = modIns.iterator();
 		
-		int i=0;
-		while(iterador.hasNext()) {
-			instalaciones[i]=iterador.next()[0].toString();
-			i++;
+		int iIns=0;
+		while(iteradorIns.hasNext()) {
+			instalaciones[iIns]=iteradorIns.next()[0].toString();
+			iIns++;
 		}
 		
 		JComboBox comboBox = new JComboBox();
@@ -129,8 +143,20 @@ public class crear_actividad {
 		lblDeporte.setBounds(10, 264, 73, 17);
 		panel.add(lblDeporte);
 		
+		List<Object[]> modDep=modeloIns.getDeportes();
+		
+		String[] deportes=new String[modDep.size()];
+		
+		Iterator<Object[]> iteradorDep = modDep.iterator();
+		
+		int iDep=0;
+		while(iteradorDep.hasNext()) {
+			deportes[iDep]=iteradorDep.next()[0].toString();
+			iDep++;
+		}
+		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Pádel", "Tenis", "Fútbol"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(deportes));
 		comboBox_1.setBounds(84, 264, 199, 21);
 		panel.add(comboBox_1);
 		
@@ -160,11 +186,37 @@ public class crear_actividad {
 		panel.add(lblNoSocios);
 		
 		textField_1 = new JTextField();
+		textField_1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if((e.getKeyChar()>='0' && e.getKeyChar()<='9') || e.getKeyChar()==',' || e.getKeyChar()=='.') {
+					if(e.getKeyChar()==',') {
+						e.setKeyChar('.');
+					}
+				}
+				else {
+					e.setKeyChar((char)127);
+				}
+			}
+		});
 		textField_1.setBounds(462, 48, 61, 19);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
+		textField_2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if((e.getKeyChar()>='0' && e.getKeyChar()<='9') || e.getKeyChar()==',' || e.getKeyChar()=='.') {
+					if(e.getKeyChar()==',') {
+						e.setKeyChar('.');
+					}
+				}
+				else {
+					e.setKeyChar((char)127);
+				}
+			}
+		});
 		textField_2.setColumns(10);
 		textField_2.setBounds(483, 77, 61, 19);
 		panel.add(textField_2);
@@ -189,10 +241,56 @@ public class crear_actividad {
 		lblPeriodoDe.setBounds(372, 264, 172, 17);
 		panel.add(lblPeriodoDe);
 		
-		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un periodo de inscripción>"}));
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(500, 180, 149, 19);
+		panel.add(dateChooser);
+		dateChooser.setEnabled(false);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(500, 213, 149, 19);
+		panel.add(dateChooser_1);
+		dateChooser_1.setEnabled(false);
+		
+		comboBox_1_1 = new JComboBox();
+		getPeriodosIns();
+		
+		
 		comboBox_1_1.setBounds(382, 291, 267, 21);
 		panel.add(comboBox_1_1);
+		
+		JLabel lblFechaInicial = new JLabel("- Fecha inicial:");
+		lblFechaInicial.setEnabled(false);
+		lblFechaInicial.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFechaInicial.setBounds(400, 180, 90, 17);
+		panel.add(lblFechaInicial);
+		
+		JLabel lblFechaFinal = new JLabel("- Fecha final:");
+		lblFechaFinal.setEnabled(false);
+		lblFechaFinal.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFechaFinal.setBounds(400, 215, 87, 17);
+		panel.add(lblFechaFinal);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBox_2.getSelectedIndex()==4) {
+					dateChooser.setEnabled(true);
+					dateChooser_1.setEnabled(true);
+					lblFechaInicial.setEnabled(true);
+					lblFechaFinal.setEnabled(true);
+				}
+				else {
+					dateChooser.setEnabled(false);
+					dateChooser_1.setEnabled(false);
+					lblFechaInicial.setEnabled(false);
+					lblFechaFinal.setEnabled(false);
+				}
+			}
+		});
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Verano", "Otoño", "Invierno", "Primavera", "Otro..."}));
+		comboBox_2.setBounds(382, 149, 267, 21);
+		panel.add(comboBox_2);
 		
 		JButton btnNewButton = new JButton("Crear nuevo periodo");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -204,6 +302,68 @@ public class crear_actividad {
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Crear");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date dateIni = dateChooser.getDate();
+				Date dateFin = dateChooser_1.getDate();
+				//fecha de hoy
+				Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+				if(textField.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
+				}	
+				else if(textArea.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField_1.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio para socios.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(textField_2.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio para no socios.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(!precioCorrecto(textField_1.getText())) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio de socio válido.","Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(!precioCorrecto(textField_2.getText())) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio de no socio válido.","Error",JOptionPane.ERROR_MESSAGE);
+				}		
+				else if(comboBox_2.getSelectedIndex()==4) {
+					if(dateIni==null) {
+						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una fecha inicial de periodo.","Error",JOptionPane.ERROR_MESSAGE);
+					}
+					else if(dateFin==null) {
+						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una fecha final de periodo.","Error",JOptionPane.ERROR_MESSAGE);
+					}
+					else if(dateIni.getTime()-dateHoy.getTime()<0) {
+						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha inicial no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+					}
+					else if(dateFin.getTime()-dateHoy.getTime()<0) {
+						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+					}
+					else if(dateFin.getTime()-dateIni.getTime()<0) {
+						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						String nombre=textField.getText();
+						String descripcion=textArea.getText();
+						String fecha_ini=sdf.format(dateIni);
+						String fecha_fin=sdf.format(dateFin);
+						
+						JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+						frmCrearActividad.dispose();
+					}
+					
+				}		
+				else {			
+					String nombre=textField.getText();
+					String descripcion=textArea.getText();
+					
+					JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+					frmCrearActividad.dispose();
+				}
+				
+			}
+		});
 		btnNewButton_1.setBounds(591, 432, 85, 21);
 		panel.add(btnNewButton_1);
 		
@@ -225,57 +385,48 @@ public class crear_actividad {
 		btnNewButton_1_1_1.setBounds(10, 346, 135, 21);
 		panel.add(btnNewButton_1_1_1);
 		
-		JLabel lblFechaInicial = new JLabel("- Fecha inicial:");
-		lblFechaInicial.setEnabled(false);
-		lblFechaInicial.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFechaInicial.setBounds(400, 180, 90, 17);
-		panel.add(lblFechaInicial);
 		
-		JLabel lblFechaFinal = new JLabel("- Fecha final:");
-		lblFechaFinal.setEnabled(false);
-		lblFechaFinal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFechaFinal.setBounds(400, 215, 87, 17);
-		panel.add(lblFechaFinal);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(comboBox_2.getSelectedIndex()==5) {
-					textField_3.setEnabled(true);
-					textField_4.setEnabled(true);
-					lblFechaInicial.setEnabled(true);
-					lblFechaFinal.setEnabled(true);
-				}
-				else {
-					textField_3.setEnabled(false);
-					textField_4.setEnabled(false);
-					lblFechaInicial.setEnabled(false);
-					lblFechaFinal.setEnabled(false);
-				}
-			}
-		});
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Verano", "Otoño", "Invierno", "Primavera", "Otro..."}));
-		comboBox_2.setBounds(382, 149, 267, 21);
-		panel.add(comboBox_2);
+
 		
 		
-		
-		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
-		textField_3.setBounds(497, 181, 152, 19);
-		panel.add(textField_3);
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		textField_4.setEnabled(false);
-		textField_4.setColumns(10);
-		textField_4.setBounds(497, 216, 152, 19);
-		panel.add(textField_4);
 	}
 
 	public Window getFrmCrearActividad() {
 		// TODO Auto-generated method stub
 		return this.frmCrearActividad;
+	}
+	
+	public void getPeriodosIns() {
+		List<Object[]> modPer=modeloPer.getPeriodosIns();
+		
+		periodosIns=new String[modPer.size()];
+		
+		Iterator<Object[]> iteradorPer = modPer.iterator();
+		
+		int iPer=0;
+		while(iteradorPer.hasNext()) {
+			periodosIns[iPer]=iteradorPer.next()[0].toString();
+			iPer++;
+		}
+		
+		comboBox_1_1.setModel(new DefaultComboBoxModel(periodosIns));
+	}
+	
+	public boolean precioCorrecto(String precio) {
+		int puntos=0;
+		if(precio.charAt(0)=='.') {
+			return false;
+		}
+		for(int i=1;i<precio.length();i++) {
+			if(precio.charAt(i)=='.') {
+				puntos++;
+			}		
+		}
+		if(puntos!=1) return false;
+		if(precio.charAt(precio.length()-3)!='.') {
+			return false;
+		}
+		return true;
 	}
 }
 

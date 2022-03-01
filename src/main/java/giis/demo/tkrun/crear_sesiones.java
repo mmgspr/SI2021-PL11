@@ -93,7 +93,7 @@ public class crear_sesiones {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<selecciona un día>", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"}));
 		comboBox.setBounds(62, 10, 146, 22);
 		panel.add(comboBox);
 		
@@ -112,15 +112,15 @@ public class crear_sesiones {
 		lblSesiones.setBounds(330, 14, 89, 17);
 		panel.add(lblSesiones);
 		
-		textField = new JTextField();
-		textField.setBounds(95, 54, 104, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"}));
+		comboBox_1.setBounds(100, 53, 89, 22);
+		panel.add(comboBox_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(77, 94, 104, 20);
-		panel.add(textField_1);
+		JComboBox comboBox_1_1 = new JComboBox();
+		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"}));
+		comboBox_1_1.setBounds(87, 93, 89, 22);
+		panel.add(comboBox_1_1);
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
@@ -130,19 +130,12 @@ public class crear_sesiones {
 		JButton btnNewButton = new JButton("Añadir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox.getSelectedIndex()==0) {
-					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nSelecciona un día.","Error",JOptionPane.ERROR_MESSAGE);
-				}
-				else if(textField.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nIntroduce una hora de inicio.","Error",JOptionPane.ERROR_MESSAGE);
-				}
-				else if(textField_1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nIntroduce una hora de fin.","Error",JOptionPane.ERROR_MESSAGE);
+				if(comboBox_1.getSelectedIndex()>=comboBox_1_1.getSelectedIndex()) {
+					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nLa hora final debe ser mayor que la de inicio.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					
-					textArea.setText(textArea.getText()+comboBox.getModel().getElementAt(comboBox.getSelectedIndex())+" de "+textField.getText()+" a "+textField_1.getText()+"\n");
-					//textField.getText();
+					textArea.setText(textArea.getText()+comboBox.getModel().getElementAt(comboBox.getSelectedIndex())+" de "+comboBox_1.getModel().getElementAt(comboBox_1.getSelectedIndex())+" a "+comboBox_1_1.getModel().getElementAt(comboBox_1_1.getSelectedIndex())+"\n");
 					//JOptionPane.showMessageDialog(null,"La sesión se ha añadido correctamente","Añadido",JOptionPane.INFORMATION_MESSAGE);
 				}
 				
@@ -152,6 +145,11 @@ public class crear_sesiones {
 		panel.add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmCrearSesiones.dispose();
+			}
+		});
 		btnCancelar.setBounds(10, 277, 89, 23);
 		panel.add(btnCancelar);
 		
@@ -163,6 +161,8 @@ public class crear_sesiones {
 		});
 		btnGuardar.setBounds(585, 277, 89, 23);
 		panel.add(btnGuardar);
+		
+		
 		
 		
 		

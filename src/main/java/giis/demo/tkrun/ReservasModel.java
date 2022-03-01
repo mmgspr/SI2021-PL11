@@ -21,7 +21,7 @@ private Database db = new Database();
 	}
 	public static final String SQL_RESERVAS_MANU= "SELECT persona, fecha_reserva, actividad FROM reservas WHERE instalacion=";
 	public List<Object[]> getReservasManu(long id_instalacion){
-		return db.executeQueryArray(SQL_RESERVAS_MANU+ id_instalacion);
+		return db.executeQueryArray(SQL_RESERVAS_MANU+ "'"+id_instalacion+"'");
 	}
 	
 	//SQL para comprobar si una instalacion está reservada un día a una hora
