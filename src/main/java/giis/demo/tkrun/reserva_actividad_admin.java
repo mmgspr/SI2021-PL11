@@ -38,6 +38,7 @@ public class reserva_actividad_admin {
 	private ClientesModel modeloClientes = new ClientesModel();
 	private ActividadesModel modeloActividades = new ActividadesModel();
 	private int i;
+	private boolean activado = false;
 	
 	//pantalla principal
 	private SwingMain principal;
@@ -158,6 +159,10 @@ public class reserva_actividad_admin {
 		JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setBounds(242, 298, 156, 19);
 		panel.add(dateChooser_1);
+		
+		JDateChooser dateChooser_1_1 = new JDateChooser();
+		dateChooser_1_1.setBounds(1000,1000,1000,1000);
+		panel.add(dateChooser_1_1);
 		
 		JButton btnNewButton_1 = new JButton("Reservar");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -304,6 +309,31 @@ public class reserva_actividad_admin {
 		});
 		btnNewButton_1.setBounds(567, 439, 89, 23);
 		panel.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Reservar solo un día");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!activado) {
+					dateChooser.setBounds(1000,1000,1000,1000);
+					dateChooser_1.setBounds(1000, 1000, 1000, 1000);
+					dateChooser_1_1.setBounds(242, 375, 156, 19);
+					btnNewButton_2.setText("Resevar un periodo");
+					activado = true;
+				}
+				else {
+					dateChooser.setBounds(242, 229, 156, 19);
+					dateChooser_1.setBounds(242, 298, 156, 19);
+					dateChooser_1_1.setBounds(1000,1000,1000,1000);
+					btnNewButton_2.setText("Resevar solo un día");
+					activado = false;
+				}
+				
+			}
+		});
+		btnNewButton_2.setBounds(46, 371, 163, 23);
+		panel.add(btnNewButton_2);
+		
+		
 
 
 	}
