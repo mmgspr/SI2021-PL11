@@ -73,6 +73,7 @@ private Database db = new Database();
 		return (long)lista.get(0)[0] + 1;
 	}
 	
+	//Método para obtener el nombre de las actividades según su id 
 	public static final String SQL_ACTIVIDAD = "SELECT nombre FROM actividades WHERE id_actividad=";
 	
 	public List<Object[]> getActividad(long id_actividad){
@@ -80,11 +81,20 @@ private Database db = new Database();
 	}
 	
 	//Método para eliminar una reserva
-	public static final String SQL_ELIMINAR_RESERVA = "DELETE from reservas WHERE instalacion=? AND fecha_reserva=?;";
-	public void eliminarReserva(int instalacion, String fecha) {
+		public static final String SQL_ELIMINAR_RESERVA = "DELETE from reservas WHERE instalacion=? AND fecha_reserva=?;";
+		public void eliminarReserva(int instalacion, String fecha) {
 
-		db.executeUpdate(SQL_ELIMINAR_RESERVA,instalacion, fecha);
-	}
+			db.executeUpdate(SQL_ELIMINAR_RESERVA,instalacion, fecha);
+		}
 	
-
+			
+	//Método para obtener el nombre de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_TODAS_ACTIVIDADES_PERIODO1 = "SELECT nombre, descripcion, fecha_ini, fecha_fin, aforo, precio_socio, precio_no_socio FROM actividades WHERE fecha_fin >=";
+	
+	public List<Object[]> getActividadPeriodo(String fechaIni, String fechaFin){
+		return db.executeQueryArray(SQL_TODAS_ACTIVIDADES_PERIODO1+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
+		
+	} 
+		
+	
 }
