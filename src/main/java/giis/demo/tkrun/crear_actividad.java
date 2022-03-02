@@ -44,6 +44,7 @@ public class crear_actividad {
 	private JTextField textField_4;
 	private InstalacionesModel modeloIns = new InstalacionesModel();
 	private PeriodosInscripcionModel modeloPer = new PeriodosInscripcionModel();
+	private ActividadesModel modeloAct= new ActividadesModel();
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
@@ -275,6 +276,8 @@ public class crear_actividad {
 					lblFechaFinal.setEnabled(true);
 				}
 				else {
+					dateChooser.setDate(null);
+					dateChooser_1.setDate(null);
 					dateChooser.setEnabled(false);
 					dateChooser_1.setEnabled(false);
 					lblFechaInicial.setEnabled(false);
@@ -299,61 +302,141 @@ public class crear_actividad {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat year = new SimpleDateFormat("yyyy");
 				Date dateIni = dateChooser.getDate();
 				Date dateFin = dateChooser_1.getDate();
 				//fecha de hoy
 				Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 				if(textField.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
 				}	
 				else if(textArea.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio para socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_2.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio para no socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para no socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(!precioCorrecto(textField_1.getText())) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio de socio válido.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio de socio válido.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(!precioCorrecto(textField_2.getText())) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio de no socio válido.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio de no socio válido.","Error",JOptionPane.ERROR_MESSAGE);
 				}		
 				else if(comboBox_2.getSelectedIndex()==4) {
 					if(dateIni==null) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una fecha inicial de periodo.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce una fecha inicial de periodo.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else if(dateFin==null) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una fecha final de periodo.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce una fecha final de periodo.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else if(dateIni.getTime()-dateHoy.getTime()<0) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha inicial no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nLa fecha inicial no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else if(dateFin.getTime()-dateHoy.getTime()<0) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else if(dateFin.getTime()-dateIni.getTime()<0) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else {
 						String nombre=textField.getText();
 						String descripcion=textArea.getText();
 						String fecha_ini=sdf.format(dateIni);
 						String fecha_fin=sdf.format(dateFin);
-						
-						JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
-						frmCrearActividad.dispose();
+						String aforo=spinner.getModel().getValue().toString();
+						String pSoc=textField_1.getText();
+						String pNoSoc=textField_2.getText();
+						String deporte=comboBox_1.getSelectedItem().toString();
+						String instalacion_nombre=comboBox.getSelectedItem().toString();
+						List<Object[]> instalacion_lista=modeloIns.getIdInstalacion(instalacion_nombre);
+						String[] instal=new String[instalacion_lista.size()];
+						Iterator<Object[]> iteradorIns = instalacion_lista.iterator();
+						int iIns=0;
+						while(iteradorIns.hasNext()) {
+							instal[iIns]=iteradorIns.next()[0].toString();
+							iIns++;
+						}
+						String instalacion=instal[0];
+						//System.out.printf("%s", instalacion);
+						String per_ins_nombre=comboBox_1_1.getSelectedItem().toString();
+						List<Object[]> per_ins_lista=modeloPer.getIdPeriodoIns(per_ins_nombre);
+						String[] p_i=new String[per_ins_lista.size()];
+						Iterator<Object[]> iteradorPerIns = per_ins_lista.iterator();
+						int iPerIns=0;
+						while(iteradorPerIns.hasNext()) {
+							p_i[iPerIns]=iteradorPerIns.next()[0].toString();
+							iIns++;
+						}
+						String per_ins=p_i[0];
+						//System.out.printf("%s", per_ins);
+						try {
+							modeloAct.nuevaActividad(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
+							JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+							frmCrearActividad.dispose();
+						} catch (Exception eActividad) {
+							JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad.\n","Error.",JOptionPane.ERROR_MESSAGE);
+						}
 					}
 					
 				}		
 				else {			
 					String nombre=textField.getText();
 					String descripcion=textArea.getText();
-					
-					JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
-					frmCrearActividad.dispose();
+					String fecha_ini=sdf.format(dateHoy);
+					String fecha_fin=sdf.format(dateHoy);
+					if(comboBox_2.getSelectedIndex()==0) {
+						fecha_ini=year.format(dateHoy)+"-6-21";
+						fecha_fin=year.format(dateHoy)+"-9-23";
+					}
+					else if(comboBox_2.getSelectedIndex()==1) {
+						fecha_ini=year.format(dateHoy)+"-9-23";
+						fecha_fin=year.format(dateHoy)+"-12-21";
+					}
+					else if(comboBox_2.getSelectedIndex()==2) {
+						fecha_ini=year.format(dateHoy)+"-12-21";
+						fecha_fin=year.format(dateHoy)+"-3-20";
+					}
+					else if(comboBox_2.getSelectedIndex()==3) {
+						fecha_ini=year.format(dateHoy)+"-3-20";
+						fecha_fin=year.format(dateHoy)+"-6-21";
+					}
+					//int aforo=(int) spinner.getModel().getValue();
+					String aforo=spinner.getModel().getValue().toString();
+					String pSoc=textField_1.getText();
+					String pNoSoc=textField_2.getText();
+					String deporte=comboBox_1.getSelectedItem().toString();
+					String instalacion_nombre=comboBox.getSelectedItem().toString();
+					List<Object[]> instalacion_lista=modeloIns.getIdInstalacion(instalacion_nombre);
+					String[] instal=new String[instalacion_lista.size()];
+					Iterator<Object[]> iteradorIns = instalacion_lista.iterator();
+					int iIns=0;
+					while(iteradorIns.hasNext()) {
+						instal[iIns]=iteradorIns.next()[0].toString();
+						iIns++;
+					}
+					String instalacion=instal[0];
+					//System.out.printf("%s", instalacion);
+					String per_ins_nombre=comboBox_1_1.getSelectedItem().toString();
+					List<Object[]> per_ins_lista=modeloPer.getIdPeriodoIns(per_ins_nombre);
+					String[] p_i=new String[per_ins_lista.size()];
+					Iterator<Object[]> iteradorPerIns = per_ins_lista.iterator();
+					int iPerIns=0;
+					while(iteradorPerIns.hasNext()) {
+						p_i[iPerIns]=iteradorPerIns.next()[0].toString();
+						iIns++;
+					}
+					String per_ins=p_i[0];
+					//System.out.printf("%s", per_ins);
+					try {
+						modeloAct.nuevaActividad(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
+						JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+						frmCrearActividad.dispose();
+					} catch (Exception eActividad) {
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad.\n","Error.",JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				
 			}
@@ -378,10 +461,7 @@ public class crear_actividad {
 		});
 		btnNewButton_1_1_1.setBounds(10, 346, 135, 21);
 		panel.add(btnNewButton_1_1_1);
-		
-		
-
-		
+			
 		
 	}
 

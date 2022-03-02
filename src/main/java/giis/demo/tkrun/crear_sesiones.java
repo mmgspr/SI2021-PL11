@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import giis.demo.util.SwingMain;
 
@@ -23,6 +24,9 @@ import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -39,6 +43,7 @@ public class crear_sesiones {
 	private crear_actividad ventanaCrearActividad;
 	private JTextField textField;
 	private JTextField textField_1;
+	private List<String[]> sesionesLista;
 
 	/**
 	 * Launch the application.
@@ -118,25 +123,47 @@ public class crear_sesiones {
 		panel.add(comboBox_1);
 		
 		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"}));
+		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"}));
 		comboBox_1_1.setBounds(87, 93, 89, 22);
 		panel.add(comboBox_1_1);
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
-		textArea.setBounds(340, 42, 334, 191);
-		panel.add(textArea);
+		//textArea.setBounds(340, 42, 334, 191);
+		//panel.add(textArea);
+		JScrollPane scroll = new JScrollPane(textArea);
+		scroll.setBounds(340, 42, 334, 191);
+		panel.add(scroll);
+		
+		sesionesLista = new ArrayList<String[]>();
+		
+		 
 		
 		JButton btnNewButton = new JButton("Añadir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox_1.getSelectedIndex()>=comboBox_1_1.getSelectedIndex()) {
-					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nLa hora final debe ser mayor que la de inicio.","Error",JOptionPane.ERROR_MESSAGE);
+				if(comboBox_1.getSelectedIndex()>=comboBox_1_1.getSelectedIndex()+1) {
+					JOptionPane.showMessageDialog(frmCrearSesiones,"No se ha podido añadir la sesión. \nLa hora final debe ser mayor que la inicial.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
+					String vSesiones[] = new String[3]; 
+					vSesiones[0]=(String) comboBox.getModel().getElementAt(comboBox.getSelectedIndex());
+					vSesiones[1]=(String) comboBox_1.getModel().getElementAt(comboBox_1.getSelectedIndex());
+					vSesiones[2]=(String) comboBox_1_1.getModel().getElementAt(comboBox_1_1.getSelectedIndex());
+					sesionesLista.add(vSesiones);
+					textArea.setText(textArea.getText()+comboBox.getModel().getElementAt(
+							comboBox.getSelectedIndex())+
+							" de "+comboBox_1.getModel().getElementAt(comboBox_1.getSelectedIndex())+
+							" a "+comboBox_1_1.getModel().getElementAt(comboBox_1_1.getSelectedIndex())+"\n");
+					Iterator<String[]> iter=sesionesLista.iterator();
 					
-					textArea.setText(textArea.getText()+comboBox.getModel().getElementAt(comboBox.getSelectedIndex())+" de "+comboBox_1.getModel().getElementAt(comboBox_1.getSelectedIndex())+" a "+comboBox_1_1.getModel().getElementAt(comboBox_1_1.getSelectedIndex())+"\n");
-					//JOptionPane.showMessageDialog(null,"La sesión se ha añadido correctamente","Añadido",JOptionPane.INFORMATION_MESSAGE);
+					
+					
+					while(iter.hasNext()) {
+						String vector[]=iter.next();
+						System.out.printf("%s - %s - %s\n", vector[0],vector[1],vector[2]);
+					}
+					
 				}
 				
 			}
@@ -156,16 +183,35 @@ public class crear_sesiones {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Las sesiones se han guardado correctamento.","Guardado",JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frmCrearSesiones,"Las sesiones se han guardado correctamento.","Guardado",JOptionPane.INFORMATION_MESSAGE);
+				frmCrearSesiones.dispose();
 			}
 		});
 		btnGuardar.setBounds(585, 277, 89, 23);
 		panel.add(btnGuardar);
 		
+		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+				sesionesLista.removeAll(sesionesLista);
+			}
+		});
+		btnLimpiar.setBounds(350, 244, 89, 23);
+		panel.add(btnLimpiar);
 		
 		
 		
 		
 		
+		
+	}
+
+	public List<String[]> getSesionesLista() {
+		return sesionesLista;
+	}
+
+	public void setSesionesLista(List<String[]> sesionesLista) {
+		this.sesionesLista = sesionesLista;
 	}
 }
