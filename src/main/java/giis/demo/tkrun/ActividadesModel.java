@@ -24,4 +24,14 @@ public class ActividadesModel {
 		return (long)lista.get(0)[0] + 1;
 	}
 	
+	
+	//Método para obtener el id de una actividad
+	public static final String SQL_ID_ACTIVIDAD = "SELECT id_actividad FROM actividades WHERE nombre=";
+	
+	public long getIdActividad(String nombre){
+		List<Object[]> lista;
+		lista = db.executeQueryArray(SQL_ID_ACTIVIDAD+"'"+nombre+"'");
+		return (long)lista.get(0)[0]; 	
+	}
+	
 }
