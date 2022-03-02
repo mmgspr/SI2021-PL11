@@ -80,7 +80,7 @@ private Database db = new Database();
 		return db.executeQueryArray(SQL_ACTIVIDAD+id_actividad);	
 	}
 	
-<<<<<<< HEAD
+
 	
 	//Método para obtener el nombre de las actividades que se encuentran en un periodo determinado	
     public static final String SQL_TODAS_ACTIVIDADES_PERIODO1 = "SELECT nombre FROM actividades WHERE fecha_fin >=";
@@ -122,7 +122,7 @@ private Database db = new Database();
 		return db.executeQueryArray(SQL_PLAZAS_ACTIVIDAD+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
 		
 	}
-=======
+
 	//Método para eliminar una reserva
 	public static final String SQL_ELIMINAR_RESERVA = "DELETE from reservas WHERE instalacion=? AND fecha_reserva=?;";
 	public void eliminarReserva(int instalacion, String fecha) {
@@ -130,7 +130,7 @@ private Database db = new Database();
 		db.executeUpdate(SQL_ELIMINAR_RESERVA,instalacion, fecha);
 	}
 	
->>>>>>> refs/heads/Trabajo
+
 
 
 	//Método para obtener el precio socio de las actividades que se encuentran en un periodo determinado	
