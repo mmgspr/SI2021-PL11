@@ -44,6 +44,7 @@ public class crear_actividad {
 	private JTextField textField_4;
 	private InstalacionesModel modeloIns = new InstalacionesModel();
 	private PeriodosInscripcionModel modeloPer = new PeriodosInscripcionModel();
+	private ActividadesModel modeloAct= new ActividadesModel();
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
@@ -307,38 +308,38 @@ public class crear_actividad {
 				//fecha de hoy
 				Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 				if(textField.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
 				}	
 				else if(textArea.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio para socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_2.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio para no socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para no socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(!precioCorrecto(textField_1.getText())) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio de socio válido.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio de socio válido.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(!precioCorrecto(textField_2.getText())) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce un precio de no socio válido.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio de no socio válido.","Error",JOptionPane.ERROR_MESSAGE);
 				}		
 				else if(comboBox_2.getSelectedIndex()==4) {
 					if(dateIni==null) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una fecha inicial de periodo.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce una fecha inicial de periodo.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else if(dateFin==null) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nIntroduce una fecha final de periodo.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce una fecha final de periodo.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else if(dateIni.getTime()-dateHoy.getTime()<0) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha inicial no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nLa fecha inicial no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else if(dateFin.getTime()-dateHoy.getTime()<0) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else if(dateFin.getTime()-dateIni.getTime()<0) {
-						JOptionPane.showMessageDialog(null,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else {
 						String nombre=textField.getText();
@@ -371,29 +372,36 @@ public class crear_actividad {
 						}
 						String per_ins=p_i[0];
 						//System.out.printf("%s", per_ins);
-						JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
-						frmCrearActividad.dispose();
+						try {
+							modeloAct.nuevaActividad(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
+							JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+							frmCrearActividad.dispose();
+						} catch (Exception eActividad) {
+							JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad.\n","Error.",JOptionPane.ERROR_MESSAGE);
+						}
 					}
 					
 				}		
 				else {			
 					String nombre=textField.getText();
 					String descripcion=textArea.getText();
+					String fecha_ini=sdf.format(dateHoy);
+					String fecha_fin=sdf.format(dateHoy);
 					if(comboBox_2.getSelectedIndex()==0) {
-						String fecha_ini=year.format(dateHoy)+"-6-21";
-						String fecha_fin=year.format(dateHoy)+"-9-23";
+						fecha_ini=year.format(dateHoy)+"-6-21";
+						fecha_fin=year.format(dateHoy)+"-9-23";
 					}
 					else if(comboBox_2.getSelectedIndex()==1) {
-						String fecha_ini=year.format(dateHoy)+"-9-23";
-						String fecha_fin=year.format(dateHoy)+"-12-21";
+						fecha_ini=year.format(dateHoy)+"-9-23";
+						fecha_fin=year.format(dateHoy)+"-12-21";
 					}
 					else if(comboBox_2.getSelectedIndex()==2) {
-						String fecha_ini=year.format(dateHoy)+"-12-21";
-						String fecha_fin=year.format(dateHoy)+"-3-20";
+						fecha_ini=year.format(dateHoy)+"-12-21";
+						fecha_fin=year.format(dateHoy)+"-3-20";
 					}
 					else if(comboBox_2.getSelectedIndex()==3) {
-						String fecha_ini=year.format(dateHoy)+"-3-20";
-						String fecha_fin=year.format(dateHoy)+"-6-21";
+						fecha_ini=year.format(dateHoy)+"-3-20";
+						fecha_fin=year.format(dateHoy)+"-6-21";
 					}
 					//int aforo=(int) spinner.getModel().getValue();
 					String aforo=spinner.getModel().getValue().toString();
@@ -421,8 +429,14 @@ public class crear_actividad {
 						iIns++;
 					}
 					String per_ins=p_i[0];
-					JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
-					frmCrearActividad.dispose();
+					//System.out.printf("%s", per_ins);
+					try {
+						modeloAct.nuevaActividad(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
+						JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+						frmCrearActividad.dispose();
+					} catch (Exception eActividad) {
+						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad.\n","Error.",JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				
 			}

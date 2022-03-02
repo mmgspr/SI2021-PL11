@@ -143,7 +143,7 @@ public class crear_sesiones {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBox_1.getSelectedIndex()>=comboBox_1_1.getSelectedIndex()+1) {
-					JOptionPane.showMessageDialog(null,"No se ha podido añadir la sesión. \nLa hora final debe ser mayor que la inicial.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearSesiones,"No se ha podido añadir la sesión. \nLa hora final debe ser mayor que la inicial.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					String vSesiones[] = new String[3]; 
@@ -183,7 +183,7 @@ public class crear_sesiones {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Las sesiones se han guardado correctamento.","Guardado",JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frmCrearSesiones,"Las sesiones se han guardado correctamento.","Guardado",JOptionPane.INFORMATION_MESSAGE);
 				frmCrearSesiones.dispose();
 			}
 		});

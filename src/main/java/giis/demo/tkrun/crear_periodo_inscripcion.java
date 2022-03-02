@@ -158,34 +158,34 @@ public class crear_periodo_inscripcion {
 				//fecha de hoy
 				Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 				if(textField.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nIntroduce un nombre.","Error",JOptionPane.ERROR_MESSAGE);
 				}	
 				else if(textArea.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(dateIniSoc==null) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha inicial de socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nIntroduce una fecha inicial de socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(dateFinSoc==null) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha final de socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nIntroduce una fecha final de socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(dateFinNoSoc==null) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nIntroduce una fecha final de no socios","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nIntroduce una fecha final de no socios","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(dateIniSoc.getTime()-dateHoy.getTime()<0) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha inicial de socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nLa fecha inicial de socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(dateFinSoc.getTime()-dateHoy.getTime()<0) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final de socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nLa fecha final de socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(dateFinNoSoc.getTime()-dateHoy.getTime()<0) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final de no socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nLa fecha final de no socios no puede ser anterior a la actual.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(dateFinSoc.getTime()-dateIniSoc.getTime()<0) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(dateFinNoSoc.getTime()-dateFinSoc.getTime()<0) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final de no socios no puede ser anterior a la final de socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo. \nLa fecha final de no socios no puede ser anterior a la final de socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					String nombre=textField.getText();
@@ -193,13 +193,17 @@ public class crear_periodo_inscripcion {
 					String fecha_ini_soc=sdf.format(dateIniSoc);
 					String fecha_fin_soc=sdf.format(dateFinSoc);
 					String fecha_fin_no_soc=sdf.format(dateFinNoSoc);
-					modeloPer.nuevoPeriodoIns(nombre, descripcion, fecha_ini_soc, fecha_fin_soc, fecha_fin_no_soc);
-					JOptionPane.showMessageDialog(null,"El periodo se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
-					if(ventanaCrearActividad!=null) {
-						ventanaCrearActividad.getPeriodosIns();
-						ventanaCrearActividad.comboBox_1_1.setSelectedIndex(ventanaCrearActividad.comboBox_1_1.getItemCount()-1);
-					}
-					frmCrearPeriodoDe.dispose();
+					try {
+						modeloPer.nuevoPeriodoIns(nombre, descripcion, fecha_ini_soc, fecha_fin_soc, fecha_fin_no_soc);
+						JOptionPane.showMessageDialog(frmCrearPeriodoDe,"El periodo se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+						if(ventanaCrearActividad!=null) {
+							ventanaCrearActividad.getPeriodosIns();
+							ventanaCrearActividad.comboBox_1_1.setSelectedIndex(ventanaCrearActividad.comboBox_1_1.getItemCount()-1);
+						}
+						frmCrearPeriodoDe.dispose();
+					} catch (Exception ePeriodoIns) {
+						JOptionPane.showMessageDialog(frmCrearPeriodoDe,"No se ha podido crear el periodo.\nEl nombre de periodo ya existe.","Error.",JOptionPane.ERROR_MESSAGE);
+					}		
 				}
 				
 			}
