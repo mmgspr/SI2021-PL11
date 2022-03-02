@@ -17,6 +17,13 @@ public class PeriodosInscripcionModel {
 		return db.executeQueryArray(SQL_TODOS_PERIODOS_INS );
 	}
 	
+	//SQL para obtener el id de un periodo de inscripcion
+		public static final String SQL_ID_PERIODO_INS = "SELECT id_periodo_inscripcion FROM periodos_inscripcion WHERE nombre=";
+		
+		public List<Object[]> getIdPeriodoIns(String nombre){
+			return db.executeQueryArray(SQL_ID_PERIODO_INS+"'"+nombre+"'");	
+		}
+	
 	//Método para instertar un nuevo periodo de inscripcion
 		public static final String SQL_NUEVO_PERIODO_INS = "INSERT INTO periodos_inscripcion(id_periodo_inscripcion, nombre, descripcion, fecha_ini_socio, fecha_fin_socio, fecha_fin_no_socio) VALUES (?, ?, ?, ?, ?, ?);";
 		public void nuevoPeriodoIns(String nombre, String descripcion, String fecha_ini_soc, String fecha_fin_soc, String fecha_fin_no_soc) {
