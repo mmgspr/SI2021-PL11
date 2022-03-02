@@ -15,5 +15,13 @@ public class ActividadesModel {
 			
 			return db.executeQueryArray(SQL_TODAS_ACTIVIDADES);
 		}
+		
+	//Método para obtener siguiente id
+	public static final String SQL_SIGUIENTE_ID = "SELECT MAX(id_actividad) from actividades;";
+	public long siguienteIdActividad() {
+		List<Object[]> lista;
+		lista = db.executeQueryArray(SQL_SIGUIENTE_ID);
+		return (long)lista.get(0)[0] + 1;
+	}
 	
 }
