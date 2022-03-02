@@ -38,13 +38,30 @@ private Database db = new Database();
 			}
 			return false;
 		}
+		
+	//SQL para comprobar si una instalacion está reservada por actividad
+	//retorna 0 si puedes reservar, 1 si está reservada por un cliente y puedes tmb, y -1 si no puedes reservar
+		public static final String SQL_RES_ACTIVIDAD = " AND actividad<>0";
+		List<Object[]> lista1;
+		boolean socio;
+		public int comprobarDisponibilidadActividad(String instalacion, String diaHora){
+			lista1 = db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'"+ SQL_RESERVADA+"'"+diaHora+"'"+ SQL_RES_ACTIVIDAD);
+			socio = comprobarDisponibilidad(instalacion, diaHora);
+			if (lista1.size() == 0 && socio) {
+				//System.out.println(lista.get(0)[0]);
+				return 0;
+			}
+			else if(socio)
+				return 1;
+			return -1;
+		}
 
 	//Método para instertar una nueva reserva
 	public static final String SQL_NUEVA_RESERVA = "INSERT INTO reservas (id_reserva, persona, instalacion, fecha, fecha_reserva, precio, actividad) VALUES (?, ?, ?, ?, ?, ?, ?);";
-	public void nuevaReserva(int socio, int instalacion, String fecha, String fecha_reserva, String precio, int actividad) {
+	public void nuevaReserva(int socio, int instalacion, String fecha, String fecha_reserva, String precio, Object actividad) {
 		long id;
-		id = siguienteIdReserva()
-;		db.executeUpdate(SQL_NUEVA_RESERVA,id, socio,instalacion, fecha, fecha_reserva, precio, actividad);
+		id = siguienteIdReserva();		
+		db.executeUpdate(SQL_NUEVA_RESERVA,id, null,instalacion, fecha, fecha_reserva, precio, actividad);
 	}
 	
 	
@@ -63,6 +80,7 @@ private Database db = new Database();
 		return db.executeQueryArray(SQL_ACTIVIDAD+id_actividad);	
 	}
 	
+<<<<<<< HEAD
 	
 	//Método para obtener el nombre de las actividades que se encuentran en un periodo determinado	
     public static final String SQL_TODAS_ACTIVIDADES_PERIODO1 = "SELECT nombre FROM actividades WHERE fecha_fin >=";
@@ -104,6 +122,15 @@ private Database db = new Database();
 		return db.executeQueryArray(SQL_PLAZAS_ACTIVIDAD+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
 		
 	}
+=======
+	//Método para eliminar una reserva
+	public static final String SQL_ELIMINAR_RESERVA = "DELETE from reservas WHERE instalacion=? AND fecha_reserva=?;";
+	public void eliminarReserva(int instalacion, String fecha) {
+
+		db.executeUpdate(SQL_ELIMINAR_RESERVA,instalacion, fecha);
+	}
+	
+>>>>>>> refs/heads/Trabajo
 
 
 	//Método para obtener el precio socio de las actividades que se encuentran en un periodo determinado	

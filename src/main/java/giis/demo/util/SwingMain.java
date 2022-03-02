@@ -18,7 +18,7 @@ import giis.demo.tkrun.*;
 public class SwingMain {
 
 	private JFrame frmVentanaDeCarga;
-	private inicial vInicial;
+	private Login vLogin;
 	public Database db;
 	
 	/**
@@ -44,6 +44,10 @@ public class SwingMain {
 	public SwingMain() {
 		initialize();
 	}
+	public SwingMain(Login vLogin) {
+		this.vLogin=vLogin;
+		initialize();
+	}
 
 	/**
 	 * Initialize the contents of the frame.aaa
@@ -53,19 +57,9 @@ public class SwingMain {
 		frmVentanaDeCarga.setTitle("Ventana de carga");
 		frmVentanaDeCarga.setBounds(0, 0, 287, 185);
 		frmVentanaDeCarga.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
 		
-		vInicial= new inicial(this);
-		JButton btnEjecutarTkrun = new JButton("Ejecutar sistema");
-		btnEjecutarTkrun.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
-			public void actionPerformed(ActionEvent e) {
-				//CarrerasController controller=new CarrerasController(new CarrerasModel(), new CarrerasView());
-				//controller.initController();
-				vInicial.getFrmIndex().setVisible(true);
-				
-			}
-		});
 		frmVentanaDeCarga.getContentPane().setLayout(new BoxLayout(frmVentanaDeCarga.getContentPane(), BoxLayout.Y_AXIS));
-		frmVentanaDeCarga.getContentPane().add(btnEjecutarTkrun);
 		
 			
 		JButton btnInicializarBaseDeDatos = new JButton("Inicializar Base de Datos en Blanco");
@@ -86,8 +80,20 @@ public class SwingMain {
 			}
 		});
 		frmVentanaDeCarga.getContentPane().add(btnCargarDatosIniciales);
+		JButton btnEjecutarTkrun = new JButton("Ejecutar sistema");
+		btnEjecutarTkrun.addActionListener(new ActionListener() { //NOSONAR codigo autogenerado
+			public void actionPerformed(ActionEvent e) {
+				//CarrerasController controller=new CarrerasController(new CarrerasModel(), new CarrerasView());
+				//controller.initController();
+				vLogin.getvInicialAdmin().getFrmIndex().setVisible(true);
+				frmVentanaDeCarga.setVisible(false);
+				
+			}
+		});
+		frmVentanaDeCarga.getContentPane().add(btnEjecutarTkrun);
 	}
 
-	public JFrame getFrame() { return this.frmVentanaDeCarga; }
+	public JFrame getFrmIndex() { return this.frmVentanaDeCarga; }
+	
 	
 }

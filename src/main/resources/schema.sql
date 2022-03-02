@@ -27,14 +27,16 @@ CREATE TABLE clientes(
 
     fecha_nacimiento date,
     
-    moroso boolean
+    moroso boolean, 
+    
+    contraseña varchar(20)
 
 ); 
 CREATE TABLE instalaciones( 
 
     id_instalacion integer unsigned unique not null primary key, 
 
-    nombre varchar(50), 
+    nombre varchar(50) unique, 
 
     deporte varchar(20), 
 
@@ -66,7 +68,7 @@ CREATE TABLE periodos_inscripcion(
 
     id_periodo_inscripcion integer unsigned unique not null primary key, 
 
-	nombre varchar(50), 
+	nombre varchar(50) unique, 
 
     descripcion varchar(200), 
 

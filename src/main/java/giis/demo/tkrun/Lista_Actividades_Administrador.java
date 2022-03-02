@@ -35,7 +35,6 @@ public class Lista_Actividades_Administrador {
 	private InstalacionesModel modelo = new InstalacionesModel();
 	private JFrame frmListaDeActividades;
 	private JTable table;
-	private SwingMain principal;
 
 	/**
 	 * Launch the application.
@@ -58,10 +57,6 @@ public class Lista_Actividades_Administrador {
 	 */
 	public Lista_Actividades_Administrador() {
 		initialize();
-	}
-	public Lista_Actividades_Administrador(SwingMain principal) {
-		initialize();
-		this.principal = principal;
 	}
 
 	/**
