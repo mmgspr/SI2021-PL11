@@ -33,16 +33,15 @@ public class visualizarReservasS {
 	private JTable table;
 	private InstalacionesModel modeloInstal = new InstalacionesModel();
 	private ReservasModel modeloReserv=new ReservasModel();
-	private SwingMain principal;
+	private Login vLogin;
 	private DefaultTableModel tableModel;
 	private Object[][] contenidos;
 	private String titulos[] = new String[31];
-	int id_socio=-1;
+	int id_socio;
 	
 	Calendar cal=Calendar.getInstance();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	final long tiempo_actual=cal.getTime().getTime();
-	private JTextField txtIDSocio;
 	
 	/**
 	 * Launch the application a
@@ -66,9 +65,10 @@ public class visualizarReservasS {
 	public visualizarReservasS() {
 		initialize();
 	}
-	public visualizarReservasS(SwingMain principal) {
+	public visualizarReservasS(Login login) {
 		initialize();
-		this.principal = principal;
+		this.vLogin = login;
+		this.id_socio=this.vLogin.getId_socio();
 	}
 	
 	
@@ -149,28 +149,6 @@ public class visualizarReservasS {
 				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
 		);
 		
-		txtIDSocio = new JTextField();
-		
-		txtIDSocio.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				if(arg0.getKeyChar()<'0' || arg0.getKeyChar()>'9') {
-					arg0.setKeyChar((char)127);
-				}}});
-			
-		txtIDSocio.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				if(txtIDSocio.getText().equals("")) {id_socio=-1;}
-				else {
-					id_socio=Integer.parseInt(txtIDSocio.getText());
-					
-				}}});
-		
-		txtIDSocio.setColumns(10);
-		
-		JLabel lblIntroduceTuId = new JLabel("Introduce tu id de socio:");
-		
 		JButton ButtonRecargar = new JButton("Recargar Tabla");
 		
 		ButtonRecargar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -193,12 +171,7 @@ public class visualizarReservasS {
 							.addGap(32)
 							.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
 							.addGap(36)
-							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-							.addComponent(lblIntroduceTuId)
-							.addGap(18)
-							.addComponent(txtIDSocio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(38)))
+							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)))
 					.addGap(10))
 		);
 		gl_panel.setVerticalGroup(
@@ -209,9 +182,7 @@ public class visualizarReservasS {
 						.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(txtIDSocio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblIntroduceTuId)))
+							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(15)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
@@ -261,7 +232,7 @@ public class visualizarReservasS {
 		
 		for(int i=0; i<13;i++) {
 			for(int j=1; j<31; j++) {
-				contenido[i][j]="LIB";
+				contenido[i][j]="LIBRE";
 			}
 		}
 		
@@ -305,91 +276,91 @@ public class visualizarReservasS {
 				if(esActividad) {
 					switch(horaTotal) {
 					case "9:00":
-						contenido[0][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[0][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "10:00":
-						contenido[1][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[1][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "11:00":
-						contenido[2][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[2][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "12:00":
-						contenido[3][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[3][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "13:00":
-						contenido[4][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[4][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "14:00":
-						contenido[5][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[5][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "15:00":
-						contenido[6][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[6][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "16:00":
-						contenido[7][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[7][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "17:00":
-						contenido[8][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[8][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "18:00":
-						contenido[9][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[9][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "19:00":
-						contenido[10][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[10][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "20:00":
-						contenido[11][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[11][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "21:00":
-						contenido[12][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[12][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					}
 				}
 				else if(esReservaPropia){
 					switch(horaTotal) {
 					case "9:00":
-						contenido[0][dia_afectado]="RES(Usted)"; break;
+						contenido[0][dia_afectado]="Reservado(Usted)"; break;
 					case "10:00":
-						contenido[1][dia_afectado]="RES(Usted)"; break;
+						contenido[1][dia_afectado]="Reservado(Usted)"; break;
 					case "11:00":
-						contenido[2][dia_afectado]="RES(Usted)"; break;
+						contenido[2][dia_afectado]="Reservado(Usted)"; break;
 					case "12:00":
-						contenido[3][dia_afectado]="RES(Usted)"; break;
+						contenido[3][dia_afectado]="Reservado(Usted)"; break;
 					case "13:00":
-						contenido[4][dia_afectado]="RES(Usted)"; break;
+						contenido[4][dia_afectado]="Reservado(Usted)"; break;
 					case "14:00":
-						contenido[5][dia_afectado]="RES(Usted)"; break;
+						contenido[5][dia_afectado]="Reservado(Usted)"; break;
 					case "15:00":
-						contenido[6][dia_afectado]="RES(Usted)"; break;
+						contenido[6][dia_afectado]="Reservado(Usted)"; break;
 					case "16:00":
-						contenido[7][dia_afectado]="RES(Usted)"; break;
+						contenido[7][dia_afectado]="Reservado(Usted)"; break;
 					case "17:00":
-						contenido[8][dia_afectado]="RES(Usted)"; break;
+						contenido[8][dia_afectado]="Reservado(Usted)"; break;
 					case "18:00":
-						contenido[9][dia_afectado]="RES(Usted)"; break;
+						contenido[9][dia_afectado]="Reservado(Usted)"; break;
 					case "19:00":
-						contenido[10][dia_afectado]="RES(Usted)"; break;
+						contenido[10][dia_afectado]="Reservado(Usted)"; break;
 					case "20:00":
-						contenido[11][dia_afectado]="RES(Usted)"; break;
+						contenido[11][dia_afectado]="Reservado(Usted)"; break;
 					case "21:00":
-						contenido[12][dia_afectado]="RES(Usted)"; break;
+						contenido[12][dia_afectado]="Reservado(Usted)"; break;
 					}
 				}
 				else {
 					switch(horaTotal) {
 					case "9:00":
-						contenido[0][dia_afectado]="RES"; break;
+						contenido[0][dia_afectado]="Reservado"; break;
 					case "10:00":
-						contenido[1][dia_afectado]="RES"; break;
+						contenido[1][dia_afectado]="Reservado"; break;
 					case "11:00":
-						contenido[2][dia_afectado]="RES"; break;
+						contenido[2][dia_afectado]="Reservado"; break;
 					case "12:00":
-						contenido[3][dia_afectado]="RES"; break;
+						contenido[3][dia_afectado]="Reservado"; break;
 					case "13:00":
-						contenido[4][dia_afectado]="RES"; break;
+						contenido[4][dia_afectado]="Reservado"; break;
 					case "14:00":
-						contenido[5][dia_afectado]="RES"; break;
+						contenido[5][dia_afectado]="Reservado"; break;
 					case "15:00":
-						contenido[6][dia_afectado]="RES"; break;
+						contenido[6][dia_afectado]="Reservado"; break;
 					case "16:00":
-						contenido[7][dia_afectado]="RES"; break;
+						contenido[7][dia_afectado]="Reservado"; break;
 					case "17:00":
-						contenido[8][dia_afectado]="RES"; break;
+						contenido[8][dia_afectado]="Reservado"; break;
 					case "18:00":
-						contenido[9][dia_afectado]="RES"; break;
+						contenido[9][dia_afectado]="Reservado"; break;
 					case "19:00":
-						contenido[10][dia_afectado]="RES"; break;
+						contenido[10][dia_afectado]="Reservado"; break;
 					case "20:00":
-						contenido[11][dia_afectado]="RES"; break;
+						contenido[11][dia_afectado]="Reservado"; break;
 					case "21:00":
-						contenido[12][dia_afectado]="RES"; break;
+						contenido[12][dia_afectado]="Reservado"; break;
 					}
 				}
 				

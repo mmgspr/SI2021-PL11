@@ -39,9 +39,10 @@ public class Reservar_Instalacion_Socio {
 	private ClientesModel modeloClientes = new ClientesModel();
 	private JFrame frmReservarInstalacin;
 	private JTextField textFieldCoste;
-	private SwingMain principal;
+	private Login vLogin;
 	private String precio="";
 	private JTextField textFieldSocio;
+	private int id_socio;
 
 	/**
 	 * Launch the application.
@@ -65,9 +66,10 @@ public class Reservar_Instalacion_Socio {
 	public Reservar_Instalacion_Socio() {
 		initialize();
 	}
-	public Reservar_Instalacion_Socio(SwingMain principal) {
+	public Reservar_Instalacion_Socio(Login login) {
 		initialize();
-		this.principal = principal;
+		this.vLogin= login;
+		this.id_socio=this.vLogin.getId_socio();
 	}
 	/**
 	 * Initialize the contents of the frame.

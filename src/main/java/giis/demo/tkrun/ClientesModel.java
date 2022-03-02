@@ -16,12 +16,24 @@ public class ClientesModel {
 	
 	private Database db = new Database();
 	
+	public static final String SQL_CONTRASEÑA = "SELECT contraseña FROM clientes WHERE id_socio=";
+	
+	public List<Object[]> getContraseña(String id_socio){
+		
+		return db.executeQueryArray(SQL_CONTRASEÑA + "'"+id_socio+"';");
+	}
 	
 	//SQL para ver todos los id's de los clientes
 	public static final String SQL_TODOS_ID = "SELECT id_socio FROM clientes WHERE id_socio IS NOT NULL";
 	public List<Object[]> getIdTodos(){
 		
 		return db.executeQueryArray(SQL_TODOS_ID);
+	}
+	
+	public static final String SQL_NOMBRE_DESDE_ID= "SELECT nombre FROM clientes WHERE id_socio=";
+	public List<Object[]> getNombreDesdeId(int id_socio){
+		
+		return db.executeQueryArray(SQL_NOMBRE_DESDE_ID+id_socio+";");
 	}
 	
 	//SQL para comprobar si un id es válido
