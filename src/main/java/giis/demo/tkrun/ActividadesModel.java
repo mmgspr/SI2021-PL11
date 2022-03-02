@@ -32,4 +32,14 @@ public class ActividadesModel {
 				db.executeUpdate(SQL_NUEVA_ACTIVIDAD,id, nombre, descripcion, aforo, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion);
 			}
 	
+	
+	//Método para obtener el id de una actividad
+	public static final String SQL_ID_ACTIVIDAD = "SELECT id_actividad FROM actividades WHERE nombre=";
+	
+	public long getIdActividad(String nombre){
+		List<Object[]> lista;
+		lista = db.executeQueryArray(SQL_ID_ACTIVIDAD+"'"+nombre+"'");
+		return (long)lista.get(0)[0]; 	
+	}
+	
 }
