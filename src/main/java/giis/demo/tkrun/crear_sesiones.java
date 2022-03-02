@@ -183,7 +183,7 @@ public class crear_sesiones {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frmCrearSesiones,"Las sesiones se han guardado correctamento.","Guardado",JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frmCrearSesiones,"Las sesiones se han guardado correctamente.","Guardado",JOptionPane.INFORMATION_MESSAGE);
 				frmCrearSesiones.dispose();
 			}
 		});

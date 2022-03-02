@@ -18,10 +18,10 @@ public class SesionesModel {
 		
 		//Método para instertar una nueva actividad
 		public static final String SQL_NUEVA_SESION = "INSERT INTO sesiones(id_sesion, dia, hora_ini, hora_fin, actividad) VALUES (?, ?, ?, ?, ?);";
-		public void nuevaSesion(String hora_ini, String hora_fin, String actividad) {
+		public void nuevaSesion(String dia, String hora_ini, String hora_fin, long actividad) {
 			long id;
 			id = siguienteIdSesion();
-			db.executeUpdate(SQL_NUEVA_SESION, id, hora_ini, hora_fin, actividad);
+			db.executeUpdate(SQL_NUEVA_SESION, id, dia, hora_ini, hora_fin, actividad);
 		}
 		
 		//método para obtener las sesiones de una actividad

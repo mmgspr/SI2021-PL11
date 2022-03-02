@@ -198,7 +198,7 @@ public class crear_periodo_inscripcion {
 						JOptionPane.showMessageDialog(frmCrearPeriodoDe,"El periodo se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
 						if(ventanaCrearActividad!=null) {
 							ventanaCrearActividad.getPeriodosIns();
-							ventanaCrearActividad.comboBox_1_1.setSelectedIndex(ventanaCrearActividad.comboBox_1_1.getItemCount()-1);
+							//ventanaCrearActividad.comboBox_1_1.setSelectedIndex(0);
 						}
 						frmCrearPeriodoDe.dispose();
 					} catch (Exception ePeriodoIns) {

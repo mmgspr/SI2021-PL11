@@ -44,7 +44,8 @@ public class crear_actividad {
 	private JTextField textField_4;
 	private InstalacionesModel modeloIns = new InstalacionesModel();
 	private PeriodosInscripcionModel modeloPer = new PeriodosInscripcionModel();
-	private ActividadesModel modeloAct= new ActividadesModel();
+	private ActividadesModel modeloAct = new ActividadesModel();
+	private SesionesModel modeloSes = new SesionesModel();
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
@@ -372,15 +373,14 @@ public class crear_actividad {
 						}
 						String per_ins=p_i[0];
 						try {
-							modeloAct.nuevaActividad(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
+							long id_act=modeloAct.nuevaActividadRetornaId(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
 							sesionesLista=vSesiones.getSesionesLista();
-							
 							Iterator<String[]> iter=sesionesLista.iterator();
 							while(iter.hasNext()) {
 								String vector[]=iter.next();
-								System.out.printf("%s - %s - %s\n", vector[0],vector[1],vector[2]);
+								//System.out.printf("%s - %s - %s\n", vector[0],vector[1]+":00",vector[2]+":00");
+								modeloSes.nuevaSesion(vector[0], vector[1]+":00", vector[2]+":00", id_act);
 							}
-							
 							JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
 							frmCrearActividad.dispose();
 						} catch (Exception eActividad) {
@@ -436,15 +436,14 @@ public class crear_actividad {
 					}
 					String per_ins=p_i[0];
 					try {
-						modeloAct.nuevaActividad(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);	
+						long id_act=modeloAct.nuevaActividadRetornaId(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);	
 						sesionesLista=vSesiones.getSesionesLista();
-						
 						Iterator<String[]> iter=sesionesLista.iterator();
 						while(iter.hasNext()) {
 							String vector[]=iter.next();
-							System.out.printf("%s - %s - %s\n", vector[0],vector[1],vector[2]);
+							//System.out.printf("%s - %s - %s\n", vector[0],vector[1]+":00",vector[2]+":00");
+							modeloSes.nuevaSesion(vector[0], vector[1]+":00", vector[2]+":00", id_act);
 						}
-						
 						JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);
 						frmCrearActividad.dispose();
 					} catch (Exception eActividad) {
