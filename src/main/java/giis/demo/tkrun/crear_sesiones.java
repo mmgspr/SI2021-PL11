@@ -155,15 +155,13 @@ public class crear_sesiones {
 							comboBox.getSelectedIndex())+
 							" de "+comboBox_1.getModel().getElementAt(comboBox_1.getSelectedIndex())+
 							" a "+comboBox_1_1.getModel().getElementAt(comboBox_1_1.getSelectedIndex())+"\n");
-					Iterator<String[]> iter=sesionesLista.iterator();
-					
-					
-					
+					Iterator<String[]> iter=sesionesLista.iterator();					
+					/*
 					while(iter.hasNext()) {
 						String vector[]=iter.next();
 						System.out.printf("%s - %s - %s\n", vector[0],vector[1],vector[2]);
 					}
-					
+					*/
 				}
 				
 			}
@@ -174,6 +172,8 @@ public class crear_sesiones {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+				sesionesLista.removeAll(sesionesLista);
 				frmCrearSesiones.dispose();
 			}
 		});
