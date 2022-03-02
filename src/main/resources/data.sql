@@ -25,7 +25,7 @@ INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso, contraseñ
 ('52347843G',NULL,'Martín', '2006-6-24', true, null ),
 
 ('58428791E',3,'Mario', '2004-12-21', true, '58428791E'),
-(null, 0, 'dani', null, false, 'a') ;
+('a', 0, 'dani', null, false, 'a') ;
 INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES 
 
 (1,'Pista de tenis 1', 'Tenis', 7), 
