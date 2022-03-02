@@ -83,6 +83,10 @@ public class Lista_Actividades_Administrador {
 				frmListaDeActividades.dispose();
 			}
 		});
+		
+		table = new JTable();
+		
+		
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ButtonCancelar.setBounds(302, 302, 101, 29);
 		panel.add(ButtonCancelar);
@@ -91,27 +95,7 @@ public class Lista_Actividades_Administrador {
 		scrollPane.setBounds(10, 58, 668, 234);
 		panel.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Actividad", "Tipo de Actividad", "Fecha Inicio", "Fecha Fin", "N\u00BA Plazas", "Precio Socios", "Precio No Socios"
-			}
-		));
+		
 		scrollPane.setViewportView(table);
 		
 		JLabel lblNewLabel = new JLabel("Fin de Periodo:");
@@ -148,31 +132,26 @@ public class Lista_Actividades_Administrador {
 			    SimpleDateFormat sdfk = new SimpleDateFormat("yyyy-MM-dd");
 			    String dateFin = sdfk.format(dateChooserFin.getDate());
 				String Fin = dateFin;
-								
-				;
+																
+				RellenarTablas(table, Inicio, Fin);
 				
-				//id_instalacion
+			
+				
+				
+				
+					
+				
+				
+				/*
+				//variable actividades
 				String Actividad;
-				
-				List<Object[]> lista=modeloReservas.getActividadPeriodo(Inicio, Fin);
-				//Lita donde se guardan todas las actividades
-				String[] nombre=new String[lista.size()];
-				//Para obtener el número de actividades de esa lista
-				Iterator<Object[]> iterador = lista.iterator();				
-				int i=0;
-				while(iterador.hasNext()) {
-					nombre[i]=iterador.next()[0].toString();
-					i++;
-				}
-				
 				// BORRAR AL ACABAR:PARA COMPROBAR QUE FUNCIONA getActividadPeriodo
 				while(i > 0) {
 					i--;
 				Actividad = nombre[i];
-				System.out.println(Actividad);
-			
+				System.out.println(Actividad);			
 				}
-				
+				*/
 				
 				
 				
@@ -180,8 +159,10 @@ public class Lista_Actividades_Administrador {
 			}
 		});
 		ButtonComprobar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonComprobar.setBounds(537, 22, 121, 21);
+		ButtonComprobar.setBounds(496, 20, 111, 21);
 		panel.add(ButtonComprobar);
+		
+	
 		
 	}
 
@@ -189,4 +170,41 @@ public class Lista_Actividades_Administrador {
 		// TODO Auto-generated method stub
 		return this.frmListaDeActividades;
 	}
+	
+	public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
+		
+		
+		List<Object[]> listaActividades=modeloReservas.getActividadPeriodo(Inicio, Fin);	
+	
+		Object[][] matriz = new Object[listaActividades.size()][7];					
+		Iterator<Object[]> iterador = listaActividades.iterator();				
+		int i=0;
+		while(iterador.hasNext()) {
+			Object[] vector = new Object[7]; 
+			vector=iterador.next();
+			
+			for(int j=0;j<7;j++) {
+				
+			  matriz[i][j]= vector[j];
+			
+		}
+			i++;
+		}
+		table.setModel(new DefaultTableModel(
+				
+				matriz
+				
+				
+				,
+				new String[] {
+					"Actividad", "Tipo de Actividad", "Fecha Inicio", "Fecha Fin", "N\u00BA Plazas", "Precio Socios", "Precio No Socios"
+				}
+				
+			));
+		
+	}
+	
+	
+	
+	
 }
