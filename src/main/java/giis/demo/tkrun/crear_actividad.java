@@ -281,6 +281,8 @@ public class crear_actividad {
 					lblFechaFinal.setEnabled(true);
 				}
 				else {
+					dateChooser.setDate(null);
+					dateChooser_1.setDate(null);
 					dateChooser.setEnabled(false);
 					dateChooser_1.setEnabled(false);
 					lblFechaInicial.setEnabled(false);
@@ -384,10 +386,7 @@ public class crear_actividad {
 		});
 		btnNewButton_1_1_1.setBounds(10, 346, 135, 21);
 		panel.add(btnNewButton_1_1_1);
-		
-		
-
-		
+			
 		
 	}
 

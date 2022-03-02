@@ -190,8 +190,8 @@ public class crear_periodo_inscripcion {
 				else if(dateFinSoc.getTime()-dateIniSoc.getTime()<0) {
 					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
 				}
-				else if(dateFinNoSoc.getTime()-dateIniSoc.getTime()<0) {
-					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
+				else if(dateFinNoSoc.getTime()-dateFinSoc.getTime()<0) {
+					JOptionPane.showMessageDialog(null,"No se ha podido crear el periodo. \nLa fecha final de no socios no puede ser anterior a la final de socios.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					String nombre=textField.getText();
