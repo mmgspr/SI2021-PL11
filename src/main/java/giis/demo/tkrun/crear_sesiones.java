@@ -190,6 +190,16 @@ public class crear_sesiones {
 		btnGuardar.setBounds(585, 277, 89, 23);
 		panel.add(btnGuardar);
 		
+		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+				sesionesLista.removeAll(sesionesLista);
+			}
+		});
+		btnLimpiar.setBounds(350, 244, 89, 23);
+		panel.add(btnLimpiar);
+		
 		
 		
 		

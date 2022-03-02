@@ -307,6 +307,7 @@ public class crear_actividad {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat year = new SimpleDateFormat("yyyy");
 				Date dateIni = dateChooser.getDate();
 				Date dateFin = dateChooser_1.getDate();
 				//fecha de hoy
@@ -350,7 +351,32 @@ public class crear_actividad {
 						String descripcion=textArea.getText();
 						String fecha_ini=sdf.format(dateIni);
 						String fecha_fin=sdf.format(dateFin);
-						
+						String aforo=spinner.getModel().getValue().toString();
+						String pSoc=textField_1.getText();
+						String pNoSoc=textField_2.getText();
+						String deporte=comboBox_1.getSelectedItem().toString();
+						String instalacion_nombre=comboBox.getSelectedItem().toString();
+						List<Object[]> instalacion_lista=modeloIns.getIdInstalacion(instalacion_nombre);
+						String[] instal=new String[instalacion_lista.size()];
+						Iterator<Object[]> iteradorIns = instalacion_lista.iterator();
+						int iIns=0;
+						while(iteradorIns.hasNext()) {
+							instal[iIns]=iteradorIns.next()[0].toString();
+							iIns++;
+						}
+						String instalacion=instal[0];
+						//System.out.printf("%s", instalacion);
+						String per_ins_nombre=comboBox_1_1.getSelectedItem().toString();
+						List<Object[]> per_ins_lista=modeloPer.getIdPeriodoIns(per_ins_nombre);
+						String[] p_i=new String[per_ins_lista.size()];
+						Iterator<Object[]> iteradorPerIns = per_ins_lista.iterator();
+						int iPerIns=0;
+						while(iteradorPerIns.hasNext()) {
+							p_i[iPerIns]=iteradorPerIns.next()[0].toString();
+							iIns++;
+						}
+						String per_ins=p_i[0];
+						//System.out.printf("%s", per_ins);
 						JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
 						frmCrearActividad.dispose();
 					}
@@ -359,7 +385,48 @@ public class crear_actividad {
 				else {			
 					String nombre=textField.getText();
 					String descripcion=textArea.getText();
-					
+					if(comboBox_2.getSelectedIndex()==0) {
+						String fecha_ini=year.format(dateHoy)+"-6-21";
+						String fecha_fin=year.format(dateHoy)+"-9-23";
+					}
+					else if(comboBox_2.getSelectedIndex()==1) {
+						String fecha_ini=year.format(dateHoy)+"-9-23";
+						String fecha_fin=year.format(dateHoy)+"-12-21";
+					}
+					else if(comboBox_2.getSelectedIndex()==2) {
+						String fecha_ini=year.format(dateHoy)+"-12-21";
+						String fecha_fin=year.format(dateHoy)+"-3-20";
+					}
+					else if(comboBox_2.getSelectedIndex()==3) {
+						String fecha_ini=year.format(dateHoy)+"-3-20";
+						String fecha_fin=year.format(dateHoy)+"-6-21";
+					}
+					//int aforo=(int) spinner.getModel().getValue();
+					String aforo=spinner.getModel().getValue().toString();
+					String pSoc=textField_1.getText();
+					String pNoSoc=textField_2.getText();
+					String deporte=comboBox_1.getSelectedItem().toString();
+					String instalacion_nombre=comboBox.getSelectedItem().toString();
+					List<Object[]> instalacion_lista=modeloIns.getIdInstalacion(instalacion_nombre);
+					String[] instal=new String[instalacion_lista.size()];
+					Iterator<Object[]> iteradorIns = instalacion_lista.iterator();
+					int iIns=0;
+					while(iteradorIns.hasNext()) {
+						instal[iIns]=iteradorIns.next()[0].toString();
+						iIns++;
+					}
+					String instalacion=instal[0];
+					//System.out.printf("%s", instalacion);
+					String per_ins_nombre=comboBox_1_1.getSelectedItem().toString();
+					List<Object[]> per_ins_lista=modeloPer.getIdPeriodoIns(per_ins_nombre);
+					String[] p_i=new String[per_ins_lista.size()];
+					Iterator<Object[]> iteradorPerIns = per_ins_lista.iterator();
+					int iPerIns=0;
+					while(iteradorPerIns.hasNext()) {
+						p_i[iPerIns]=iteradorPerIns.next()[0].toString();
+						iIns++;
+					}
+					String per_ins=p_i[0];
 					JOptionPane.showMessageDialog(null,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
 					frmCrearActividad.dispose();
 				}
