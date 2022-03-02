@@ -47,7 +47,6 @@ public class crear_actividad {
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
-	private SwingMain principal;
 	
 	JComboBox comboBox_1_1;
 	String[] periodosIns;
@@ -74,11 +73,6 @@ public class crear_actividad {
 	 */
 	public crear_actividad() {
 		initialize();
-	}
-	
-	public crear_actividad(SwingMain principal) {
-		initialize();
-		this.principal = principal;
 	}
 
 	/**

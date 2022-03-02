@@ -42,7 +42,6 @@ public class reserva_admin_cliente {
 	private InstalacionesModel modelo = new InstalacionesModel();
 	private ReservasModel modeloReservas = new ReservasModel();
 	private ClientesModel modeloClientes = new ClientesModel();
-	private SwingMain principal;
 	private String precio="";
 
 	/**
@@ -68,11 +67,6 @@ public class reserva_admin_cliente {
 	public reserva_admin_cliente() {
 		initialize();
 	}
-	public reserva_admin_cliente(SwingMain principal) {
-		initialize();
-		this.principal = principal;
-	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */

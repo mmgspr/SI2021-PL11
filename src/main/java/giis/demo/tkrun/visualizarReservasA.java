@@ -62,10 +62,6 @@ public class visualizarReservasA {
 	public visualizarReservasA() {
 		initialize();
 	}
-	public visualizarReservasA(SwingMain principal) {
-		initialize();
-		this.principal = principal;
-	}
 	
 	
 	public JFrame getFrmVisualizarReservas() {
@@ -234,7 +230,7 @@ public class visualizarReservasA {
 		
 		for(int i=0; i<13;i++) {
 			for(int j=1; j<31; j++) {
-				contenido[i][j]="LIB";
+				contenido[i][j]="LIBRE";
 			}
 		}
 		
@@ -276,61 +272,61 @@ public class visualizarReservasA {
 				if(esActividad) {
 					switch(horaTotal) {
 					case "9:00":
-						contenido[0][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[0][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "10:00":
-						contenido[1][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[1][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "11:00":
-						contenido[2][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[2][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "12:00":
-						contenido[3][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[3][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "13:00":
-						contenido[4][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[4][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "14:00":
-						contenido[5][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[5][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "15:00":
-						contenido[6][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[6][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "16:00":
-						contenido[7][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[7][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "17:00":
-						contenido[8][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[8][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "18:00":
-						contenido[9][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[9][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "19:00":
-						contenido[10][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[10][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "20:00":
-						contenido[11][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[11][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "21:00":
-						contenido[12][dia_afectado]="RES("+nombre_actividad+")"; break;
+						contenido[12][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					}
 				}
 				else {
 					switch(horaTotal) {
 					case "9:00":
-						contenido[0][dia_afectado]="RES("+persona+")"; break;
+						contenido[0][dia_afectado]="Reservado("+persona+")"; break;
 					case "10:00":
-						contenido[1][dia_afectado]="RES("+persona+")"; break;
+						contenido[1][dia_afectado]="Reservado("+persona+")"; break;
 					case "11:00":
-						contenido[2][dia_afectado]="RES("+persona+")"; break;
+						contenido[2][dia_afectado]="Reservado("+persona+")"; break;
 					case "12:00":
-						contenido[3][dia_afectado]="RES("+persona+")"; break;
+						contenido[3][dia_afectado]="Reservado("+persona+")"; break;
 					case "13:00":
-						contenido[4][dia_afectado]="RES("+persona+")"; break;
+						contenido[4][dia_afectado]="Reservado("+persona+")"; break;
 					case "14:00":
-						contenido[5][dia_afectado]="RES("+persona+")"; break;
+						contenido[5][dia_afectado]="Reservado("+persona+")"; break;
 					case "15:00":
-						contenido[6][dia_afectado]="RES("+persona+")"; break;
+						contenido[6][dia_afectado]="Reservado("+persona+")"; break;
 					case "16:00":
-						contenido[7][dia_afectado]="RES("+persona+")"; break;
+						contenido[7][dia_afectado]="Reservado("+persona+")"; break;
 					case "17:00":
-						contenido[8][dia_afectado]="RES("+persona+")"; break;
+						contenido[8][dia_afectado]="Reservado("+persona+")"; break;
 					case "18:00":
-						contenido[9][dia_afectado]="RES("+persona+")"; break;
+						contenido[9][dia_afectado]="Reservado("+persona+")"; break;
 					case "19:00":
-						contenido[10][dia_afectado]="RES("+persona+")"; break;
+						contenido[10][dia_afectado]="Reservado("+persona+")"; break;
 					case "20:00":
-						contenido[11][dia_afectado]="RES("+persona+")"; break;
+						contenido[11][dia_afectado]="Reservado("+persona+")"; break;
 					case "21:00":
-						contenido[12][dia_afectado]="RES("+persona+")"; break;
+						contenido[12][dia_afectado]="Reservado("+persona+")"; break;
 					}
 				}
 				
