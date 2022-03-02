@@ -56,10 +56,75 @@ private Database db = new Database();
 		return (long)lista.get(0)[0] + 1;
 	}
 	
+	//Método para obtener el nombre de las actividades según su id 
 	public static final String SQL_ACTIVIDAD = "SELECT nombre FROM actividades WHERE id_actividad=";
 	
 	public List<Object[]> getActividad(long id_actividad){
 		return db.executeQueryArray(SQL_ACTIVIDAD+id_actividad);	
 	}
+	
+	
+	//Método para obtener el nombre de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_TODAS_ACTIVIDADES_PERIODO1 = "SELECT nombre FROM actividades WHERE fecha_fin >=";
+	
+	public List<Object[]> getActividadPeriodo(String fechaIni, String fechaFin){
+		return db.executeQueryArray(SQL_TODAS_ACTIVIDADES_PERIODO1+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
+		
+	} 
+	
+	//Método para obtener el tipo de actividad de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_TIPO_ACTIVIDAD = "SELECT descripcion FROM actividades WHERE fecha_fin >=";
+	
+	public List<Object[]> getTipoActividad(String fechaIni, String fechaFin){
+		return db.executeQueryArray(SQL_TIPO_ACTIVIDAD+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
+		
+	} 
+	
+	//Método para obtener la fecha inicial de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_FECHA_INI_ACTIVIDAD = "SELECT fecha_ini FROM actividades WHERE fecha_fin >=";
+	
+	public List<Object[]> getIniActividad(String fechaIni, String fechaFin){
+		return db.executeQueryArray(SQL_FECHA_INI_ACTIVIDAD+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
+		
+	} 
+	
+	
+	//Método para obtener la fecha fin de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_FECHA_FIN_ACTIVIDAD= "SELECT fecha_fin FROM actividades WHERE fecha_fin >=";
+	
+	public List<Object[]> getFinActividad(String fechaIni, String fechaFin){
+		return db.executeQueryArray(SQL_FECHA_FIN_ACTIVIDAD+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
+		
+	} 
+	
+	//Método para obtener el nº plazas de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_PLAZAS_ACTIVIDAD= "SELECT aforo FROM actividades WHERE fecha_fin >=";
+	
+	public List<Object[]> getPlazasActividad(String fechaIni, String fechaFin){
+		return db.executeQueryArray(SQL_PLAZAS_ACTIVIDAD+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
+		
+	}
 
+
+	//Método para obtener el precio socio de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_PRECIOS_ACTIVIDAD= "SELECT precio_socio FROM actividades WHERE fecha_fin >=";
+	
+	public List<Object[]> getPrecioSActividad(String fechaIni, String fechaFin){
+		return db.executeQueryArray(SQL_PRECIOS_ACTIVIDAD+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
+		
+	}
+	
+	//Método para obtener el precio socio de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_PRECIONS_ACTIVIDAD= "SELECT precio_no_socio FROM actividades WHERE fecha_fin >=";
+	
+	public List<Object[]> getPrecioNSActividad(String fechaIni, String fechaFin){
+		return db.executeQueryArray(SQL_PRECIONS_ACTIVIDAD+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
+		
+	}
+	
+	
+	
+	
+	
+	
 }

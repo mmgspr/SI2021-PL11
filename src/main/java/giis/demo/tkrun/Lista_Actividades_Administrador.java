@@ -21,10 +21,18 @@ import giis.demo.util.SwingMain;
 
 import javax.swing.JSplitPane;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 public class Lista_Actividades_Administrador {
 
+	private ReservasModel modeloReservas = new ReservasModel();
+	private InstalacionesModel modelo = new InstalacionesModel();
 	private JFrame frmListaDeActividades;
 	private JTable table;
 	private SwingMain principal;
@@ -62,41 +70,30 @@ public class Lista_Actividades_Administrador {
 	private void initialize() {
 		frmListaDeActividades = new JFrame();
 		frmListaDeActividades.setTitle("Lista de Actividades");
-		frmListaDeActividades.setBounds(100, 100, 541, 362);
+		frmListaDeActividades.setBounds(100, 100, 722, 367);
 		frmListaDeActividades.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmListaDeActividades.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel LabelPeriodo = new JLabel("Periodo:");
+		JLabel LabelPeriodo = new JLabel("Inicio de Periodo:");
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelPeriodo.setBounds(10, 20, 57, 20);
+		LabelPeriodo.setBounds(23, 20, 111, 20);
 		panel.add(LabelPeriodo);
 		
-		JComboBox comboBoxPeriodo = new JComboBox();
-		comboBoxPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBoxPeriodo.setModel(new DefaultComboBoxModel(new String[] {"<selecciona uno>", "Primavera", "Verano", "Otoño", "Invierno"}));
-		comboBoxPeriodo.setBounds(69, 20, 148, 21);
-		panel.add(comboBoxPeriodo);
-		
-		JButton ButtonCancelar = new JButton("Cancelar");
+		JButton ButtonCancelar = new JButton("Aceptar");
 		ButtonCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmListaDeActividades.dispose();
 			}
 		});
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonCancelar.setBounds(10, 286, 101, 29);
+		ButtonCancelar.setBounds(302, 302, 101, 29);
 		panel.add(ButtonCancelar);
 		
-		JButton ButtonGuardar = new JButton("Guardar");
-		ButtonGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonGuardar.setBounds(416, 286, 101, 29);
-		panel.add(ButtonGuardar);
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 58, 507, 218);
+		scrollPane.setBounds(10, 58, 668, 234);
 		panel.add(scrollPane);
 		
 		table = new JTable();
@@ -122,7 +119,74 @@ public class Lista_Actividades_Administrador {
 		));
 		scrollPane.setViewportView(table);
 		
+		JLabel lblNewLabel = new JLabel("Fin de Periodo:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(283, 19, 95, 22);
+		panel.add(lblNewLabel);
 		
+		JDateChooser dateChooserInicio = new JDateChooser();
+		dateChooserInicio.setToolTipText("");
+		dateChooserInicio.setBounds(144, 21, 95, 19);
+		panel.add(dateChooserInicio);
+				
+	
+			
+		
+		JDateChooser dateChooserFin = new JDateChooser();
+		dateChooserFin.setBounds(385, 21, 101, 19);
+		panel.add(dateChooserFin);
+		
+		
+		
+			
+		
+		JButton ButtonComprobar = new JButton("Comprobar");
+		ButtonComprobar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//fechaInicio
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String dateInicio = sdf.format(dateChooserInicio.getDate());
+				String Inicio = dateInicio;
+				
+				//FechaFin
+			    SimpleDateFormat sdfk = new SimpleDateFormat("yyyy-MM-dd");
+			    String dateFin = sdfk.format(dateChooserFin.getDate());
+				String Fin = dateFin;
+								
+				;
+				
+				//id_instalacion
+				String Actividad;
+				
+				List<Object[]> lista=modeloReservas.getActividadPeriodo(Inicio, Fin);
+				//Lita donde se guardan todas las actividades
+				String[] nombre=new String[lista.size()];
+				//Para obtener el número de actividades de esa lista
+				Iterator<Object[]> iterador = lista.iterator();				
+				int i=0;
+				while(iterador.hasNext()) {
+					nombre[i]=iterador.next()[0].toString();
+					i++;
+				}
+				
+				// BORRAR AL ACABAR:PARA COMPROBAR QUE FUNCIONA getActividadPeriodo
+				while(i > 0) {
+					i--;
+				Actividad = nombre[i];
+				System.out.println(Actividad);
+			
+				}
+				
+				
+				
+				
+				
+			}
+		});
+		ButtonComprobar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ButtonComprobar.setBounds(537, 22, 121, 21);
+		panel.add(ButtonComprobar);
 		
 	}
 
