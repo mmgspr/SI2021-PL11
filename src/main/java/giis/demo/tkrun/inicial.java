@@ -63,7 +63,7 @@ public class inicial {
 	 */
 	private void initialize() {
 		frmIndex = new JFrame();
-		frmIndex.setTitle("Índice");
+		frmIndex.setTitle("Menú inicial");
 		frmIndex.setBounds(100, 100, 531, 363);
 		frmIndex.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
