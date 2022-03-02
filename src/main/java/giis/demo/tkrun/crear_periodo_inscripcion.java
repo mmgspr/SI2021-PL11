@@ -54,12 +54,6 @@ public class crear_periodo_inscripcion {
 	public crear_periodo_inscripcion(crear_actividad vSM) {
 		this.ventanaCrearActividad=vSM;
 		initialize();
-		
-	}
-	
-	public crear_periodo_inscripcion(SwingMain principal) {
-		initialize();
-		this.principal = principal;
 	}
 
 	/**
