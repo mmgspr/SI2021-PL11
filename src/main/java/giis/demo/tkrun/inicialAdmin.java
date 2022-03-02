@@ -23,6 +23,7 @@ public class inicialAdmin {
 	private crear_actividad vCrearActividad;
 	private Lista_Actividades_Administrador vListaActividadesA;
 	private crear_periodo_inscripcion vCrearPeriodoInscripcion;
+	private reserva_actividad_admin vReservaActividad;
 	/**
 	 * Launch the application.
 	 */
@@ -119,6 +120,8 @@ public class inicialAdmin {
 		btnNewButton_1_6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vReservaActividad = new reserva_actividad_admin();
+				vReservaActividad.getFrmReservaActividad().setVisible(true);
 			}
 		});
 		btnNewButton_1_6.setBounds(305, 238, 181, 23);
