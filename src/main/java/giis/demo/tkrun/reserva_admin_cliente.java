@@ -151,7 +151,7 @@ public class reserva_admin_cliente {
 		panel.add(lblNewLabel_1_1);
 		
 		JComboBox comboBoxHora = new JComboBox();
-		comboBoxHora.setModel(new DefaultComboBoxModel(new String[] {"10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00", "21:00:00", "22:00:00"}));
+		comboBoxHora.setModel(new DefaultComboBoxModel(new String[] {"9:00:00","10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00", "21:00:00"}));
 		comboBoxHora.setBounds(205, 166, 86, 22);
 		panel.add(comboBoxHora);
 		

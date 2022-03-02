@@ -38,6 +38,23 @@ private Database db = new Database();
 			}
 			return false;
 		}
+		
+	//SQL para comprobar si una instalacion está reservada por actividad
+	//retorna 0 si puedes reservar, 1 si está reservada por un cliente y puedes tmb, y -1 si no puedes reservar
+		public static final String SQL_RES_ACTIVIDAD = " AND actividad<>0";
+		List<Object[]> lista1;
+		boolean socio;
+		public int comprobarDisponibilidadActividad(String instalacion, String diaHora){
+			lista1 = db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'"+ SQL_RESERVADA+"'"+diaHora+"'"+ SQL_ACTIVIDAD);
+			socio = comprobarDisponibilidad(instalacion, diaHora);
+			if (lista1.size() == 0 && socio) {
+				//System.out.println(lista.get(0)[0]);
+				return 0;
+			}
+			else if(! socio)
+				return 1;
+			return -1;
+		}
 
 	//Método para instertar una nueva reserva
 	public static final String SQL_NUEVA_RESERVA = "INSERT INTO reservas (id_reserva, persona, instalacion, fecha, fecha_reserva, precio, actividad) VALUES (?, ?, ?, ?, ?, ?, ?);";
