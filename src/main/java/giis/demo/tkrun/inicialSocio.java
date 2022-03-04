@@ -91,7 +91,7 @@ public class inicialSocio {
 		btnNewButton_1_2.setBounds(25, 182, 207, 23);
 		panel.add(btnNewButton_1_2);
 		
-		lblBienvenido = new JLabel("Bienvenido, ");
+		lblBienvenido = new JLabel("Bienvenido/a, ");
 		lblBienvenido.setFont(new Font("Tahoma", Font.BOLD, 33));
 		lblBienvenido.setBounds(25, 39, 455, 84);
 		panel.add(lblBienvenido);
