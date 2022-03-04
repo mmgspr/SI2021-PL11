@@ -271,7 +271,7 @@ public class visualizarReservasA {
 				}
 				if(esActividad) {
 					switch(horaTotal) {
-					case "9:00":
+					case "09:00":
 						contenido[0][dia_afectado]="Reservado("+nombre_actividad+")"; break;
 					case "10:00":
 						contenido[1][dia_afectado]="Reservado("+nombre_actividad+")"; break;
@@ -300,8 +300,9 @@ public class visualizarReservasA {
 					}
 				}
 				else {
+					System.out.println(horaTotal);
 					switch(horaTotal) {
-					case "9:00":
+					case "09:00":
 						contenido[0][dia_afectado]="Reservado("+persona+")"; break;
 					case "10:00":
 						contenido[1][dia_afectado]="Reservado("+persona+")"; break;
