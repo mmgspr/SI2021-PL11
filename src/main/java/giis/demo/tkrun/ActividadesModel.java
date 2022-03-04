@@ -31,6 +31,12 @@ public class ActividadesModel {
 				id = siguienteIdActividad();
 				db.executeUpdate(SQL_NUEVA_ACTIVIDAD,id, nombre, descripcion, aforo, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion);
 			}
+			public long nuevaActividadRetornaId(String nombre, String descripcion, String aforo, String precio_socio, String precio_no_socio, String fecha_ini, String fecha_fin, String deporte, String instalacion, String periodo_inscripcion) {
+				long id;
+				id = siguienteIdActividad();
+				db.executeUpdate(SQL_NUEVA_ACTIVIDAD,id, nombre, descripcion, aforo, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion);
+				return id;
+			}
 	
 	
 	//Método para obtener el id de una actividad
