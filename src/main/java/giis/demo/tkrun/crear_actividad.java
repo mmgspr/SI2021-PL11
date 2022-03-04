@@ -135,7 +135,7 @@ public class crear_actividad {
 		comboBox.setBounds(96, 215, 199, 21);
 		panel.add(comboBox);
 		
-		JLabel lblDeporte = new JLabel("\u2022 Deporte:");
+		JLabel lblDeporte = new JLabel("• Tipo:");
 		lblDeporte.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDeporte.setBounds(10, 264, 73, 17);
 		panel.add(lblDeporte);
@@ -154,7 +154,7 @@ public class crear_actividad {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(deportes));
-		comboBox_1.setBounds(84, 264, 199, 21);
+		comboBox_1.setBounds(61, 264, 199, 21);
 		panel.add(comboBox_1);
 		
 		JLabel lblPlazas = new JLabel("\u2022 Plazas:");
