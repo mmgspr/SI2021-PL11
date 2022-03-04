@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +34,10 @@ import giis.demo.util.Database;
 import giis.demo.util.SwingMain;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+ 
+import java.time.format.DateTimeFormatter;
+import java.time.Duration;
+import java.time.Period;
 
 public class crear_actividad {
 
@@ -316,7 +321,7 @@ public class crear_actividad {
 					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_1.getText().equals("")) {
-					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para socios. ","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_2.getText().equals("")) {
 					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para no socios.","Error",JOptionPane.ERROR_MESSAGE);
@@ -393,7 +398,11 @@ public class crear_actividad {
 					String nombre=textField.getText();
 					String descripcion=textArea.getText();
 					String fecha_ini=sdf.format(dateHoy);
-					String fecha_fin=sdf.format(dateHoy);
+					String fecha_fin=sdf.format(dateHoy);				
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(dateHoy);
+					calendar.add(Calendar.YEAR, -1);
+					Date año_ant=calendar.getTime();
 					if(comboBox_2.getSelectedIndex()==0) {
 						fecha_ini=year.format(dateHoy)+"-6-21";
 						fecha_fin=year.format(dateHoy)+"-9-23";
@@ -403,7 +412,7 @@ public class crear_actividad {
 						fecha_fin=year.format(dateHoy)+"-12-21";
 					}
 					else if(comboBox_2.getSelectedIndex()==2) {
-						fecha_ini=year.format(dateHoy)+"-12-21";
+						fecha_ini=year.format(año_ant)+"-12-21";
 						fecha_fin=year.format(dateHoy)+"-3-20";
 					}
 					else if(comboBox_2.getSelectedIndex()==3) {
