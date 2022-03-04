@@ -168,6 +168,16 @@ public class reserva_actividad_admin {
 		dateChooser_1_1.setBounds(1000,1000,1000,1000);
 		panel.add(dateChooser_1_1);
 		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"}));
+		comboBox_2.setBounds(1000,1000,1000,1000);
+		panel.add(comboBox_2);
+		
+		JComboBox comboBox_2_2 = new JComboBox();
+		comboBox_2_2.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"}));
+		comboBox_2_2.setBounds(1000,1000,1000,1000);
+		panel.add(comboBox_2_2);
+		
 		JButton btnNewButton_1 = new JButton("Reservar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -358,6 +368,10 @@ public class reserva_actividad_admin {
 					dateChooser_1.setBounds(1000, 1000, 1000, 1000);
 					dateChooser_1_1.setBounds(242, 375, 156, 19);
 					btnNewButton_2.setText("Resevar un periodo");
+					comboBox_2.setBounds(242, 229, 156, 19);
+					comboBox_2_2.setBounds(242, 298, 156, 19);
+					lblSeleccionePeriodo_1.setText("Seleccione hora inicial");
+					lblSeleccionePeriodo_1_1.setText("Seleccione hora final");
 					activado = true;
 				}
 				else {
@@ -365,6 +379,10 @@ public class reserva_actividad_admin {
 					dateChooser_1.setBounds(242, 298, 156, 19);
 					dateChooser_1_1.setBounds(1000,1000,1000,1000);
 					btnNewButton_2.setText("Resevar solo un día");
+					comboBox_2.setBounds(1000,1000,1000,1000);
+					comboBox_2_2.setBounds(1000,1000,1000,1000);
+					lblSeleccionePeriodo_1.setText("Seleccione fecha inicial:");
+					lblSeleccionePeriodo_1_1.setText("Seleccione fecha final:");
 					activado = false;
 				}
 				
@@ -372,6 +390,7 @@ public class reserva_actividad_admin {
 		});
 		btnNewButton_2.setBounds(46, 371, 163, 23);
 		panel.add(btnNewButton_2);
+		
 		
 		
 
