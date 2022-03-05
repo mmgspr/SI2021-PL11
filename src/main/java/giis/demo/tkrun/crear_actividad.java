@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +34,10 @@ import giis.demo.util.Database;
 import giis.demo.util.SwingMain;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+ 
+import java.time.format.DateTimeFormatter;
+import java.time.Duration;
+import java.time.Period;
 
 public class crear_actividad {
 
@@ -44,10 +49,12 @@ public class crear_actividad {
 	private JTextField textField_4;
 	private InstalacionesModel modeloIns = new InstalacionesModel();
 	private PeriodosInscripcionModel modeloPer = new PeriodosInscripcionModel();
-	private ActividadesModel modeloAct= new ActividadesModel();
+	private ActividadesModel modeloAct = new ActividadesModel();
+	private SesionesModel modeloSes = new SesionesModel();
 	
 	private crear_sesiones vSesiones;
 	private crear_periodo_inscripcion vPeriodoIns;
+	private List<String[]> sesionesLista;
 	
 	JComboBox comboBox_1_1;
 	String[] periodosIns;
@@ -133,7 +140,7 @@ public class crear_actividad {
 		comboBox.setBounds(96, 215, 199, 21);
 		panel.add(comboBox);
 		
-		JLabel lblDeporte = new JLabel("\u2022 Deporte:");
+		JLabel lblDeporte = new JLabel("• Tipo:");
 		lblDeporte.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDeporte.setBounds(10, 264, 73, 17);
 		panel.add(lblDeporte);
@@ -152,7 +159,7 @@ public class crear_actividad {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(deportes));
-		comboBox_1.setBounds(84, 264, 199, 21);
+		comboBox_1.setBounds(61, 264, 199, 21);
 		panel.add(comboBox_1);
 		
 		JLabel lblPlazas = new JLabel("\u2022 Plazas:");
@@ -314,7 +321,7 @@ public class crear_actividad {
 					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce una descripción.","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_1.getText().equals("")) {
-					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para socios.","Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para socios. ","Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(textField_2.getText().equals("")) {
 					JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad. \nIntroduce un precio para no socios.","Error",JOptionPane.ERROR_MESSAGE);
@@ -360,7 +367,6 @@ public class crear_actividad {
 							iIns++;
 						}
 						String instalacion=instal[0];
-						//System.out.printf("%s", instalacion);
 						String per_ins_nombre=comboBox_1_1.getSelectedItem().toString();
 						List<Object[]> per_ins_lista=modeloPer.getIdPeriodoIns(per_ins_nombre);
 						String[] p_i=new String[per_ins_lista.size()];
@@ -371,9 +377,15 @@ public class crear_actividad {
 							iIns++;
 						}
 						String per_ins=p_i[0];
-						//System.out.printf("%s", per_ins);
 						try {
-							modeloAct.nuevaActividad(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
+							long id_act=modeloAct.nuevaActividadRetornaId(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
+							sesionesLista=vSesiones.getSesionesLista();
+							Iterator<String[]> iter=sesionesLista.iterator();
+							while(iter.hasNext()) {
+								String vector[]=iter.next();
+								//System.out.printf("%s - %s - %s\n", vector[0],vector[1]+":00",vector[2]+":00");
+								modeloSes.nuevaSesion(vector[0], vector[1]+":00", vector[2]+":00", id_act);
+							}
 							JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
 							frmCrearActividad.dispose();
 						} catch (Exception eActividad) {
@@ -386,7 +398,11 @@ public class crear_actividad {
 					String nombre=textField.getText();
 					String descripcion=textArea.getText();
 					String fecha_ini=sdf.format(dateHoy);
-					String fecha_fin=sdf.format(dateHoy);
+					String fecha_fin=sdf.format(dateHoy);				
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(dateHoy);
+					calendar.add(Calendar.YEAR, -1);
+					Date año_ant=calendar.getTime();
 					if(comboBox_2.getSelectedIndex()==0) {
 						fecha_ini=year.format(dateHoy)+"-6-21";
 						fecha_fin=year.format(dateHoy)+"-9-23";
@@ -396,7 +412,7 @@ public class crear_actividad {
 						fecha_fin=year.format(dateHoy)+"-12-21";
 					}
 					else if(comboBox_2.getSelectedIndex()==2) {
-						fecha_ini=year.format(dateHoy)+"-12-21";
+						fecha_ini=year.format(año_ant)+"-12-21";
 						fecha_fin=year.format(dateHoy)+"-3-20";
 					}
 					else if(comboBox_2.getSelectedIndex()==3) {
@@ -418,7 +434,6 @@ public class crear_actividad {
 						iIns++;
 					}
 					String instalacion=instal[0];
-					//System.out.printf("%s", instalacion);
 					String per_ins_nombre=comboBox_1_1.getSelectedItem().toString();
 					List<Object[]> per_ins_lista=modeloPer.getIdPeriodoIns(per_ins_nombre);
 					String[] p_i=new String[per_ins_lista.size()];
@@ -429,10 +444,16 @@ public class crear_actividad {
 						iIns++;
 					}
 					String per_ins=p_i[0];
-					//System.out.printf("%s", per_ins);
 					try {
-						modeloAct.nuevaActividad(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);
-						JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);	
+						long id_act=modeloAct.nuevaActividadRetornaId(nombre, descripcion, aforo, pSoc, pNoSoc, fecha_ini, fecha_fin, deporte, instalacion, per_ins);	
+						sesionesLista=vSesiones.getSesionesLista();
+						Iterator<String[]> iter=sesionesLista.iterator();
+						while(iter.hasNext()) {
+							String vector[]=iter.next();
+							//System.out.printf("%s - %s - %s\n", vector[0],vector[1]+":00",vector[2]+":00");
+							modeloSes.nuevaSesion(vector[0], vector[1]+":00", vector[2]+":00", id_act);
+						}
+						JOptionPane.showMessageDialog(frmCrearActividad,"La actividad se ha creado correctamente","Creado",JOptionPane.INFORMATION_MESSAGE);
 						frmCrearActividad.dispose();
 					} catch (Exception eActividad) {
 						JOptionPane.showMessageDialog(frmCrearActividad,"No se ha podido crear la actividad.\n","Error.",JOptionPane.ERROR_MESSAGE);

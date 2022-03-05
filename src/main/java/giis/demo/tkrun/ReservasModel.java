@@ -56,17 +56,20 @@ private Database db = new Database();
 		
 	//SQL para comprobar si una instalacion está reservada por actividad
 	//retorna 0 si puedes reservar, 1 si está reservada por un cliente y puedes tmb, y -1 si no puedes reservar
-		public static final String SQL_RES_ACTIVIDAD = " AND actividad<>0";
-		List<Object[]> lista1;
-		boolean socio;
+		public static final String SQL_RES_ACTIVIDAD = " AND actividad!=0";
+		public static final String SQL_RES_SOCIO = " AND persona is not null";
+		List<Object[]> lista1, lista2;
+		//boolean socio;
 		public int comprobarDisponibilidadActividad(String instalacion, String diaHora){
 			lista1 = db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'"+ SQL_RESERVADA+"'"+diaHora+"'"+ SQL_RES_ACTIVIDAD);
-			socio = comprobarDisponibilidad(instalacion, diaHora);
-			if (lista1.size() == 0 && socio) {
+			lista2 = db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'"+ SQL_RESERVADA+"'"+diaHora+"'"+ SQL_RES_SOCIO);
+			//socio = comprobarDisponibilidad(instalacion, diaHora);
+			//System.out.println(socio);
+			if (lista1.size() == 0 && lista2.size() == 0) {
 				//System.out.println(lista.get(0)[0]);
 				return 0;
 			}
-			else if(socio)
+			else if(lista1.size() == 0)
 				return 1;
 			return -1;
 		}
@@ -111,5 +114,13 @@ private Database db = new Database();
 		
 	} 
 		
+	//Método para obtener el cliente a partir  
+	public static final String SQL_CLIENTE1 = "SELECT persona FROM reservas WHERE instalacion = '";
+	public static final String SQL_CLIENTE2 = " AND fecha_reserva = '";
+	
+	public int getCliente(String instalacion, String fecha){
+		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE1+instalacion+"'"+SQL_CLIENTE2 + fecha+"';");	
+		return (int) lista.get(0)[0];
+	} 
 	
 }

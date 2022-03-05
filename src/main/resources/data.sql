@@ -76,11 +76,11 @@ INSERT INTO inscripciones(id_inscripcion, persona, actividad, fecha) VALUES
 
 INSERT INTO sesiones(id_sesion, dia, hora_ini, hora_fin, actividad) VALUES 
 
-(1, 'Lunes', '9:00:00', '11:00:00', '1'), 
+(1, 'lunes', '9:00:00', '11:00:00', '1'), 
 
-(2, 'Miercoles', '16:00:00', '18:00:00', '1'), 
+(2, 'miercoles', '16:00:00', '18:00:00', '1'), 
 
-(3, 'Viernes', '9:00:00', '12:00:00', '2'),
+(3, 'viernes', '9:00:00', '12:00:00', '2'),
 
-(4, 'Sabado', '20:00:00', '21:00:00', '3'); 
+(4, 'sabado', '20:00:00', '21:00:00', '3'); 
 

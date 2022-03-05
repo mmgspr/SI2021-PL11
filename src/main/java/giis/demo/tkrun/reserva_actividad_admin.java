@@ -16,14 +16,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.Window;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
@@ -37,8 +43,10 @@ public class reserva_actividad_admin {
 	private ReservasModel modeloReservas = new ReservasModel();
 	private ClientesModel modeloClientes = new ClientesModel();
 	private ActividadesModel modeloActividades = new ActividadesModel();
+	private SesionesModel modeloSesiones = new SesionesModel();
 	private int i;
 	private boolean activado = false;
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	//pantalla principal
 	private SwingMain principal;
@@ -164,6 +172,16 @@ public class reserva_actividad_admin {
 		dateChooser_1_1.setBounds(1000,1000,1000,1000);
 		panel.add(dateChooser_1_1);
 		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"}));
+		comboBox_2.setBounds(1000,1000,1000,1000);
+		panel.add(comboBox_2);
+		
+		JComboBox comboBox_2_2 = new JComboBox();
+		comboBox_2_2.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"}));
+		comboBox_2_2.setBounds(1000,1000,1000,1000);
+		panel.add(comboBox_2_2);
+		
 		JButton btnNewButton_1 = new JButton("Reservar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,6 +192,7 @@ public class reserva_actividad_admin {
 				List<Object[]> lista=modelo.getIdInstalacion((String)comboBox_1.getSelectedItem());
 				String[] nombre=new String[lista.size()];
 				Iterator<Object[]> iterador = lista.iterator();
+				List<String[]> clientes_borrados = new ArrayList<String[]>();
 				
 				int i=0;
 				while(iterador.hasNext()) {
@@ -182,126 +201,214 @@ public class reserva_actividad_admin {
 				}
 				id = nombre[0];
 				
-				
-				//fecha inicio
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				String date1 = sdf.format(dateChooser.getDate());
-				
-				//fecha fin
-				String date2 = sdf.format(dateChooser_1.getDate());
-				
 				//fecha de hoy
 				Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-				
-				//diferencia entre fecha inicio y fin
-				long diferencia_dias= 0;
-				long diferencia_años= 0;
-				Date d1 = new Date();
-				Date d2 = new Date();
-				try {
-					//pasar de string a fecha
-		            d1 = sdf.parse(date1);
-		            d2 = sdf.parse(date2);
-		  
-		            //Calcular la diferencia en milisegundos
-		            long difference_In_Time
-		                = d2.getTime() - d1.getTime();
-		  
-		            // Calcular la diferencia en segundos, minutos, horas, años y dias
-		            long difference_In_Seconds
-		                = (difference_In_Time
-		                   / 1000)
-		                  % 60;
-		  
-		            long difference_In_Minutes
-		                = (difference_In_Time
-		                   / (1000 * 60))
-		                  % 60;
-		  
-		            long difference_In_Hours
-		                = (difference_In_Time
-		                   / (1000 * 60 * 60))
-		                  % 24;
-		  
-		            long difference_In_Years
-		                = (difference_In_Time
-		                   / (1000l * 60 * 60 * 24 * 365));
-		  
-		            long difference_In_Days
-		                = (difference_In_Time
-		                   / (1000 * 60 * 60 * 24))
-		                  % 365;
-		            diferencia_dias = difference_In_Days;
-		            diferencia_años = difference_In_Years;
-		           
-		        }
-		  
-		        // Catch the Exception
-		        catch (ParseException excepcion) {
-		            excepcion.printStackTrace();
-		        }
-				
-				
-				//Comprobar si está ocupada por una actividad
-				//int dia = d1.getDay();
-				Date fecha_inicio = dateChooser.getDate();
-				Calendar c = Calendar.getInstance();
-				c.setTime(fecha_inicio);
-				String diaHora = ""; 
-				boolean libre= false;
-				int Rcliente=0;
-				if (diferencia_dias >= 0 && diferencia_años >= 0) {
-					libre = true;
-						for (i=0; i<diferencia_dias+diferencia_años*365;i++) {
-							
-							
-							//FALTA AÑADIR LA HORA
-							diaHora= sdf.format(c.getTime()) + " 17:00:00";
-							System.out.println(diaHora);
-							
-							int reservado = modeloReservas.comprobarDisponibilidadActividad(id, diaHora);
-							if (reservado == -1) {					
+				String diaHora = "";
+				if (!activado) {
+					//fecha inicio
+					String date1 = sdf.format(dateChooser.getDate());
+					
+					//fecha fin
+					String date2 = sdf.format(dateChooser_1.getDate());
+								
+					//diferencia entre fecha inicio y fin
+					long diferencia_dias= 0;
+					long diferencia_años= 0;
+					Date d1 = new Date();
+					Date d2 = new Date();
+					
+					try {
+						//pasar de string a fecha
+			            d1 = sdf.parse(date1);
+			            d2 = sdf.parse(date2);
+			  
+			            //Calcular la diferencia en milisegundos
+			            long difference_In_Time
+			                = d2.getTime() - d1.getTime();
+			  
+			            // Calcular la diferencia en segundos, minutos, horas, años y dias
+			            long difference_In_Seconds
+			                = (difference_In_Time
+			                   / 1000)
+			                  % 60;
+			  
+			            long difference_In_Minutes
+			                = (difference_In_Time
+			                   / (1000 * 60))
+			                  % 60;
+			  
+			            long difference_In_Hours
+			                = (difference_In_Time
+			                   / (1000 * 60 * 60))
+			                  % 24;
+			  
+			            long difference_In_Years
+			                = (difference_In_Time
+			                   / (1000l * 60 * 60 * 24 * 365));
+			  
+			            long difference_In_Days
+			                = (difference_In_Time
+			                   / (1000 * 60 * 60 * 24))
+			                  % 365;
+			            diferencia_dias = difference_In_Days;
+			            diferencia_años = difference_In_Years;
+			           
+			        }
+			  
+			        // Catch the Exception
+			        catch (ParseException excepcion) {
+			            excepcion.printStackTrace();
+			        }
+					
+					
+					//Comprobar si está ocupada por una actividad
+					//int dia = d1.getDay();
+					Date fecha_inicio = dateChooser.getDate();
+					
+					Calendar c = Calendar.getInstance();
+					c.setTime(fecha_inicio);
+					//long inicio = c.getTime().getTime();
+					boolean libre= false;
+					int Rcliente=0;
+					LocalDate l = Instant.ofEpochMilli(fecha_inicio.getTime())
+						      .atZone(ZoneId.systemDefault())
+						      .toLocalDate();
+					if (diferencia_dias >= 0 && diferencia_años >= 0) {
+						libre = true;
+							for (i=0; i<diferencia_dias+diferencia_años*365;i++) {
+								for (int j = 9; j<=21; j++) {
+																							
+									diaHora = sdf.format(c.getTime()) + " " + Integer.toString(j) + ":00:00";
+																									
+									int reservado = modeloReservas.comprobarDisponibilidadActividad(id, diaHora);
+									if (reservado == -1) {					
+										JOptionPane.showMessageDialog(frmReservaParaActividad,
+											    "Está ocupado por otra actividad.",
+											    "Error al reservar",
+											    JOptionPane.ERROR_MESSAGE);
+										
+										libre=false;
+										continue;
+									}
+									else if (reservado == 1) {
+										Rcliente = 1;
+										
+									}
+								}
+								c.add(c.DATE, 1);
+							}
+					}
+					else {
+						JOptionPane.showMessageDialog(frmReservaParaActividad,
+							    "No puedes reservar para una fecha ya pasada.",
+							    "Error al reservar",
+							    JOptionPane.ERROR_MESSAGE);
+						//System.out.println("No puedes reservar para una fecha ya pasada.");
+					}
+					if (libre == true) {
+						c.setTime(fecha_inicio);
+						
+						for (i=0;i<diferencia_dias+diferencia_años*365;i++) {
+							for (int j = 9; j<=21; j++) {
+								diaHora= sdf.format(c.getTime()) + " " + Integer.toString(j)+ ":00:00";
+								//eliminar la reserva del socio
+								if(Rcliente == 1 && !modeloReservas.comprobarDisponibilidad(id, diaHora)) {
+									clientes_borrados.add(new String[]{id, diaHora});//, Integer.toString(modeloReservas.getCliente(id, diaHora))});
+									modeloReservas.eliminarReserva(Integer.parseInt(id),diaHora);
+								}
+								//crear la nueva reserva
+								modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0",modeloActividades.getIdActividad((String) comboBox.getSelectedItem()));
+							}														
+							c.add(c.DATE, 1);
+						}
+						
+						//Preparador del string del mensaje
+						String mensaje = "Alguna hora estaba reservada por un cliente pero la administración tiene prioridad.\n"
+								+ "Se han eliminado las siguientes reservas:\n";
+						Iterator<String[]> it = clientes_borrados.iterator() ;
+						String[] array ;
+						while(it.hasNext()) {
+							array = it.next();
+							mensaje += "\nInstalación: " + array[0]
+								    + "\nDía y hora: " + array[1];
+						}
+						
+						if (Rcliente == 1) {
+							JOptionPane.showMessageDialog(frmReservaParaActividad,
+								     
+								   // + "Cliente: " + clientes_borrados.get(0)[2] 
+								    mensaje,
+								    "Éxito al reservar",
+								    JOptionPane.INFORMATION_MESSAGE);
+						}
+							//JOptionPane.showMessageDialog(frmReservaParaActividad, "Estaba reservado por un cliente pero tienes prioridad, así que se ha reservado correctamente.\n");
+						else
+							JOptionPane.showMessageDialog(frmReservaParaActividad, "Reservado.\n");
+					}
+				}
+				else {
+					int ini, fin;
+					ini = Integer.parseInt(comboBox_2.getSelectedItem().toString().split(":")[0]);
+					fin = Integer.parseInt(comboBox_2_2.getSelectedItem().toString().split(":")[0]);
+					String dia = sdf.format(dateChooser_1_1.getDate());
+					String hora = comboBox_2.getSelectedItem().toString();
+					int hSeleccionada = comboBox_2.getSelectedIndex();
+					int ReserCliente = 0;
+					int cliente=0;
+					if (fin > ini) {
+						//Bucle para comprobar si todas las horas están disponibles
+						for(int j = 0; j<fin-ini; j++) {
+							diaHora = dia + " " + hora;
+							cliente = modeloReservas.comprobarDisponibilidadActividad(id, diaHora);
+							if (cliente==-1) {
 								JOptionPane.showMessageDialog(frmReservaParaActividad,
 									    "Está ocupado por otra actividad.",
 									    "Error al reservar",
 									    JOptionPane.ERROR_MESSAGE);
-								//System.out.println("Está ocupado.");
-								libre=false;
-								continue;
+								break;
 							}
-							else if (reservado == 1) {
-								Rcliente = 1;
-							}
-							c.add(c.DAY_OF_MONTH, 1);
+							else if(cliente == 1) ReserCliente =1;
+							hora = comboBox_2.getItemAt(hSeleccionada+j).toString();
 						}
-				}
-				else {
-					JOptionPane.showMessageDialog(frmReservaParaActividad,
-						    "No puedes reservar para una fecha ya pasada.",
-						    "Error al reservar",
-						    JOptionPane.ERROR_MESSAGE);
-					//System.out.println("No puedes reservar para una fecha ya pasada.");
-				}
-				if (libre == true) {
-					c.setTime(d1);
-					for (i=0;i<diferencia_dias+diferencia_años*365;i++) {
-						//eliminar la reserva del socio
-						//if(Rcliente == 1)
-						//modeloReservas.eliminarReserva(Integer.parseInt(id),diaHora);
-						//crear la nueva reserva
-						modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(d1), diaHora, "0",modeloActividades.siguienteIdActividad());
+						if (cliente != -1) {
 						
-						//System.out.printf("Correcto, has podido reservar, y tiene un coste de %s.\n",precio);
-						System.out.println("hola");					
-						c.add(Calendar.DATE, 1);
-						//c.add(c.DAY_OF_MONTH, 1);
-						diaHora= sdf.format(c.DAY_OF_MONTH) + " 17:00:00";
+							hora = comboBox_2.getSelectedItem().toString();
+							//Bucle para reservar todas las horas
+							for (int j=0; j<fin-ini; j++) {
+								hora = comboBox_2.getItemAt(hSeleccionada+j).toString();
+								diaHora = dia + " " + hora;
+								modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0",modeloActividades.getIdActividad((String) comboBox.getSelectedItem()));
+								
+							}
+							
+							//Mensajes de éxito de reserva
+							if (ReserCliente == 1) {
+								JOptionPane.showMessageDialog(frmReservaParaActividad,
+									    "Alguna hora estaba reservada por un cliente pero la administración tiene prioridad.\n"
+										+ "Se han eliminado las siguientes reservas:\n" 
+									    + "Cliente: " + clientes_borrados.get(0)[3] 
+									    + "\nInstalación: " + clientes_borrados.get(0)[3]
+									    + "\nDía y hora: " + clientes_borrados.get(0)[2],
+									    "Éxito al reservar",
+									    JOptionPane.INFORMATION_MESSAGE);
+							}
+							else {
+								JOptionPane.showMessageDialog(frmReservaParaActividad,
+									    "Reservado.",
+									    "Éxito al reservar",
+									    JOptionPane.INFORMATION_MESSAGE);
+							}
+						
+						}
 					}
-					if (Rcliente == 1)
-						JOptionPane.showMessageDialog(frmReservaParaActividad, "Estaba reservado por un cliente pero tienes prioridad.\n");
-					else
-						JOptionPane.showMessageDialog(frmReservaParaActividad, "Reservado.\n");
+					else {
+						JOptionPane.showMessageDialog(frmReservaParaActividad,
+							    "La hora de fin es anterior a la de inicio.",
+							    "Error al reservar",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 				}
+				
 					
 			}
 							
@@ -318,6 +425,10 @@ public class reserva_actividad_admin {
 					dateChooser_1.setBounds(1000, 1000, 1000, 1000);
 					dateChooser_1_1.setBounds(242, 375, 156, 19);
 					btnNewButton_2.setText("Resevar un periodo");
+					comboBox_2.setBounds(242, 229, 156, 19);
+					comboBox_2_2.setBounds(242, 298, 156, 19);
+					lblSeleccionePeriodo_1.setText("Seleccione hora inicial");
+					lblSeleccionePeriodo_1_1.setText("Seleccione hora final");
 					activado = true;
 				}
 				else {
@@ -325,6 +436,10 @@ public class reserva_actividad_admin {
 					dateChooser_1.setBounds(242, 298, 156, 19);
 					dateChooser_1_1.setBounds(1000,1000,1000,1000);
 					btnNewButton_2.setText("Resevar solo un día");
+					comboBox_2.setBounds(1000,1000,1000,1000);
+					comboBox_2_2.setBounds(1000,1000,1000,1000);
+					lblSeleccionePeriodo_1.setText("Seleccione fecha inicial:");
+					lblSeleccionePeriodo_1_1.setText("Seleccione fecha final:");
 					activado = false;
 				}
 				
@@ -332,6 +447,7 @@ public class reserva_actividad_admin {
 		});
 		btnNewButton_2.setBounds(46, 371, 163, 23);
 		panel.add(btnNewButton_2);
+		
 		
 		
 
@@ -342,4 +458,46 @@ public class reserva_actividad_admin {
 		// TODO Auto-generated method stub
 		return frmReservaParaActividad;
 	}
+	
+	public static String getDayString(Date date, Locale locale) {
+		DateFormat formatter = new SimpleDateFormat("EEEE", locale);
+		return formatter.format(date);
+	}
 }
+
+//COMO COMPROBAR SESIONES Y TAL
+		/*
+		List<Object[]> sesiones = modeloSesiones.getSesionesActividad(Long.toString(modeloActividades.getIdActividad((String)comboBox.getSelectedItem())));
+		String diaSemana = getDayString(dateChooser_1_1.getDate(), new Locale("es", "ES"));
+		System.out.println(diaSemana);
+		Iterator<Object[]> it = sesiones.iterator();
+		Object sesion[];
+		boolean encontrado = false;
+		while(it.hasNext()) {
+			sesion = (Object[])it.next();
+			if (sesion[0].equals(diaSemana)) {
+				diaHora=sdf.format(dateChooser_1_1.getDate())+" "+ sesion[1];
+				encontrado = true;
+			}
+		}
+		if (encontrado == true){
+			//diaHora=sdf.format(dateChooser_1_1.getDate())+" 20:00:00";
+			int cliente = modeloReservas.comprobarDisponibilidadActividad(id, diaHora);
+			if (cliente==-1) {
+				JOptionPane.showMessageDialog(frmReservaParaActividad,
+					    "Está ocupado por otra actividad.",
+					    "Error al reservar",
+					    JOptionPane.ERROR_MESSAGE);
+			}
+			else if (cliente == 0){
+				modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
+				JOptionPane.showMessageDialog(frmReservaParaActividad, "Reservado.\n");
+			}
+			else {
+				modeloReservas.eliminarReserva(Integer.parseInt(id), diaHora);
+				modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
+				JOptionPane.showMessageDialog(frmReservaParaActividad, "Estaba reservado por un cliente pero tienes prioridad.\n");
+			}
+		}
+		else JOptionPane.showMessageDialog(frmReservaParaActividad, "La actividad elegida no tiene una sesión en el día especificado.\n");
+		*/
