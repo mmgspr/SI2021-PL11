@@ -16,16 +16,18 @@ DELETE FROM clientes;
 
 INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso, contraseña) VALUES 
 
-('58438791C',1,'Alvaro', '2001-12-21', true, '58438791C'), 
+('58438791C',1,'Alvaro', '2001-12-21', 1, '58438791C'), 
 
-('54487543A',NULL,'Daniel', '2005-6-24', false, null ), 
+('54487543A',NULL,'Daniel', '2005-6-24', 0, null ), 
 
-('46739273H',2,'Roberto', '1972-7-15', false, '46739273H'), 
+('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H'), 
 
-('52347843G',NULL,'Martín', '2006-6-24', true, null ),
+('52347843G',NULL,'Martín', '2006-6-24', 0, null ),
 
-('58428791E',3,'Mario', '2004-12-21', true, '58428791E'),
-('a', 0, 'dani', null, false, 'a') ;
+('58428791E',3,'Mario', '2004-12-21', 1, '58428791E'),
+
+('a', 0, 'dani', null, 0, 'a') ;
+
 INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES 
 
 (1,'Pista de tenis 1', 'Tenis', 7), 
@@ -39,9 +41,9 @@ INSERT INTO reservas(id_reserva, persona, instalacion, fecha, fecha_reserva, pre
 
 (1,NULL, 3, '2022-2-23', '2022-3-25 17:00:00', '6.25' ,1), 
 
-(2,2, 2,'2022-2-25', '2022-3-27 20:00:00', '4.5' ,0), 
+(2,2, 2,'2022-2-25', '2022-3-20 20:00:00', '4.5' ,0),
 
-(3,2, 3,'2022-2-26', '2022-3-24 19:00:00', '3.2' ,0),
+(3,2, 3,'2022-2-26', '2022-3-20 19:00:00', '3.2' ,0),
  
 (4,NULL, 4,'2022-2-26', '2022-3-24 15:00:00', '3.2' ,3),
 

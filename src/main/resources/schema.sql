@@ -27,7 +27,7 @@ CREATE TABLE clientes(
 
     fecha_nacimiento date,
     
-    moroso boolean, 
+    moroso integer , 
     
     contraseña varchar(20)
 

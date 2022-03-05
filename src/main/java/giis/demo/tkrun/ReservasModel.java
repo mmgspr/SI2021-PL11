@@ -19,6 +19,21 @@ private Database db = new Database();
 		//return db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'");
 		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
 	}
+	
+	//SQL para ver si un socio tiene reservada una hora determinada
+		public static final String SQL_RESERVAS_INSTALACION_SOCIO = "SELECT id_reserva FROM reservas WHERE fecha_reserva=";
+		public boolean getReservasInstalacionSocio(String fecha_reserva, int id_socio){
+			List<Object[]> lista;
+			lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_SOCIO+"'"+fecha_reserva+"'");
+			if (((int)lista.get(0)[0] == id_socio)){
+				return true;
+			}
+			else {
+			    return false;
+			}
+			
+		}
+	
 	public static final String SQL_RESERVAS_MANU= "SELECT persona, fecha_reserva, actividad FROM reservas WHERE instalacion=";
 	public List<Object[]> getReservasManu(long id_instalacion){
 		return db.executeQueryArray(SQL_RESERVAS_MANU+ "'"+id_instalacion+"'");

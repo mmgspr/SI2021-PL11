@@ -49,13 +49,16 @@ public class ClientesModel {
 		
 		//SQL para comprobar si debe alguna cuota
 				public static final String SQL_MOROSO = "SELECT moroso FROM clientes WHERE id_socio =";
-				public boolean DebeDinero(String id){
+				public int DebeDinero(String id){
 					List<Object[]> lista;
 					lista = db.executeQueryArray(SQL_MOROSO+"'"+id+"'");
-					if (lista.size() == 0){
-						return false;
+					if ((lista.get(0)[0].toString().equals("0"))){
+						return 0;
 					}
-					return true;
+					else {
+					    return 1;
+					}
+								
 				}
 			
 	

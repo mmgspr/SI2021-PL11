@@ -147,6 +147,7 @@ public class Login {
 		return id_socio;
 	}
 
+
 	public void setId_socio(int id_socio) {
 		this.id_socio = id_socio;
 	}
