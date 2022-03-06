@@ -174,7 +174,7 @@ public class Reservar_Instalacion_Socio {
 		panel.add(LabelHoraIni);
 		
 		JComboBox comboBoxHoraIni = new JComboBox();
-		comboBoxHoraIni.setModel(new DefaultComboBoxModel(new String[] {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"}));
+		comboBoxHoraIni.setModel(new DefaultComboBoxModel(new String[] {"09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"}));
 		comboBoxHoraIni.setBounds(158, 48, 85, 21);
 		panel.add(comboBoxHoraIni);
 		
@@ -211,26 +211,33 @@ public class Reservar_Instalacion_Socio {
 				//System.out.printf("%d hora  ",indice);
 				//System.out.printf("%d hora  ",indice-1);
 				
+				
+				
 				//Mtemos la hora anterior
 				String hora1 = (String)comboBoxHoraIni.getItemAt(indice-1);				
 				//Hora Anterior
-				String diaHora1 = date+" "+hora1;
+				String diaHora1 = date+" "+hora1+":00";
 								
 				//Metemos -2 hora 
 				String hora2 = (String)comboBoxHoraIni.getItemAt(indice-2);				
-				//Hora Anterior
-				String diaHora2 = date+" "+hora2;
-				System.out.println(diaHora2);
+		        
+				//Metemos -2 hora 
+				String hora5 = (String)comboBoxHoraIni.getItemAt(indice-3);				
+				
+				
+				
 								
 				//Mtemos la hora siguiente
 				String hora3 = (String)comboBoxHoraIni.getItemAt(indice+1);				
 				//Hora Siguiente
-				String diaHora3 = date+" "+hora3;
+				String diaHora3 = date+" "+hora3+":00";
 								
 				//Metemos +2 hora 
-				String hora4 = (String)comboBoxHoraIni.getItemAt(indice+2);				
-				//Hora Anterior
-				String diaHora4 = date+" "+hora4;
+				String hora4 = (String)comboBoxHoraIni.getItemAt(indice+2);		
+				
+				//Metemos +2 hora 
+				String hora6 = (String)comboBoxHoraIni.getItemAt(indice+3);	
+				
 				//System.out.println(diaHora);
 				
 				
@@ -292,21 +299,28 @@ public class Reservar_Instalacion_Socio {
 				String id_socio = String.valueOf(id_socioS); 
 				
 				boolean reserva = true;
+		   			if(hora=="09:00") {
+		   				reserva = false;
+		   			}
+		   			
+		   		switch(hora) {
+		   		case"09:00":hora5=hora;
+		   		case"10:00":hora5=hora1;
+		   		case"11:00":hora5=hora2;
+		   		case"21:00":hora6=hora;
+		   		case"20:00":hora6=hora3;
+		   		case"19:00":hora6=hora4;
+		   		default:hora=hora;
+		   		}
 		   			
 				
-				
-				if(((modeloReservas.getReservasInstalacionSocio(diaHora, id_socioS)) && (modeloReservas.getReservasInstalacionSocio(diaHora1, id_socioS))
-						&& (modeloReservas.getReservasInstalacionSocio(diaHora2, id_socioS))) || ((modeloReservas.getReservasInstalacionSocio(diaHora, id_socioS))
-								&& (modeloReservas.getReservasInstalacionSocio(diaHora1, id_socioS)) && (modeloReservas.getReservasInstalacionSocio(diaHora3, id_socioS)))
-						|| ((modeloReservas.getReservasInstalacionSocio(diaHora, id_socioS)) && (modeloReservas.getReservasInstalacionSocio(diaHora4, id_socioS))
-										&& (modeloReservas.getReservasInstalacionSocio(diaHora3, id_socioS))) ) {
-					reserva=false;
-				}
+		   		String diaHora2 = date+" "+hora5+":00";
+		   		String diaHora4 = date+" "+hora6+":00";
 				
 				
 				
 				
-			if(reserva) {	
+		if(modeloReservas.getReservasInstalacionSocio(diaHora2,diaHora4, id_socioS, id)) {
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
 					//obtener el precio de la instalacion seleccionada
 					precio = modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem());										
@@ -326,7 +340,8 @@ public class Reservar_Instalacion_Socio {
 												+ "  Precio de la reserva: "+precio
 												+"\n  Socio que lo solicita: "+id_socio
 												+"\n  Instalación a reservar: "+id
-												+"\n  Fecha de reserva: "+diaHora);										
+												+"\n  Fecha de reserva: "+diaHora);	
+										modeloReservas.nuevaReserva1(Integer.parseInt(id_socio), Integer.parseInt(id), sdf.format(d1), diaHora, precio ,0);
 									}
 									
 								CheckBoxEstaLibre.setSelected(true);																
@@ -359,13 +374,16 @@ public class Reservar_Instalacion_Socio {
 						    JOptionPane.ERROR_MESSAGE);
 					
 				}
-			}
-			else {
-				JOptionPane.showMessageDialog(frmReservarInstalacin,
-					    "",
-					    "No puedes reservar 3h seguidas",
-					    JOptionPane.ERROR_MESSAGE);
-			}
+				
+		}
+		else {
+			JOptionPane.showMessageDialog(frmReservarInstalacin,
+				    "No puedes reservar más de 3h seguidas",
+				    "Error Reservando",
+				    JOptionPane.ERROR_MESSAGE);
+		}
+			
+			
 				
 				
 			}

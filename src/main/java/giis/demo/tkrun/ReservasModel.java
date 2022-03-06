@@ -20,19 +20,72 @@ private Database db = new Database();
 		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
 	}
 	
-	//SQL para ver si un socio tiene reservada una hora determinada
-		public static final String SQL_RESERVAS_INSTALACION_SOCIO = "SELECT id_reserva FROM reservas WHERE fecha_reserva=";
-		public boolean getReservasInstalacionSocio(String fecha_reserva, int id_socio){
-			List<Object[]> lista;
-			lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_SOCIO+"'"+fecha_reserva+"'");
-			if (((int)lista.get(0)[0] == id_socio)){
+	
+	
+	//SQL para ver si un socio tiene al menos 3 reservas en un periodo de tiempo
+			public static final String SQL_RESERVAS_INSTALACION_SOCIO1 = "SELECT MIN(fecha_reserva) FROM reservas WHERE ((persona= ?) "
+					+ "AND (fecha_reserva >= ?) AND (fecha_reserva <= ?));";
+			public static final String SQL_RESERVAS_INSTALACION_ = "SELECT COUNT(persona) FROM reservas WHERE ((instalacion = ?)AND ((persona=?) AND ((fecha_reserva= ?) "
+					+ "OR (fecha_reserva= ?) OR (fecha_reserva= ?))));";
+			public boolean getReservasInstalacionSocio(String fechaIni2,String fechaIni4, int id_socio, String id){
+				List<Object[]> lista;
+				
+				lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_SOCIO1,id_socio, fechaIni2, fechaIni4);
+				System.out.printf(" Fecha -2 %s \n",fechaIni4);
+				System.out.printf(" Fecha +2 %s \n",fechaIni2);
+				System.out.printf("Id socio %d \n",id_socio);
+				
+				try {
+					
+			    String fecha_min =lista.get(0)[0].toString();
+			    if(fecha_min != null) {
+			    String[] vector=fecha_min.split("T"); 
+			    fecha_min=vector[1].split(":")[0];
+			    int hora1 = Integer.parseInt(fecha_min);
+			    
+			    int hora2 = hora1+1;
+			    int hora3 = hora1+2;
+			    
+			    String fecha1= vector[0]+" "+hora1+":00:00";
+			    String fecha2= vector[0]+" "+hora2+":00:00";
+			    String fecha3= vector[0]+" "+hora3+":00:00";
+			    System.out.printf(" Fecha1 %s \n",fecha1);
+				System.out.printf(" Fecha2 %s \n",fecha2);
+				System.out.printf(" Fecha3 %s \n",fecha3);
+	
+				
+			    
+			    lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha3 );
+			    int jk= Integer.parseInt(lista.get(0)[0].toString());
+			    System.out.printf("%d Count(reservas) \n", jk);
+			    
+				if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
+					
+					return true;
+					
+				}
+				else {
+				    return false;
+				}
+				
+				}
+				}
+				
+				catch (Exception E){
+					System.out.printf("Hola \n");
+					E.printStackTrace();
+					//return true;
+					
+					
+				}
+				
+				
 				return true;
+				
 			}
-			else {
-			    return false;
-			}
-			
-		}
+	
+
+
 	
 	public static final String SQL_RESERVAS_MANU= "SELECT persona, fecha_reserva, actividad FROM reservas WHERE instalacion=";
 	public List<Object[]> getReservasManu(long id_instalacion){
@@ -81,6 +134,18 @@ private Database db = new Database();
 		id = siguienteIdReserva();		
 		db.executeUpdate(SQL_NUEVA_RESERVA,id, null,instalacion, fecha, fecha_reserva, precio, actividad);
 	}
+	
+	//Método para instertar una nueva reserva
+		public static final String SQL_NUEVA_RESERVA_SOCIO = "INSERT INTO reservas (id_reserva, persona, instalacion, fecha, fecha_reserva, precio, actividad) VALUES (?, ?, ?, ?, ?, ?, ?);";
+		public void nuevaReserva1(int socio, int instalacion, String fecha, String fecha_reserva, String precio, Object actividad) {
+			long id;
+			id = siguienteIdReserva();		
+			db.executeUpdate(SQL_NUEVA_RESERVA_SOCIO,id, socio,instalacion, fecha, fecha_reserva, precio, actividad);
+		}
+	
+	
+	
+	
 	
 	
 	//Método para obtener siguiente id
