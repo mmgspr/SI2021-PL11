@@ -29,7 +29,9 @@ CREATE TABLE clientes(
     
     moroso integer , 
     
-    contraseña varchar(20)
+    contraseña varchar(20),
+    
+    cuota decimal(10,2) 
 
 ); 
 CREATE TABLE instalaciones( 

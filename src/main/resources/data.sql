@@ -14,19 +14,19 @@ DELETE FROM clientes;
 
 -- (3, 'Juan', '1972-7-15', '13254768D'); 
 
-INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso, contraseña) VALUES 
+INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso, contraseña, cuota) VALUES 
 
-('58438791C',1,'Alvaro', '2001-12-21', 1, '58438791C'), 
+('58438791C',1,'Alvaro', '2001-12-21', 1, '58438791C', 30), 
 
-('54487543A',NULL,'Daniel', '2005-6-24', 0, null ), 
+('54487543A',NULL,'Daniel', '2005-6-24', 0, null, null ), 
 
-('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H'), 
+('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H',30), 
 
-('52347843G',NULL,'Martín', '2006-6-24', 0, null ),
+('52347843G',NULL,'Martín', '2006-6-24', 0, null, null ),
 
-('58428791E',3,'Mario', '2004-12-21', 1, '58428791E'),
+('58428791E',3,'Mario', '2004-12-21', 1, '58428791E',30),
 
-('a', 0, 'dani', null, 0, 'a') ;
+('a', 0, 'dani', null, 0, 'a', 30) ;
 
 INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES 
 
