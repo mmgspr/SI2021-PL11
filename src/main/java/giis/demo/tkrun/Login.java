@@ -4,8 +4,6 @@ import java.awt.EventQueue;
 import java.awt.Window;
 
 import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -52,6 +50,10 @@ public class Login {
 	public Login() {
 		initialize();
 	}
+	public Login(SwingMain vSwing) {
+		this.vSwing=vSwing;
+		initialize();
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -60,12 +62,11 @@ public class Login {
 		frmLogin = new JFrame();
 		frmLogin.setTitle("Login");
 		frmLogin.setBounds(100, 100, 302, 224);
-		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmLogin.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
 		
 		vInicialAdmin= new inicialAdmin(this);
 		vInicialSocio= new inicialSocio(this);
-		vSwing = new SwingMain(this);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setBounds(51, 43, 69, 14);
@@ -91,7 +92,7 @@ public class Login {
 				if(!txtId_usuario.getText().equals("") && !Arrays.equals(txtContraseña.getPassword(), "".toCharArray())) {
 					//entrar como admin
 					if(txtId_usuario.getText().equals("admin") && Arrays.equals(txtContraseña.getPassword(), "admin".toCharArray())){
-						vSwing.getFrmIndex().setVisible(true);
+						vInicialAdmin.getFrmIndex().setVisible(true);
 						frmLogin.setVisible(false);
 					}
 					else { //entrar como socio
