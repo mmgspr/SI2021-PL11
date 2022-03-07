@@ -179,6 +179,7 @@ public class Reservar_Instalacion_Socio {
 		panel.add(comboBoxHoraIni);
 		
 		JButton ButtonReservar = new JButton("Reservar\r\n");
+		ButtonReservar.setEnabled(false);
 		ButtonReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//id_instalacion
@@ -196,7 +197,7 @@ public class Reservar_Instalacion_Socio {
 				
 				//Id instalacion
 				id = nombre[0];
-				System.out.println(id);
+				//System.out.println(id);
 				
 				
 				
@@ -204,6 +205,7 @@ public class Reservar_Instalacion_Socio {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String date = sdf.format(dateChooserInicio.getDate());
 				String hora = (String)comboBoxHoraIni.getSelectedItem();
+				System.out.println("Esta es la hora elegida"+hora);
 				String diaHora = date+" "+hora;
 				
 				//Cogemos el indice de la elección
@@ -214,31 +216,30 @@ public class Reservar_Instalacion_Socio {
 				
 				
 				//Mtemos la hora anterior
-				String hora1 = (String)comboBoxHoraIni.getItemAt(indice-1);				
+				String hora_menos_1 = (String)comboBoxHoraIni.getItemAt(indice-1);				
 				//Hora Anterior
-				String diaHora1 = date+" "+hora1+":00";
+				String diaHora1 = date+" "+hora_menos_1+":00";
 								
 				//Metemos -2 hora 
-				String hora2 = (String)comboBoxHoraIni.getItemAt(indice-2);				
+				String hora_menos_2 = (String)comboBoxHoraIni.getItemAt(indice-2);				
 		        
 				//Metemos -2 hora 
-				String hora5 = (String)comboBoxHoraIni.getItemAt(indice-3);				
-				
+				String hora_menos_3= (String)comboBoxHoraIni.getItemAt(indice-3);				
 				
 				
 								
 				//Mtemos la hora siguiente
-				String hora3 = (String)comboBoxHoraIni.getItemAt(indice+1);				
+				String hora_mas_1 = (String)comboBoxHoraIni.getItemAt(indice+1);				
 				//Hora Siguiente
-				String diaHora3 = date+" "+hora3+":00";
+				String diaHora3 = date+" "+hora_mas_1+":00";
 								
 				//Metemos +2 hora 
-				String hora4 = (String)comboBoxHoraIni.getItemAt(indice+2);		
+				String hora_mas_2 = (String)comboBoxHoraIni.getItemAt(indice+2);		
 				
-				//Metemos +2 hora 
-				String hora6 = (String)comboBoxHoraIni.getItemAt(indice+3);	
-				
-				//System.out.println(diaHora);
+				//Metemos +3 hora 
+				String hora_mas_3 = (String)comboBoxHoraIni.getItemAt(indice+3);	
+				//System.out.println("\n Indice \n"+indice);
+				//System.out.println(comboBoxHoraIni.getItemAt(indice+3));
 				
 				
 		
@@ -298,29 +299,63 @@ public class Reservar_Instalacion_Socio {
 				int id_socioS = vLogin.getId_socio();
 				String id_socio = String.valueOf(id_socioS); 
 				
-				boolean reserva = true;
-		   			if(hora=="09:00") {
-		   				reserva = false;
-		   			}
+				  String fecha_ini=hora;
+		   		  String[] vector1=fecha_ini.split(":"); 
+			      fecha_ini=vector1[0].split(":")[0];
+		   		 //System.out.println("Fecha_ini"+fecha_ini);
+				 int horaS= Integer.parseInt(fecha_ini);
+				// System.out.println("horS"+horaS);
 		   			
 		   		switch(hora) {
-		   		case"09:00":hora5=hora;
-		   		case"10:00":hora5=hora1;
-		   		case"11:00":hora5=hora2;
-		   		case"21:00":hora6=hora;
-		   		case"20:00":hora6=hora3;
-		   		case"19:00":hora6=hora4;
-		   		default:hora=hora;
+		   		case"09:00":hora_menos_3=hora;
+		   		break;
+		   		case"10:00":hora_menos_3=hora_menos_1;
+		   		break;
+		   		case"11:00":hora_menos_3=hora_menos_2;
+		   		break;
+		   		case"21:00":hora_mas_3=hora;
+		   		break;
+		   		case"20:00":hora_mas_3=hora_mas_1;
+		   		break;
+		   		case"19:00":hora_mas_3=hora_mas_2;
+		   		break;
 		   		}
-		   			
+		   		
+		   		switch(horaS) {
+		   		case 8:horaS=horaS+1;
+		   		break;
+		   		}
+		   		
+		   		
+		   		
+		   		
+		   		int horaT=horaS+1;
+		   		switch(horaT) {
+		   		case 22: horaT=horaT-1;
+		   		break;
+		   		}
+		   		
+		   		int horaJ=horaS-1;
+		   		switch(horaJ) {
+		   		case 8:horaJ=horaJ+1;
+		   		break;
+		   		}
+		   		
+		   	// System.out.println("horS "+horaS);
+		   		
+		   		
 				
-		   		String diaHora2 = date+" "+hora5+":00";
-		   		String diaHora4 = date+" "+hora6+":00";
+		   		String diaHora_menos_3 = date+" "+hora_menos_3+":00";
+		   		String diaHora_mas_3 = date+" "+hora_mas_3+":00";
+		   		
+				//System.out.println("\n Esta es la hora (+3)  "+hora_mas_3);
+				//System.out.printf("\n Esta es la hora (-3)  "+hora_menos_3);
+
+				//System.out.println("\n diaHora_menos_3  "+diaHora_menos_3);
+				//System.out.println("\n diaHora_mas_3   "+diaHora_mas_3);
 				
 				
-				
-				
-		if(modeloReservas.getReservasInstalacionSocio(diaHora2,diaHora4, id_socioS, id)) {
+		if(modeloReservas.getReservasInstalacionSocio(diaHora_menos_3,diaHora_mas_3, id_socioS, id, horaS, horaT, date, horaJ)) {
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
 					//obtener el precio de la instalacion seleccionada
 					precio = modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem());										
@@ -407,7 +442,7 @@ public class Reservar_Instalacion_Socio {
 				
 				//Id instalacion
 				id = nombre[0];
-				System.out.println(id);
+				//System.out.println(id);
 				
 				
 				
@@ -416,7 +451,7 @@ public class Reservar_Instalacion_Socio {
 				String date = sdf.format(dateChooserInicio.getDate());
 				String hora = (String)comboBoxHoraIni.getSelectedItem();
 				String diaHora = date+" "+hora;
-				System.out.println(diaHora);
+				//System.out.println(diaHora);
 				
 				
 		
@@ -489,6 +524,7 @@ public class Reservar_Instalacion_Socio {
 									if ((modeloClientes.DebeDinero(id_socio))==1) {																																							
 										   CheckBoxPuedesReservar.setSelected(false);
 										   JOptionPane.showMessageDialog(frmReservarInstalacin ," No se ha podido reservar. \n Está libre pero debes dinero. \n               ¡MOROSO! ","Error",JOptionPane.ERROR_MESSAGE);										   								              											
+										   ButtonReservar.setEnabled(false);
 									}		
 									else {																				
 										CheckBoxPuedesReservar.setSelected(true);
@@ -496,7 +532,8 @@ public class Reservar_Instalacion_Socio {
 												+ "  Precio de la reserva: "+precio
 												+"\n  Socio que lo solicita: "+id_socio
 												+"\n  Instalación a reservar: "+id
-												+"\n  Fecha de reserva: "+diaHora);										
+												+"\n  Fecha de reserva: "+diaHora);	
+										ButtonReservar.setEnabled(true);
 									}
 									
 								CheckBoxEstaLibre.setSelected(true);																
@@ -505,21 +542,24 @@ public class Reservar_Instalacion_Socio {
 								JOptionPane.showMessageDialog(frmReservarInstalacin,
 									    "No puedes reservar con más de 15 días de antelación.",
 									    "No puedes reservar",
-									    JOptionPane.ERROR_MESSAGE);								
+									    JOptionPane.ERROR_MESSAGE);	
+								 ButtonReservar.setEnabled(false);
 							}	
 						}
 						else {
 							JOptionPane.showMessageDialog(frmReservarInstalacin,
 								    "No puedes reservar para una fecha ya pasada.",
 								    "No puedes reservar",
-								    JOptionPane.ERROR_MESSAGE);							
+								    JOptionPane.ERROR_MESSAGE);	
+							 ButtonReservar.setEnabled(false);
 						}
 				}
 					else {
 						JOptionPane.showMessageDialog(frmReservarInstalacin,
 							    "Introduce un número de socio válido.",
 							    "No puedes reservar",
-							    JOptionPane.ERROR_MESSAGE);						
+							    JOptionPane.ERROR_MESSAGE);	
+						 ButtonReservar.setEnabled(false);
 					}											
 				}
 				else {
@@ -527,6 +567,7 @@ public class Reservar_Instalacion_Socio {
 						    "Está ocupado.",
 						    "No puedes reservar",
 						    JOptionPane.ERROR_MESSAGE);
+					 ButtonReservar.setEnabled(false);
 					
 				}
 				

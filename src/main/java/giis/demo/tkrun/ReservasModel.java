@@ -20,68 +20,77 @@ private Database db = new Database();
 		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
 	}
 	
-	
+
 	
 	//SQL para ver si un socio tiene al menos 3 reservas en un periodo de tiempo
 			public static final String SQL_RESERVAS_INSTALACION_SOCIO1 = "SELECT MIN(fecha_reserva) FROM reservas WHERE ((persona= ?) "
 					+ "AND (fecha_reserva >= ?) AND (fecha_reserva <= ?));";
 			public static final String SQL_RESERVAS_INSTALACION_ = "SELECT COUNT(persona) FROM reservas WHERE ((instalacion = ?)AND ((persona=?) AND ((fecha_reserva= ?) "
-					+ "OR (fecha_reserva= ?) OR (fecha_reserva= ?))));";
-			public boolean getReservasInstalacionSocio(String fechaIni2,String fechaIni4, int id_socio, String id){
+					+ "OR (fecha_reserva= ?) OR (fecha_reserva= ?) OR (fecha_reserva=?))));";
+			public boolean getReservasInstalacionSocio(String fechaIni,String fechaFin, int id_socio, String id,int horaIni, int horaT, String Date, int horaJ){
 				List<Object[]> lista;
 				
-				lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_SOCIO1,id_socio, fechaIni2, fechaIni4);
-				System.out.printf(" Fecha -2 %s \n",fechaIni4);
-				System.out.printf(" Fecha +2 %s \n",fechaIni2);
-				System.out.printf("Id socio %d \n",id_socio);
+				lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_SOCIO1,id_socio, fechaIni, fechaFin);
+				//System.out.printf(" Fecha +3 %s \n",fechaFin);
+				//System.out.printf(" Fecha -3 %s \n",fechaIni);
+				//System.out.printf("Id socio %d \n",id_socio);
 				
 				try {
-					
-			    String fecha_min =lista.get(0)[0].toString();
-			    if(fecha_min != null) {
-			    String[] vector=fecha_min.split("T"); 
-			    fecha_min=vector[1].split(":")[0];
-			    int hora1 = Integer.parseInt(fecha_min);
+					System.out.println("Try");
+			        String fecha_min =lista.get(0)[0].toString();
 			    
-			    int hora2 = hora1+1;
-			    int hora3 = hora1+2;
 			    
-			    String fecha1= vector[0]+" "+hora1+":00:00";
-			    String fecha2= vector[0]+" "+hora2+":00:00";
-			    String fecha3= vector[0]+" "+hora3+":00:00";
-			    System.out.printf(" Fecha1 %s \n",fecha1);
-				System.out.printf(" Fecha2 %s \n",fecha2);
-				System.out.printf(" Fecha3 %s \n",fecha3);
-	
-				
+			   // String[] vector1=fecha_min.split("T"); 
+			   // String fecha=vector1[1].split(":")[0];
+			   // int horaMin = Integer.parseInt(fecha);
+			   // System.out.println("HoraMin \n"+horaMin);
+			   // System.out.println("HoraS \n"+(horaIni-1));
 			    
-			    lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha3 );
-			    int jk= Integer.parseInt(lista.get(0)[0].toString());
-			    System.out.printf("%d Count(reservas) \n", jk);
+			   // String diaHora_mas_1 = Date+" "+horaT+":00:00";
+			   // String diaHora_menos_1 = Date+" "+horaJ+":00:00";
+			    //System.out.println("HORA MAS 1 "+diaHora_mas_1);
+			   // System.out.println("HORA MENOS 1"+diaHora_menos_1);
 			    
-				if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
-					
-					return true;
-					
-				}
-				else {
-				    return false;
-				}
-				
-				}
-				}
-				
+			    if(fecha_min != null){			    
+			    		 System.out.println("Entra en el if");
+						    String[] vector=fecha_min.split("T"); 
+						    fecha_min=vector[1].split(":")[0];
+						    int hora1 = Integer.parseInt(fecha_min);
+						    int hora2 = hora1+1;
+						    int hora3 = hora1+2;
+						    int hora4 = hora1+3;
+						    
+						    String fecha1= vector[0]+" "+hora1+":00:00";
+						    String fecha2= vector[0]+" "+hora2+":00:00";
+						    String fecha3= vector[0]+" "+hora3+":00:00";
+						    String fecha4= vector[0]+" "+hora4+":00:00";
+						    System.out.printf(" Fecha1=FechaMin %s \n",fecha1);
+							System.out.printf(" Fecha2=FechaMin+1 %s \n",fecha2);
+							System.out.printf(" Fecha3=FechaMin+2 %s \n",fecha3);
+							System.out.printf(" Fecha4=FechaMin+3 %s \n",fecha4);
+							
+						    
+						    lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha3,fecha4 );
+						    int jk= Integer.parseInt(lista.get(0)[0].toString());
+						    System.out.printf("%d Count(reservas) \n", jk);
+						    
+							if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
+								
+								return true;
+							}
+							else {
+							    return false;
+							}
+			    		
+			    	}
+			    }		   
+								
 				catch (Exception E){
-					System.out.printf("Hola \n");
+					System.out.printf("Catch \n");
 					E.printStackTrace();
-					//return true;
-					
-					
-				}
-				
-				
-				return true;
-				
+					//return true;					
+				}				
+				return true;				
 			}
 	
 
@@ -106,6 +115,20 @@ private Database db = new Database();
 			}
 			return false;
 		}
+		
+		//SQL para comprobar si una instalacion está reservada un día a una hora
+		//retorna true si no está reservado y se puede reservar
+			public static final String SQL_RESERVADAS = " SELECT COUNT(persona) FROM reservas WHERE ((instalacion=4) AND (persona=2) AND (fecha_reserva=?))";
+			List<Object[]> listaa;
+			public boolean comprobarDisponibilidadS(String instalacion, String diaHora, int id_socio){
+				lista = db.executeQueryArray(SQL_RESERVADAS, /*instalacion, id_socio, */diaHora);
+				
+				if (lista.size() == 0) {
+					System.out.println("Disponibilidad");
+					return true;
+				}
+				return false;
+			}
 		
 	//SQL para comprobar si una instalacion está reservada por actividad
 	//retorna 0 si puedes reservar, 1 si está reservada por un cliente y puedes tmb, y -1 si no puedes reservar
