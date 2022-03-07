@@ -31,7 +31,7 @@ CREATE TABLE clientes(
     
     contraseña varchar(20),
     
-    cuota decimal(10,2) 
+    cuota double 
 
 ); 
 CREATE TABLE instalaciones( 

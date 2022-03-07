@@ -16,15 +16,15 @@ DELETE FROM clientes;
 
 INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso, contraseña, cuota) VALUES 
 
-('58438791C',1,'Alvaro', '2001-12-21', 1, '58438791C', 30), 
+('58438791C',1,'Alvaro', '2001-12-21', 1, '58438791C', 30.30), 
 
 ('54487543A',NULL,'Daniel', '2005-6-24', 0, null, null ), 
 
-('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H',30), 
+('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H',30.30), 
 
 ('52347843G',NULL,'Martín', '2006-6-24', 0, null, null ),
 
-('58428791E',3,'Mario', '2004-12-21', 1, '58428791E',30),
+('58428791E',3,'Mario', '2004-12-21', 1, '58428791E',30.30),
 
 ('a', 0, 'dani', null, 0, 'a', 30) ;
 

@@ -110,36 +110,24 @@ public class Reservar_Instalacion_Socio {
 		
 		JLabel LabelCoste = new JLabel("Coste de la Reserva:");
 		LabelCoste.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelCoste.setBounds(10, 147, 141, 29);
+		LabelCoste.setBounds(10, 116, 141, 29);
 		panel.add(LabelCoste);
 		
 		textFieldCoste = new JTextField();
 		textFieldCoste.setEditable(false);
-		textFieldCoste.setBounds(161, 154, 93, 19);
+		textFieldCoste.setBounds(161, 123, 93, 19);
 		panel.add(textFieldCoste);
 		textFieldCoste.setColumns(10);
 		
 		JLabel LabelMetododePago = new JLabel("Método de Pago:");
 		LabelMetododePago.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		LabelMetododePago.setBounds(10, 186, 113, 29);
+		LabelMetododePago.setBounds(10, 155, 113, 29);
 		panel.add(LabelMetododePago);
-		
-		JCheckBox CheckBoxEstaLibre = new JCheckBox("Está libre");
-		CheckBoxEstaLibre.setEnabled(false);
-		CheckBoxEstaLibre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		CheckBoxEstaLibre.setBounds(161, 116, 93, 21);
-		panel.add(CheckBoxEstaLibre);
-		
-		JCheckBox CheckBoxPuedesReservar = new JCheckBox("Puedes Reservar");
-		CheckBoxPuedesReservar.setEnabled(false);
-		CheckBoxPuedesReservar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		CheckBoxPuedesReservar.setBounds(278, 116, 152, 21);
-		panel.add(CheckBoxPuedesReservar);
 		
 		JComboBox comboBoxMetodo = new JComboBox();
 		comboBoxMetodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBoxMetodo.setModel(new DefaultComboBoxModel(new String[] {"Pagar ahora", "Añadir a mi cuota"}));
-		comboBoxMetodo.setBounds(159, 190, 170, 21);
+		comboBoxMetodo.setBounds(161, 159, 170, 21);
 		panel.add(comboBoxMetodo);
 		
 		JButton ButtonCancelar = new JButton("Cancelar\r\n");
@@ -150,7 +138,7 @@ public class Reservar_Instalacion_Socio {
 		});
 		
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonCancelar.setBounds(182, 232, 103, 21);
+		ButtonCancelar.setBounds(34, 232, 103, 21);
 		panel.add(ButtonCancelar);
 		
 	
@@ -353,6 +341,18 @@ public class Reservar_Instalacion_Socio {
 
 				//System.out.println("\n diaHora_menos_3  "+diaHora_menos_3);
 				//System.out.println("\n diaHora_mas_3   "+diaHora_mas_3);
+		   		
+		   		
+		   		double prix;
+				prix = Double.parseDouble(modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem()));										
+				
+				
+				if(comboBoxMetodo.getSelectedIndex()==1) {
+			          double k= modeloReservas.nuevaCuota(id_socioS);  
+			          k = k+ prix;
+			          modeloReservas.añadeacuota(k, id_socioS);
+				
+				}
 				
 				
 		if(modeloReservas.getReservasInstalacionSocio(diaHora_menos_3,diaHora_mas_3, id_socioS, id, horaS, horaT, date, horaJ)) {
@@ -366,20 +366,22 @@ public class Reservar_Instalacion_Socio {
 							if (diferencia_dias <= 15 || diferencia_años>0) {	
 								  // System.out.printf("%d",);
 									if ((modeloClientes.DebeDinero(id_socio))==1) {																																							
-										   CheckBoxPuedesReservar.setSelected(false);
+										   //CheckBoxPuedesReservar.setSelected(false);
 										   JOptionPane.showMessageDialog(frmReservarInstalacin ," No se ha podido reservar. \n Está libre pero debes dinero. \n               ¡MOROSO! ","Error",JOptionPane.ERROR_MESSAGE);										   								              											
 									}		
 									else {																				
-										CheckBoxPuedesReservar.setSelected(true);
-										JOptionPane.showMessageDialog(frmReservarInstalacin, "  Puedes reservar.\n"
+										//CheckBoxPuedesReservar.setSelected(true);
+										JOptionPane.showMessageDialog(frmReservarInstalacin, "  Has reservado.\n"
 												+ "  Precio de la reserva: "+precio
 												+"\n  Socio que lo solicita: "+id_socio
 												+"\n  Instalación a reservar: "+id
-												+"\n  Fecha de reserva: "+diaHora);	
+												+"\n  Fecha de reserva: "+diaHora
+												+"\n  Selección de pago: "+comboBoxMetodo.getSelectedItem());	
 										modeloReservas.nuevaReserva1(Integer.parseInt(id_socio), Integer.parseInt(id), sdf.format(d1), diaHora, precio ,0);
+										ButtonReservar.setSelected(false);
 									}
 									
-								CheckBoxEstaLibre.setSelected(true);																
+								//CheckBoxEstaLibre.setSelected(true);																
 							}								
 							else {
 								JOptionPane.showMessageDialog(frmReservarInstalacin,
@@ -416,7 +418,9 @@ public class Reservar_Instalacion_Socio {
 				    "No puedes reservar más de 3h seguidas",
 				    "Error Reservando",
 				    JOptionPane.ERROR_MESSAGE);
-		}
+		} 
+		
+	
 			
 			
 				
@@ -522,12 +526,12 @@ public class Reservar_Instalacion_Socio {
 							if (diferencia_dias <= 15 || diferencia_años>0) {	
 								  // System.out.printf("%d",);
 									if ((modeloClientes.DebeDinero(id_socio))==1) {																																							
-										   CheckBoxPuedesReservar.setSelected(false);
+										 //  CheckBoxPuedesReservar.setSelected(false);
 										   JOptionPane.showMessageDialog(frmReservarInstalacin ," No se ha podido reservar. \n Está libre pero debes dinero. \n               ¡MOROSO! ","Error",JOptionPane.ERROR_MESSAGE);										   								              											
 										   ButtonReservar.setEnabled(false);
 									}		
 									else {																				
-										CheckBoxPuedesReservar.setSelected(true);
+										//CheckBoxPuedesReservar.setSelected(true);
 										JOptionPane.showMessageDialog(frmReservarInstalacin, "  Podrías reservar.\n"
 												+ "  Precio de la reserva: "+precio
 												+"\n  Socio que lo solicita: "+id_socio
@@ -536,7 +540,7 @@ public class Reservar_Instalacion_Socio {
 										ButtonReservar.setEnabled(true);
 									}
 									
-								CheckBoxEstaLibre.setSelected(true);																
+								//CheckBoxEstaLibre.setSelected(true);																
 							}								
 							else {
 								JOptionPane.showMessageDialog(frmReservarInstalacin,
@@ -575,11 +579,11 @@ public class Reservar_Instalacion_Socio {
 			}
 		});
 		ButtonComprobar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonComprobar.setBounds(10, 116, 110, 21);
+		ButtonComprobar.setBounds(161, 232, 110, 21);
 		panel.add(ButtonComprobar);
 		
 		ButtonReservar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonReservar.setBounds(313, 232, 113, 21);
+		ButtonReservar.setBounds(295, 232, 113, 21);
 		panel.add(ButtonReservar);
 	}
 

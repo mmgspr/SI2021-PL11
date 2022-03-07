@@ -24,13 +24,13 @@ private Database db = new Database();
 	
 	//SQL para ver si un socio tiene al menos 3 reservas en un periodo de tiempo
 			public static final String SQL_RESERVAS_INSTALACION_SOCIO1 = "SELECT MIN(fecha_reserva) FROM reservas WHERE ((persona= ?) "
-					+ "AND (fecha_reserva >= ?) AND (fecha_reserva <= ?));";
+					+ "AND (fecha_reserva >= ?) AND (fecha_reserva <= ?) AND (instalacion =?));";
 			public static final String SQL_RESERVAS_INSTALACION_ = "SELECT COUNT(persona) FROM reservas WHERE ((instalacion = ?)AND ((persona=?) AND ((fecha_reserva= ?) "
 					+ "OR (fecha_reserva= ?) OR (fecha_reserva= ?) OR (fecha_reserva=?))));";
 			public boolean getReservasInstalacionSocio(String fechaIni,String fechaFin, int id_socio, String id,int horaIni, int horaT, String Date, int horaJ){
 				List<Object[]> lista;
 				
-				lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_SOCIO1,id_socio, fechaIni, fechaFin);
+				lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_SOCIO1,id_socio, fechaIni, fechaFin, id);
 				//System.out.printf(" Fecha +3 %s \n",fechaFin);
 				//System.out.printf(" Fecha -3 %s \n",fechaIni);
 				//System.out.printf("Id socio %d \n",id_socio);
@@ -165,9 +165,24 @@ private Database db = new Database();
 			id = siguienteIdReserva();		
 			db.executeUpdate(SQL_NUEVA_RESERVA_SOCIO,id, socio,instalacion, fecha, fecha_reserva, precio, actividad);
 		}
+		
+		
 	
-	
-	
+		//Método para actualizar la cuota
+				public static final String SQL_SUMA_CUOTA = "UPDATE clientes SET cuota=? WHERE (id_socio=?);";
+				public void añadeacuota(double cuota, int id_socio) {	
+					System.out.println("La cuota es"+cuota);
+					db.executeUpdate(SQL_SUMA_CUOTA,cuota, id_socio);
+				}
+				
+				
+				//Método para obtener la cuota
+				public static final String SQL_CUOTA = "SELECT cuota from clientes WHERE (id_socio=?);";
+				public double nuevaCuota(int id_socio) {
+					List<Object[]> lista;
+					lista = db.executeQueryArray(SQL_CUOTA, id_socio);
+					return (double)lista.get(0)[0];
+				}
 	
 	
 	
