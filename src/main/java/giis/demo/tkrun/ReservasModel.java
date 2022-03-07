@@ -36,7 +36,7 @@ private Database db = new Database();
 				//System.out.printf("Id socio %d \n",id_socio);
 				
 				try {
-					System.out.println("Try");
+					//System.out.println("Try");
 			        String fecha_min =lista.get(0)[0].toString();
 			    
 			    
@@ -52,7 +52,7 @@ private Database db = new Database();
 			   // System.out.println("HORA MENOS 1"+diaHora_menos_1);
 			    
 			    if(fecha_min != null){			    
-			    		 System.out.println("Entra en el if");
+			    		// System.out.println("Entra en el if");
 						    String[] vector=fecha_min.split("T"); 
 						    fecha_min=vector[1].split(":")[0];
 						    int hora1 = Integer.parseInt(fecha_min);
@@ -64,15 +64,15 @@ private Database db = new Database();
 						    String fecha2= vector[0]+" "+hora2+":00:00";
 						    String fecha3= vector[0]+" "+hora3+":00:00";
 						    String fecha4= vector[0]+" "+hora4+":00:00";
-						    System.out.printf(" Fecha1=FechaMin %s \n",fecha1);
-							System.out.printf(" Fecha2=FechaMin+1 %s \n",fecha2);
-							System.out.printf(" Fecha3=FechaMin+2 %s \n",fecha3);
-							System.out.printf(" Fecha4=FechaMin+3 %s \n",fecha4);
-							
+//						    System.out.printf(" Fecha1=FechaMin %s \n",fecha1);
+//							System.out.printf(" Fecha2=FechaMin+1 %s \n",fecha2);
+//							System.out.printf(" Fecha3=FechaMin+2 %s \n",fecha3);
+//							System.out.printf(" Fecha4=FechaMin+3 %s \n",fecha4);
+//							
 						    
 						    lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha3,fecha4 );
 						    int jk= Integer.parseInt(lista.get(0)[0].toString());
-						    System.out.printf("%d Count(reservas) \n", jk);
+						   // System.out.printf("%d Count(reservas) \n", jk);
 						    
 							if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
 								
@@ -86,8 +86,8 @@ private Database db = new Database();
 			    }		   
 								
 				catch (Exception E){
-					System.out.printf("Catch \n");
-					E.printStackTrace();
+					//System.out.printf("Catch \n");
+					//E.printStackTrace();
 					//return true;					
 				}				
 				return true;				
@@ -124,7 +124,7 @@ private Database db = new Database();
 				lista = db.executeQueryArray(SQL_RESERVADAS, /*instalacion, id_socio, */diaHora);
 				
 				if (lista.size() == 0) {
-					System.out.println("Disponibilidad");
+					//System.out.println("Disponibilidad");
 					return true;
 				}
 				return false;
@@ -171,7 +171,7 @@ private Database db = new Database();
 		//Método para actualizar la cuota
 				public static final String SQL_SUMA_CUOTA = "UPDATE clientes SET cuota=? WHERE (id_socio=?);";
 				public void añadeacuota(double cuota, int id_socio) {	
-					System.out.println("La cuota es"+cuota);
+					//System.out.println("La cuota es"+cuota);
 					db.executeUpdate(SQL_SUMA_CUOTA,cuota, id_socio);
 				}
 				
