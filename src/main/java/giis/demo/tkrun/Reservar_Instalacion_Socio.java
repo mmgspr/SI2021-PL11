@@ -217,13 +217,14 @@ public class Reservar_Instalacion_Socio {
 				
 								
 				//Mtemos la hora siguiente
-				String hora_mas_1 = (String)comboBoxHoraIni.getItemAt(indice+1);				
+				String hora_mas_1 = (String)comboBoxHoraIni.getItemAt(indice+1);
+				  
 				//Hora Siguiente
 				String diaHora3 = date+" "+hora_mas_1+":00";
 								
 				//Metemos +2 hora 
-				String hora_mas_2 = (String)comboBoxHoraIni.getItemAt(indice+2);		
-				
+				String hora_mas_2 = (String)comboBoxHoraIni.getItemAt(indice+2);	
+				 
 				//Metemos +3 hora 
 				String hora_mas_3 = (String)comboBoxHoraIni.getItemAt(indice+3);	
 				//System.out.println("\n Indice \n"+indice);
@@ -302,20 +303,20 @@ public class Reservar_Instalacion_Socio {
 		   		case"11:00":hora_menos_3=hora_menos_2;
 		   		break;
 		   		case"21:00":hora_mas_3=hora;
+		   		hora_mas_1=hora;
 		   		break;
 		   		case"20:00":hora_mas_3=hora_mas_1;
+		   		hora_mas_2="21:00";
 		   		break;
 		   		case"19:00":hora_mas_3=hora_mas_2;
 		   		break;
+		   		
 		   		}
 		   		
 		   		switch(horaS) {
 		   		case 8:horaS=horaS+1;
 		   		break;
 		   		}
-		   		
-		   		
-		   		
 		   		
 		   		int horaT=horaS+1;
 		   		switch(horaT) {
@@ -332,9 +333,26 @@ public class Reservar_Instalacion_Socio {
 		   	// System.out.println("horS "+horaS);
 		   		
 		   		
+		   		
+		   		
+		   		
+		   		
+		   		String[] vector3=hora_mas_1.split(":"); 
+			     String hora_mas_111=vector3[0].split(":")[0];
+				int hora_mas_11= Integer.valueOf(hora_mas_111);
 				
+				String[] vector2=hora_mas_1.split(":"); 
+			     String hora_mas_222=vector2[0].split(":")[0];
+				int hora_mas_22= Integer.valueOf(hora_mas_222);
+				
+				
+		   		
 		   		String diaHora_menos_3 = date+" "+hora_menos_3+":00";
 		   		String diaHora_mas_3 = date+" "+hora_mas_3+":00";
+
+		   		//String diaHora_mas_1 = date+" "+hora_mas_1+":00";
+		   		
+		   		//String diaHora_mas_2 = date+" "+hora_mas_2+":00";
 		   		
 				//System.out.println("\n Esta es la hora (+3)  "+hora_mas_3);
 				//System.out.printf("\n Esta es la hora (-3)  "+hora_menos_3);
@@ -355,7 +373,7 @@ public class Reservar_Instalacion_Socio {
 				}
 				
 				
-		if(modeloReservas.getReservasInstalacionSocio(diaHora_menos_3,diaHora_mas_3, id_socioS, id, horaS, horaT, date, horaJ)) {
+		if(modeloReservas.getReservasInstalacionSocio(diaHora_menos_3,diaHora_mas_3, hora_mas_11, hora_mas_22, id_socioS, id, horaS, horaT, date, horaJ)) {
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
 					//obtener el precio de la instalacion seleccionada
 					precio = modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem());										

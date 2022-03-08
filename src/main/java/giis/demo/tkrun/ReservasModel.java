@@ -27,7 +27,7 @@ private Database db = new Database();
 					+ "AND (fecha_reserva >= ?) AND (fecha_reserva <= ?) AND (instalacion =?));";
 			public static final String SQL_RESERVAS_INSTALACION_ = "SELECT COUNT(persona) FROM reservas WHERE ((instalacion = ?)AND ((persona=?) AND ((fecha_reserva= ?) "
 					+ "OR (fecha_reserva= ?) OR (fecha_reserva= ?) OR (fecha_reserva=?))));";
-			public boolean getReservasInstalacionSocio(String fechaIni,String fechaFin, int id_socio, String id,int horaIni, int horaT, String Date, int horaJ){
+			public boolean getReservasInstalacionSocio(String fechaIni,String fechaFin, int hora_mas_1,int  hora_mas_2, int id_socio, String id,int horaIni, int horaT, String Date, int horaJ){
 				List<Object[]> lista;
 				
 				lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_SOCIO1,id_socio, fechaIni, fechaFin, id);
@@ -69,17 +69,56 @@ private Database db = new Database();
 							System.out.printf(" Fecha3=FechaMin+2 %s \n",fecha3);
 							System.out.printf(" Fecha4=FechaMin+3 %s \n",fecha4);
 							
-						    
-						    lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha3,fecha4 );
-						    int jk= Integer.parseInt(lista.get(0)[0].toString());
-						    System.out.printf("%d Count(reservas) \n", jk);
-						    
-							if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
+							if(hora1 == hora_mas_1) {
+								System.out.println("\n hora1"+hora1);
+								System.out.println("\n hora_mas_1"+hora_mas_1);
 								
-								return true;
+								 lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha2,fecha2 );
+								    int jk= Integer.parseInt(lista.get(0)[0].toString());
+								    System.out.printf("\n %d Count(reservas) \n", jk);
+								    
+									if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
+										
+										return true;
+									}
+									else {
+									    return false;
+									}	
+								
+								
 							}
 							else {
-							    return false;
+								
+							if(hora1 >= hora_mas_2){
+								System.out.println("\n hora1"+hora1);
+								System.out.println("\n hora_mas_2"+hora_mas_2);
+			   
+							    return true;
+							}
+							
+							
+							else {
+
+							    
+							    lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha3,fecha4 );
+							    int jk= Integer.parseInt(lista.get(0)[0].toString());
+							    System.out.printf("\n %d Count(reservas) \n", jk);
+							    
+								if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
+									
+									return true;
+								}
+								else {
+								    return false;
+								}
+								
+								
+								
+								
+							}
+							
+								
+							
 							}
 			    		
 			    	}
