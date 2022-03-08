@@ -438,6 +438,8 @@ public class Reservar_Instalacion_Socio {
 				    JOptionPane.ERROR_MESSAGE);
 		} 
 		
+		ButtonReservar.setEnabled(false);
+		
 	
 			
 			

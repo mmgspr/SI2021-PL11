@@ -36,7 +36,7 @@ private Database db = new Database();
 				//System.out.printf("Id socio %d \n",id_socio);
 				
 				try {
-					System.out.println("Try");
+					//System.out.println("Try");
 			        String fecha_min =lista.get(0)[0].toString();
 			    
 			    
@@ -52,7 +52,7 @@ private Database db = new Database();
 			   // System.out.println("HORA MENOS 1"+diaHora_menos_1);
 			    
 			    if(fecha_min != null){			    
-			    		 System.out.println("Entra en el if");
+			    		// System.out.println("Entra en el if");
 						    String[] vector=fecha_min.split("T"); 
 						    fecha_min=vector[1].split(":")[0];
 						    int hora1 = Integer.parseInt(fecha_min);
@@ -64,18 +64,18 @@ private Database db = new Database();
 						    String fecha2= vector[0]+" "+hora2+":00:00";
 						    String fecha3= vector[0]+" "+hora3+":00:00";
 						    String fecha4= vector[0]+" "+hora4+":00:00";
-						    System.out.printf(" Fecha1=FechaMin %s \n",fecha1);
-							System.out.printf(" Fecha2=FechaMin+1 %s \n",fecha2);
-							System.out.printf(" Fecha3=FechaMin+2 %s \n",fecha3);
-							System.out.printf(" Fecha4=FechaMin+3 %s \n",fecha4);
+						   // System.out.printf(" Fecha1=FechaMin %s \n",fecha1);
+						//	System.out.printf(" Fecha2=FechaMin+1 %s \n",fecha2);
+						//	System.out.printf(" Fecha3=FechaMin+2 %s \n",fecha3);
+							//System.out.printf(" Fecha4=FechaMin+3 %s \n",fecha4);
 							
 							if(hora1 == hora_mas_1) {
-								System.out.println("\n hora1"+hora1);
-								System.out.println("\n hora_mas_1"+hora_mas_1);
+								//System.out.println("\n hora1"+hora1);
+							//	System.out.println("\n hora_mas_1"+hora_mas_1);
 								
 								 lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha2,fecha2 );
 								    int jk= Integer.parseInt(lista.get(0)[0].toString());
-								    System.out.printf("\n %d Count(reservas) \n", jk);
+								  //  System.out.printf("\n %d Count(reservas) \n", jk);
 								    
 									if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
 										
@@ -90,8 +90,8 @@ private Database db = new Database();
 							else {
 								
 							if(hora1 >= hora_mas_2){
-								System.out.println("\n hora1"+hora1);
-								System.out.println("\n hora_mas_2"+hora_mas_2);
+							//	System.out.println("\n hora1"+hora1);
+							//	System.out.println("\n hora_mas_2"+hora_mas_2);
 			   
 							    return true;
 							}
@@ -102,7 +102,7 @@ private Database db = new Database();
 							    
 							    lista = db.executeQueryArray(SQL_RESERVAS_INSTALACION_, id,id_socio,fecha1,fecha2,fecha3,fecha4 );
 							    int jk= Integer.parseInt(lista.get(0)[0].toString());
-							    System.out.printf("\n %d Count(reservas) \n", jk);
+							 //   System.out.printf("\n %d Count(reservas) \n", jk);
 							    
 								if ((Integer.parseInt(lista.get(0)[0].toString()) < 3)){
 									
@@ -125,8 +125,8 @@ private Database db = new Database();
 			    }		   
 								
 				catch (Exception E){
-					System.out.printf("Catch \n");
-					E.printStackTrace();
+					//System.out.printf("Catch \n");
+					//E.printStackTrace();
 					//return true;					
 				}				
 				return true;				
