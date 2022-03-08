@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Window;
 
@@ -22,6 +24,7 @@ import giis.demo.util.SwingMain;
 import javax.swing.JSplitPane;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -88,7 +91,7 @@ public class Lista_Actividades_Administrador {
 		
 		
 		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonCancelar.setBounds(302, 302, 101, 29);
+		ButtonCancelar.setBounds(294, 301, 95, 19);
 		panel.add(ButtonCancelar);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -123,6 +126,13 @@ public class Lista_Actividades_Administrador {
 		ButtonComprobar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				 Date DateIniSoc = dateChooserInicio.getDate();
+				 Date DateFinSoc = dateChooserFin.getDate();
+				 
+				 if((DateIniSoc==null) || (DateFinSoc==null)) {
+						JOptionPane.showMessageDialog(frmListaDeActividades,"No se ha podido crear el periodo. \nIntroduce una fecha inicial y una fecha final.","Error",JOptionPane.ERROR_MESSAGE);
+					}
+				 else {
 				//fechaInicio
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String dateInicio = sdf.format(dateChooserInicio.getDate());
@@ -154,7 +164,7 @@ public class Lista_Actividades_Administrador {
 				*/
 				
 				
-				
+				 }
 				
 			}
 		});
