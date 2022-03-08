@@ -193,7 +193,7 @@ public class Reservar_Instalacion_Socio {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String date = sdf.format(dateChooserInicio.getDate());
 				String hora = (String)comboBoxHoraIni.getSelectedItem();
-				System.out.println("Esta es la hora elegida"+hora);
+				//System.out.println("Esta es la hora elegida"+hora);
 				String diaHora = date+" "+hora;
 				
 				//Cogemos el indice de la elección
