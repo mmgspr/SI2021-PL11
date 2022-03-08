@@ -130,9 +130,14 @@ public class Lista_Actividades_Administrador {
 				 Date DateFinSoc = dateChooserFin.getDate();
 				 
 				 if((DateIniSoc==null) || (DateFinSoc==null)) {
-						JOptionPane.showMessageDialog(frmListaDeActividades,"No se ha podido crear el periodo. \nIntroduce una fecha inicial y una fecha final.","Error",JOptionPane.ERROR_MESSAGE);
+					 
+						JOptionPane.showMessageDialog(frmListaDeActividades,"No se ha podido mostrar la Lista de Actividades. \nIntroduce una fecha inicial y una fecha final.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 				 else {
+					 if(DateFinSoc.getTime()-DateIniSoc.getTime()<0) {
+						 JOptionPane.showMessageDialog(frmListaDeActividades,"No se ha podido crear la Lista de Actividades. \n La fecha final no puede ser menor a la inicial.","Error",JOptionPane.ERROR_MESSAGE); 
+					 }
+					 else {
 				//fechaInicio
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String dateInicio = sdf.format(dateChooserInicio.getDate());
@@ -145,7 +150,7 @@ public class Lista_Actividades_Administrador {
 																
 				RellenarTablas(table, Inicio, Fin);
 				
-			
+					 }
 				
 				
 				
