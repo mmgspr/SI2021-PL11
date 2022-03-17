@@ -23,9 +23,11 @@ public class cancelarSocio {
 	private JTable table;
 	private Login principal;
 	
-	private List<Object[]> listaActividades;
+	private List<Object[]> listaReservas;
 	private Object[][] matriz;
 	private Iterator<Object[]> it;
+	private int i;
+	Object[] vector = new Object[3];
 
 	/**
 	 * Launch the application.
@@ -91,35 +93,51 @@ public class cancelarSocio {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		//RellenarTabla(table, "2022-01-01", "2022-06-01");
+		RellenarTabla(table, "2022-01-01", "2022-06-01");
 	}
 	
 	public void RellenarTabla(JTable tabla, String Inicio, String Fin) {
-		
-		
-		listaActividades=modeloReservas.todasReservasSocio(principal.getId_socio());	
-	
-		matriz = new Object[listaActividades.size()][5];					
-		it = listaActividades.iterator();				
-		int i=0;
-		while(it.hasNext()) {
-			Object[] vector = new Object[5]; 
-			vector=it.next();
-			
-			for(int j=0;j<5;j++) {
-				
-			  matriz[i][j]= vector[j];
-			
-		}
-			i++;
-		}
+		//Modelo de la tabla
 		table.setModel(new DefaultTableModel(matriz	,new String[] {
-					"Id", 
-					"Fecha", 
-					"Hora", 
-					"Instalación", 
-					"Pagada",  
-					}));
+				"Id", 
+				"Fecha", 
+				"Hora", 
+				"Instalación"
+				//,"Pagada",  
+				}));
+		//Obtenemos una lista con las reservas del socio
+		listaReservas=modeloReservas.todasReservasSocio(principal.getId_socio());	
+		//si la lista no está vacia, mostramos los elementos
+		if(!listaReservas.isEmpty()) {
+			matriz = new Object[listaReservas.size()][4];					
+			it = listaReservas.iterator();				
+			i=0;
+			while(it.hasNext()) {
+				//el vector es el siguiente elemento de la lista (una reserva en concreto del cliente)
+				vector=it.next();
+				//bucle para recorer el vector
+				for(int j=0;j<3;j++) {
+					if(j==0)//si es el id
+						matriz[i][j]= vector[j];
+					else if (j==1) {//la fecha hay que separarla
+						String[] a = ((String)vector[j]).split("T");
+						matriz[i][j] = a[0];
+						matriz[i][j+1]=a[1];
+					}
+					else//ahora la j va atrasada
+						matriz[i][j+1]= vector[j];
+				}
+				 
+				//modificamos el índice para movernos por las filas de la matriz
+				i++;
+			}
+		}
+		//sino, indicamos que no hay reservas
+		else {
+			
+		}
+		
+		
 		
 	}
 	
