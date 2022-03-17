@@ -9,8 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Window;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +40,8 @@ public class cancelarSocio {
 	private Object[] vector = new Object[3];
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextField idTxtField;
+	private long hoy;
+	
 
 	/**
 	 * Launch the application.
@@ -65,6 +69,8 @@ public class cancelarSocio {
 		principal = l;
 		this.id_socio=this.principal.getId_socio();
 		System.out.println(id_socio);
+		Calendar cal=Calendar.getInstance();
+		hoy = cal.getTime().getTime();
 		initialize();
 	}
 
@@ -149,21 +155,28 @@ public class cancelarSocio {
 			while(it.hasNext()) {
 				//el vector es el siguiente elemento de la lista (una reserva en concreto del cliente)
 				vector=it.next();
-				//bucle para recorer el vector
-				for(int j=0;j<3;j++) {
-					if(j==0)//si es el id
-						matriz[i][j]= vector[j];
-					else if (j==1) {//la fecha hay que separarla
-						String[] a = (vector[j].toString()).split(" ");
-						matriz[i][j] = a[0];
-						matriz[i][j+1]=a[1];
+				try {
+					if (hoy+432000000 < sdf.parse(vector[1].toString()).getTime()) {
+						//bucle para recorer el vector
+						for(int j=0;j<3;j++) {
+							if(j==0)//si es el id
+								matriz[i][j]= vector[j];
+							else if (j==1) {//la fecha hay que separarla
+								String[] a = (vector[j].toString()).split("T");
+								matriz[i][j] = a[0];
+								matriz[i][j+1]=a[1];
+							}
+							else//ahora la j va atrasada
+								matriz[i][j+1]= vector[j];
+						}
+						//modificamos el índice para movernos por las filas de la matriz
+						i++;
 					}
-					else//ahora la j va atrasada
-						matriz[i][j+1]= vector[j];
+					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				 
-				//modificamos el índice para movernos por las filas de la matriz
-				i++;
 			}
 		}
 		//sino, indicamos que no hay reservas
