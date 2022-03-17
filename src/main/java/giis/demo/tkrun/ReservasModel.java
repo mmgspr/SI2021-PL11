@@ -266,9 +266,9 @@ private Database db = new Database();
 	} 
 	
 	//método para obtener todas las reservas de un socio
-	public static final String SQL_RESERVAS_CLIENTE = "SELECT id_reserva, fecha_reserva, instalacion FROM reservas WHERE persona = ";
+	public static final String SQL_RESERVAS_CLIENTE = "SELECT id_reserva, fecha_reserva, instalacion FROM reservas WHERE persona = ?";
 	public List<Object[]> todasReservasSocio(int n){
-		return db.executeQueryArray(SQL_RESERVAS_CLIENTE+n);	
+		return db.executeQueryArray(SQL_RESERVAS_CLIENTE,n);	
 	}
 	
 }

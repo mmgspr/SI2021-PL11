@@ -9,12 +9,18 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Window;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class cancelarSocio {
 
@@ -22,12 +28,16 @@ public class cancelarSocio {
 	private JFrame frmCancelarReservas;
 	private JTable table;
 	private Login principal;
+	private int id_socio;
+	private JLabel sinReservasLabel;
 	
 	private List<Object[]> listaReservas;
 	private Object[][] matriz;
 	private Iterator<Object[]> it;
 	private int i;
-	Object[] vector = new Object[3];
+	private Object[] vector = new Object[3];
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private JTextField idTxtField;
 
 	/**
 	 * Launch the application.
@@ -52,8 +62,10 @@ public class cancelarSocio {
 		initialize();
 	}
 	public cancelarSocio(Login l) {
-		initialize();
 		principal = l;
+		this.id_socio=this.principal.getId_socio();
+		System.out.println(id_socio);
+		initialize();
 	}
 
 	/**
@@ -62,7 +74,7 @@ public class cancelarSocio {
 	private void initialize() {
 		frmCancelarReservas = new JFrame();
 		frmCancelarReservas.setTitle("Cancelar reservas");
-		frmCancelarReservas.setBounds(100, 100, 450, 300);
+		frmCancelarReservas.setBounds(100, 100, 578, 300);
 		frmCancelarReservas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
@@ -70,7 +82,7 @@ public class cancelarSocio {
 		panel.setLayout(null);
 		
 		JButton EliminarBtn = new JButton("Eliminar");
-		EliminarBtn.setBounds(311, 11, 115, 23);
+		EliminarBtn.setBounds(439, 13, 115, 23);
 		panel.add(EliminarBtn);
 		
 		JButton CancelarBtn = new JButton("Cancelar");
@@ -78,7 +90,7 @@ public class cancelarSocio {
 		panel.add(CancelarBtn);
 		
 		JButton AceptarBtn = new JButton("Aceptar");
-		AceptarBtn.setBounds(311, 229, 115, 23);
+		AceptarBtn.setBounds(439, 229, 115, 23);
 		panel.add(AceptarBtn);
 		
 		JLabel ReservasLbl = new JLabel("Reservas activas:");
@@ -87,26 +99,48 @@ public class cancelarSocio {
 		panel.add(ReservasLbl);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 45, 376, 146);
+		scrollPane.setBounds(26, 45, 528, 146);
 		panel.add(scrollPane);
+		
+		sinReservasLabel = new JLabel("Parece que no tienes ninguna reserva para cancelar...");
+		sinReservasLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		sinReservasLabel.setBounds(26, 202, 346, 14);
+		sinReservasLabel.setVisible(false);
+		panel.add(sinReservasLabel);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		RellenarTabla(table, "2022-01-01", "2022-06-01");
+		RellenarTabla(table);
+		table.setEnabled(false);
+		
+		idTxtField = new JTextField();
+		idTxtField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyChar() < '0' || e.getKeyChar() > '9') {
+					e.setKeyChar((char)127);
+				}
+			}
+		});
+		idTxtField.setBounds(317, 14, 96, 20);
+		panel.add(idTxtField);
+		idTxtField.setColumns(10);
+		
+		JLabel idLbl = new JLabel("Id de reserva:");
+		idLbl.setBounds(317, 0, 96, 14);
+		panel.add(idLbl);
+		
+		
+		
+		
 	}
 	
-	public void RellenarTabla(JTable tabla, String Inicio, String Fin) {
-		//Modelo de la tabla
-		table.setModel(new DefaultTableModel(matriz	,new String[] {
-				"Id", 
-				"Fecha", 
-				"Hora", 
-				"Instalación"
-				//,"Pagada",  
-				}));
+	public void RellenarTabla(JTable tabla) {
+		
 		//Obtenemos una lista con las reservas del socio
-		listaReservas=modeloReservas.todasReservasSocio(principal.getId_socio());	
+		listaReservas=modeloReservas.todasReservasSocio(id_socio);	
+		System.out.println(listaReservas.size());
 		//si la lista no está vacia, mostramos los elementos
 		if(!listaReservas.isEmpty()) {
 			matriz = new Object[listaReservas.size()][4];					
@@ -120,7 +154,7 @@ public class cancelarSocio {
 					if(j==0)//si es el id
 						matriz[i][j]= vector[j];
 					else if (j==1) {//la fecha hay que separarla
-						String[] a = ((String)vector[j]).split("T");
+						String[] a = (vector[j].toString()).split(" ");
 						matriz[i][j] = a[0];
 						matriz[i][j+1]=a[1];
 					}
@@ -134,8 +168,17 @@ public class cancelarSocio {
 		}
 		//sino, indicamos que no hay reservas
 		else {
-			
+			sinReservasLabel.setVisible(true);
 		}
+		
+		//Modelo de la tabla
+				table.setModel(new DefaultTableModel(matriz	,new String[] {
+						"Id", 
+						"Fecha", 
+						"Hora", 
+						"Instalación"
+						//,"Pagada",  
+						}));
 		
 		
 		
