@@ -274,4 +274,10 @@ private Database db = new Database();
 	
 	
 	
+	//método para obtener todas las reservas de un socio
+	public static final String SQL_RESERVAS_CLIENTE = "SELECT * FROM reservas WHERE persona = ";
+	public List<Object[]> todasReservasSocio(int n){
+		return db.executeQueryArray(SQL_RESERVAS_CLIENTE+n);	
+	}
+	
 }

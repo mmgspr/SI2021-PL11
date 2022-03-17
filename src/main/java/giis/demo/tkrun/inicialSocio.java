@@ -20,6 +20,7 @@ public class inicialSocio {
 	private Login vLogin;
 	private visualizarReservasS vVisualizarReservasS;
 	private Reservar_Instalacion_Socio vReservarInstalacionS;
+	private cancelarSocio vCancelarSocio;
 	private JLabel lblBienvenido;
 	/**
 	 * Launch the application.
@@ -95,6 +96,18 @@ public class inicialSocio {
 		lblBienvenido.setFont(new Font("Tahoma", Font.BOLD, 33));
 		lblBienvenido.setBounds(25, 39, 455, 84);
 		panel.add(lblBienvenido);
+		
+		JButton eliminarReservasBtn = new JButton("Eliminar una reserva");
+		eliminarReservasBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//lleva a cancelarSocio
+				vCancelarSocio = new cancelarSocio(vLogin);
+				vCancelarSocio.getFrmCancelarSocio().setVisible(true);
+			}
+		});
+		eliminarReservasBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		eliminarReservasBtn.setBounds(25, 216, 207, 23);
+		panel.add(eliminarReservasBtn);
 		
 	}
 	
