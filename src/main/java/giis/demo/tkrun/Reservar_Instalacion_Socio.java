@@ -41,6 +41,8 @@ public class Reservar_Instalacion_Socio {
 	private Login vLogin;
 	private String precio="";
 	private int id_socio;
+	private String date;
+	private Object hora;
 
 	/**
 	 * Launch the application.
@@ -77,7 +79,8 @@ public class Reservar_Instalacion_Socio {
 		frmReservarInstalacin.setTitle("Reservar Instalación");
 		frmReservarInstalacin.setBounds(100, 100, 450, 300);
 		frmReservarInstalacin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+		System.out.println(getHora("2022-3-25T17:00:00"));
+		System.out.println(getHora1("17:00"));
 		
 		//obtener todas las instalaciones
 				List<Object[]> lista=modelo.getInstalaciones();
@@ -193,7 +196,7 @@ public class Reservar_Instalacion_Socio {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String date = sdf.format(dateChooserInicio.getDate());
 				String hora = (String)comboBoxHoraIni.getSelectedItem();
-				//System.out.println("Esta es la hora elegida"+hora);
+				System.out.println("Esta es la hora elegida"+hora);
 				String diaHora = date+" "+hora;
 				
 				//Cogemos el indice de la elección
@@ -360,6 +363,7 @@ public class Reservar_Instalacion_Socio {
 				//System.out.println("\n diaHora_menos_3  "+diaHora_menos_3);
 				//System.out.println("\n diaHora_mas_3   "+diaHora_mas_3);
 		   		
+		   	
 		   		
 		   		double prix;
 				prix = Double.parseDouble(modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem()));										
@@ -371,9 +375,53 @@ public class Reservar_Instalacion_Socio {
 			          modeloReservas.añadeacuota(k, id_socioS);
 				
 				}
+				/*public boolean reservasMaxDia (String idSocio) {
+				String fech = this.fecha.getSelectedItem().toString();
+				List<> l=lista.getListaReservasUsuario(idSocio);
+				int contador=0;
+				int horai;
+				int horaf;
+				for(int i=0;i<l.size();i++) {
+					if(l.get(i).getFecha().equals(fech)) {
+						horaf=l.get(i).getHora_fin();
+						horai=l.get(i).getHora_ini();
+						contador=contador+(horaf-horai);
+					}
+				}		
+				int max_horas=3;
+				if(contador>= max_horas) return true;
+				else return false;
+			}
+				*/
+				 hora = (String)comboBoxHoraIni.getSelectedItem();
+				List<Object[]> I= modeloReservas.getListaReservasUsuario(id_socioS, id);
+				int contador=0;
+				int Hora_Max=3;
+				for(int k=0; k<I.size();k++){
+					if(getFecha((I.get(k)[0]).toString()).equals(date)) {
+						if( ( (getHora((I.get(k)[0]).toString())) <= ((getHora1(hora))+Hora_Max)) && ( (getHora((I.get(k)[0]).toString())) >= ((getHora1(hora))-Hora_Max))) {								
+							System.out.println("\nHora Bucle"+(getHora((I.get(k)[0]).toString())));
+						    System.out.println("\nHoraIni"+(getHora1(hora)-Hora_Max));
+						    System.out.println("\nHoraFin"+(getHora1(hora)+Hora_Max));
+							contador++;
+							System.out.println("\nContador"+contador);
+							
+						}
+					}		
+				}
+				
+				boolean seguidas=true;
+				
+				if(contador>=3) {
+					seguidas=false;
+				}
+				else 
+					seguidas=true;
+	
+			
 				
 				
-		if(modeloReservas.getReservasInstalacionSocio(diaHora_menos_3,diaHora_mas_3, hora_mas_11, hora_mas_22, id_socioS, id, horaS, horaT, date, horaJ)) {
+		if(seguidas) {
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
 					//obtener el precio de la instalacion seleccionada
 					precio = modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem());										
@@ -439,8 +487,10 @@ public class Reservar_Instalacion_Socio {
 		} 
 		
 		ButtonReservar.setEnabled(false);
+		contador=0;
+		System.out.println(contador);
+		seguidas=true;
 		
-	
 			
 			
 				
@@ -472,7 +522,7 @@ public class Reservar_Instalacion_Socio {
 				
 				//fecha
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				String date = sdf.format(dateChooserInicio.getDate());
+			    String date = sdf.format(dateChooserInicio.getDate());
 				String hora = (String)comboBoxHoraIni.getSelectedItem();
 				String diaHora = date+" "+hora;
 				//System.out.println(diaHora);
@@ -613,4 +663,36 @@ public class Reservar_Instalacion_Socio {
 		// TODO Auto-generated method stub
 		return this.frmReservarInstalacin;
 	}
+	
+	public String getFecha (String date) {
+		String[] vector=date.split("T");
+		String fecha = vector[0];
+		
+			return fecha;
+		}
+
+
+	public void setFecha(String date) {
+			this.date = date;
+		}
+	
+	public int getHora (String date) {
+		String[] vector=date.split("T");
+		date=vector[1].split(":")[0];
+		int hora=Integer.parseInt(date);
+		
+		
+			return hora;
+		}
+
+	public int getHora1 (String date) {
+		
+		  String[] vector1=date.split(":"); 
+          date=vector1[0].split(":")[0];
+	      int horaS= Integer.parseInt(date);
+	 
+	 return horaS;
+	}
+	
+
 }

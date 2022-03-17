@@ -20,7 +20,14 @@ private Database db = new Database();
 		return db.executeQueryArray(SQL_RESERVAS_INSTALACION, instalacion);
 	}
 	
+	//SQL para ver todas las reservas de un socio
+	public static final String SQL_RESERVAS_SOCIO = "SELECT fecha_reserva FROM reservas WHERE ((persona=?) AND (instalacion=?))";
+	public List<Object[]> getListaReservasUsuario(int idsocio, String instalacion){
+		
+		return db.executeQueryArray(SQL_RESERVAS_SOCIO, idsocio, instalacion);
+	}
 
+	
 	
 	//SQL para ver si un socio tiene al menos 3 reservas en un periodo de tiempo
 			public static final String SQL_RESERVAS_INSTALACION_SOCIO1 = "SELECT MIN(fecha_reserva) FROM reservas WHERE ((persona= ?) "
@@ -263,6 +270,8 @@ private Database db = new Database();
 	public int getCliente(String instalacion, String fecha){
 		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE1+instalacion+"'"+SQL_CLIENTE2 + fecha+"';");	
 		return (int) lista.get(0)[0];
-	} 
+	}
+	
+	
 	
 }
