@@ -17,6 +17,9 @@ public class PagosModel {
 	public String getReserva(String pago){
 		
 		List<Object[]> l = db.executeQueryArray(SQL_RESERVA, pago);
+		if (l.isEmpty()) {
+			return null;
+		}
 		return l.get(0)[0].toString();
 	}
 	

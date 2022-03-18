@@ -157,7 +157,7 @@ CREATE TABLE pagos(
     
     foreign key (inscripcion) references inscripciones(id_inscripcion), 
     
-    reserva integer unsigned unique,
+    reserva integer unsigned,
     
     foreign key (reserva) references reservas(id_reserva)
 

@@ -40,6 +40,8 @@ INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES
 (4, 'Pista de futbol 1', 'Futbol', 3.50);  
 INSERT INTO reservas(id_reserva, persona, instalacion, fecha, fecha_reserva, precio,actividad) VALUES 
 
+(0,NULL,NULL,NULL,NULL,NULL,NULL),
+
 (1,NULL, 3, '2022-2-23', '2022-3-25 17:00:00', '6.25' ,1), 
 
 (2,2, 2,'2022-2-25', '2022-3-24 20:00:00', '4.5' ,0),
@@ -91,9 +93,9 @@ INSERT INTO pagos(id_pago, fecha, persona, inscripcion, reserva) VALUES
 
 (1, '2022-03-14', '46739273H', NULL, 2),
 
-(3, '2022-03-10', '54487543A', 3, NULL),
+(3, '2022-03-10', '54487543A', 3, 0),
 
-(4, '2022-02-26', '58438791C', 2, NULL);
+(4, '2022-02-26', '58438791C', 2, 0);
 
 -- (2, '2022-03-14', '46739273H', NULL, 3),
 
