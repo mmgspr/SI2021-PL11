@@ -79,8 +79,8 @@ public class Reservar_Instalacion_Socio {
 		frmReservarInstalacin.setTitle("Reservar Instalación");
 		frmReservarInstalacin.setBounds(100, 100, 450, 300);
 		frmReservarInstalacin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		System.out.println(getHora("2022-3-25T17:00:00"));
-		System.out.println(getHora1("17:00"));
+		//System.out.println(getHora("2022-3-25T17:00:00"));
+		//System.out.println(getHora1("17:00"));
 		
 		//obtener todas las instalaciones
 				List<Object[]> lista=modelo.getInstalaciones();
@@ -196,7 +196,7 @@ public class Reservar_Instalacion_Socio {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String date = sdf.format(dateChooserInicio.getDate());
 				String hora = (String)comboBoxHoraIni.getSelectedItem();
-				System.out.println("Esta es la hora elegida"+hora);
+				//System.out.println("Esta es la hora elegida"+hora);
 				String diaHora = date+" "+hora;
 				
 				//Cogemos el indice de la elección
@@ -207,29 +207,29 @@ public class Reservar_Instalacion_Socio {
 				
 				
 				//Mtemos la hora anterior
-				String hora_menos_1 = (String)comboBoxHoraIni.getItemAt(indice-1);				
+				//String hora_menos_1 = (String)comboBoxHoraIni.getItemAt(indice-1);				
 				//Hora Anterior
-				String diaHora1 = date+" "+hora_menos_1+":00";
+				//String diaHora1 = date+" "+hora_menos_1+":00";
 								
 				//Metemos -2 hora 
-				String hora_menos_2 = (String)comboBoxHoraIni.getItemAt(indice-2);				
+				//String hora_menos_2 = (String)comboBoxHoraIni.getItemAt(indice-2);				
 		        
 				//Metemos -2 hora 
-				String hora_menos_3= (String)comboBoxHoraIni.getItemAt(indice-3);				
+				//String hora_menos_3= (String)comboBoxHoraIni.getItemAt(indice-3);				
 				
 				
 								
 				//Mtemos la hora siguiente
-				String hora_mas_1 = (String)comboBoxHoraIni.getItemAt(indice+1);
+			//	String hora_mas_1 = (String)comboBoxHoraIni.getItemAt(indice+1);
 				  
 				//Hora Siguiente
-				String diaHora3 = date+" "+hora_mas_1+":00";
+				//String diaHora3 = date+" "+hora_mas_1+":00";
 								
 				//Metemos +2 hora 
-				String hora_mas_2 = (String)comboBoxHoraIni.getItemAt(indice+2);	
+				//String hora_mas_2 = (String)comboBoxHoraIni.getItemAt(indice+2);	
 				 
 				//Metemos +3 hora 
-				String hora_mas_3 = (String)comboBoxHoraIni.getItemAt(indice+3);	
+			//	String hora_mas_3 = (String)comboBoxHoraIni.getItemAt(indice+3);	
 				//System.out.println("\n Indice \n"+indice);
 				//System.out.println(comboBoxHoraIni.getItemAt(indice+3));
 				
@@ -238,7 +238,7 @@ public class Reservar_Instalacion_Socio {
 				
 				//fecha de hoy
 				Date d1 = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-				
+				//System.out.println(sdf.format(d1));
 				
 				//diferencia entre las dos fechas
 				long diferencia_dias= 0;
@@ -298,23 +298,23 @@ public class Reservar_Instalacion_Socio {
 				 int horaS= Integer.parseInt(fecha_ini);
 				// System.out.println("horS"+horaS);
 		   			
-		   		switch(hora) {
+		   		/*switch(hora) {
 		   		case"09:00":hora_menos_3=hora;
 		   		break;
 		   		case"10:00":hora_menos_3=hora_menos_1;
 		   		break;
-		   		case"11:00":hora_menos_3=hora_menos_2;
+		   		//case"11:00":hora_menos_3=hora_menos_2;
 		   		break;
-		   		case"21:00":hora_mas_3=hora;
-		   		hora_mas_1=hora;
+		   	//	case"21:00":hora_mas_3=hora;
+		   		//hora_mas_1=hora;
 		   		break;
-		   		case"20:00":hora_mas_3=hora_mas_1;
-		   		hora_mas_2="21:00";
+		   		//case"20:00":hora_mas_3=hora_mas_1;
+		   	//	hora_mas_2="21:00";
 		   		break;
 		   		case"19:00":hora_mas_3=hora_mas_2;
 		   		break;
 		   		
-		   		}
+		   		}*/
 		   		
 		   		switch(horaS) {
 		   		case 8:horaS=horaS+1;
@@ -340,18 +340,18 @@ public class Reservar_Instalacion_Socio {
 		   		
 		   		
 		   		
-		   		String[] vector3=hora_mas_1.split(":"); 
-			     String hora_mas_111=vector3[0].split(":")[0];
-				int hora_mas_11= Integer.valueOf(hora_mas_111);
+		   		//String[] vector3=hora_mas_1.split(":"); 
+			   //  String hora_mas_111=vector3[0].split(":")[0];
+				//int hora_mas_11= Integer.valueOf(hora_mas_111);
 				
-				String[] vector2=hora_mas_1.split(":"); 
-			     String hora_mas_222=vector2[0].split(":")[0];
-				int hora_mas_22= Integer.valueOf(hora_mas_222);
+				//String[] vector2=hora_mas_1.split(":"); 
+			    // String hora_mas_222=vector2[0].split(":")[0];
+				//int hora_mas_22= Integer.valueOf(hora_mas_222);
 				
 				
 		   		
-		   		String diaHora_menos_3 = date+" "+hora_menos_3+":00";
-		   		String diaHora_mas_3 = date+" "+hora_mas_3+":00";
+		   		//String diaHora_menos_3 = date+" "+hora_menos_3+":00";
+		   		//String diaHora_mas_3 = date+" "+hora_mas_3+":00";
 
 		   		//String diaHora_mas_1 = date+" "+hora_mas_1+":00";
 		   		
@@ -363,8 +363,7 @@ public class Reservar_Instalacion_Socio {
 				//System.out.println("\n diaHora_menos_3  "+diaHora_menos_3);
 				//System.out.println("\n diaHora_mas_3   "+diaHora_mas_3);
 		   		
-		   	
-		   		
+		   	   
 		   		double prix;
 				prix = Double.parseDouble(modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem()));										
 				
@@ -375,24 +374,7 @@ public class Reservar_Instalacion_Socio {
 			          modeloReservas.añadeacuota(k, id_socioS);
 				
 				}
-				/*public boolean reservasMaxDia (String idSocio) {
-				String fech = this.fecha.getSelectedItem().toString();
-				List<> l=lista.getListaReservasUsuario(idSocio);
-				int contador=0;
-				int horai;
-				int horaf;
-				for(int i=0;i<l.size();i++) {
-					if(l.get(i).getFecha().equals(fech)) {
-						horaf=l.get(i).getHora_fin();
-						horai=l.get(i).getHora_ini();
-						contador=contador+(horaf-horai);
-					}
-				}		
-				int max_horas=3;
-				if(contador>= max_horas) return true;
-				else return false;
-			}
-				*/
+				
 				 hora = (String)comboBoxHoraIni.getSelectedItem();
 				List<Object[]> I= modeloReservas.getListaReservasUsuario(id_socioS, id);
 				int contador=0;
@@ -400,11 +382,11 @@ public class Reservar_Instalacion_Socio {
 				for(int k=0; k<I.size();k++){
 					if(getFecha((I.get(k)[0]).toString()).equals(date)) {
 						if( ( (getHora((I.get(k)[0]).toString())) <= ((getHora1(hora))+Hora_Max)) && ( (getHora((I.get(k)[0]).toString())) >= ((getHora1(hora))-Hora_Max))) {								
-							System.out.println("\nHora Bucle"+(getHora((I.get(k)[0]).toString())));
-						    System.out.println("\nHoraIni"+(getHora1(hora)-Hora_Max));
-						    System.out.println("\nHoraFin"+(getHora1(hora)+Hora_Max));
+							//System.out.println("\nHora Bucle"+(getHora((I.get(k)[0]).toString())));
+						   // System.out.println("\nHoraIni"+(getHora1(hora)-Hora_Max));
+						   // System.out.println("\nHoraFin"+(getHora1(hora)+Hora_Max));
 							contador++;
-							System.out.println("\nContador"+contador);
+							//System.out.println("\nContador"+contador);
 							
 						}
 					}		
@@ -412,15 +394,23 @@ public class Reservar_Instalacion_Socio {
 				
 				boolean seguidas=true;
 				
-				if(contador>=3) {
+				if(contador>=Hora_Max) {
 					seguidas=false;
 				}
 				else 
 					seguidas=true;
 	
-			
+				String Date0 = date+" "+"00:00:00";
+		   	    String Date11 = date+" "+"23:00:00";
+		   	    String Date00 = sdf.format(d1)+" "+"00:00:00";
+		   	   
+		   	    
+		   	 int horasDiaMax=4;
+		   	 int horasPeriodoMax=10;
+		   	    
+if(modeloReservas.getListaReservasUsuario2(id_socioS, Date0, Date11).size() < horasDiaMax) {	
 				
-				
+	if(modeloReservas.getListaReservasUsuario1(id_socioS,Date00).size() < horasPeriodoMax ) {
 		if(seguidas) {
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
 					//obtener el precio de la instalacion seleccionada
@@ -433,7 +423,10 @@ public class Reservar_Instalacion_Socio {
 								  // System.out.printf("%d",);
 									if ((modeloClientes.DebeDinero(id_socio))==1) {																																							
 										   //CheckBoxPuedesReservar.setSelected(false);
-										   JOptionPane.showMessageDialog(frmReservarInstalacin ," No se ha podido reservar. \n Está libre pero debes dinero. \n               ¡MOROSO! ","Error",JOptionPane.ERROR_MESSAGE);										   								              											
+										   JOptionPane.showMessageDialog(frmReservarInstalacin ,
+												   " No se ha podido reservar. \n Está libre pero debes dinero. \n    "
+												   + "           ¡MOROSO! ","Error",
+												   JOptionPane.ERROR_MESSAGE);										   								              											
 									}		
 									else {																				
 										//CheckBoxPuedesReservar.setSelected(true);
@@ -484,11 +477,28 @@ public class Reservar_Instalacion_Socio {
 				    "No puedes reservar más de 3h seguidas",
 				    "Error Reservando",
 				    JOptionPane.ERROR_MESSAGE);
-		} 
+		}
+	}
+	else {
+		
+		JOptionPane.showMessageDialog(frmReservarInstalacin,
+			    "No puedes reservar más de 10h en el periodo de 15 días",
+			    "Error Reservando",
+			    JOptionPane.ERROR_MESSAGE);
+		
+	}
+}
+else {
+	JOptionPane.showMessageDialog(frmReservarInstalacin,
+		    "No puedes reservar más de 4h el mismo dia",
+		    "Error Reservando",
+		    JOptionPane.ERROR_MESSAGE);
+	
+}
 		
 		ButtonReservar.setEnabled(false);
 		contador=0;
-		System.out.println(contador);
+		//System.out.println(contador);
 		seguidas=true;
 		
 			
