@@ -274,6 +274,13 @@ private Database db = new Database();
 		return db.executeQueryArray(SQL_TODAS_ACTIVIDADES_PERIODO1+"'"+fechaIni+"'"+" AND fecha_ini <= '" + fechaFin +"';");	
 		
 	} 
+	//Método para obtener el nombre de las actividades que se encuentran en un periodo determinado	
+    public static final String SQL_TODAS_LISTA_RESERVAS1 = "SELECT id_reserva, instalacion, fecha, fecha_reserva, precio, actividad FROM reservas WHERE ((fecha_reserva>= ?) AND (persona = ?) AND (fecha_reserva <= ?))";
+
+	public List<Object[]> getActividadPeriodo2(String fechaIni, String fechaFin, int id_socio){
+		return db.executeQueryArray(SQL_TODAS_LISTA_RESERVAS1, fechaIni,  id_socio, fechaFin);	
+		
+	} 
 		
 	//Método para obtener el cliente a partir  
 	public static final String SQL_CLIENTE1 = "SELECT persona FROM reservas WHERE instalacion = '";

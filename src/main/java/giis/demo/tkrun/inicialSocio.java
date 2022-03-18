@@ -21,6 +21,7 @@ public class inicialSocio {
 	private visualizarReservasS vVisualizarReservasS;
 	private Reservar_Instalacion_Socio vReservarInstalacionS;
 	private cancelarSocio vCancelarSocio;
+	private Lista_Reservas vLista_Reservas;
 	private JLabel lblBienvenido;
 	/**
 	 * Launch the application.
@@ -108,6 +109,16 @@ public class inicialSocio {
 		eliminarReservasBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		eliminarReservasBtn.setBounds(25, 216, 207, 23);
 		panel.add(eliminarReservasBtn);
+		
+		JButton btnNewButton = new JButton("Ver Lista de Reservas");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vLista_Reservas = new Lista_Reservas(vLogin);
+				vLista_Reservas.getFrmListaReservas().setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(298, 219, 207, 20);
+		panel.add(btnNewButton);
 		
 	}
 	
