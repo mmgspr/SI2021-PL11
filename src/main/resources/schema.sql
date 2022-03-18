@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS pagos;
 DROP TABLE IF EXISTS sesiones;
 DROP TABLE IF EXISTS reservas;
 DROP TABLE IF EXISTS inscripciones;
@@ -6,6 +7,8 @@ DROP TABLE IF EXISTS socios;
 DROP TABLE IF EXISTS periodos_inscripcion;
 DROP TABLE IF EXISTS clientes;
 DROP TABLE IF EXISTS instalaciones;
+
+
 -- CREATE TABLE socios( 
 
 -- id_socio integer unsigned unique not null primary key, 
@@ -139,5 +142,23 @@ CREATE TABLE sesiones(
     actividad integer unsigned,
     
     foreign key (actividad) references actividades(id_actividad) 
+
+); 
+
+CREATE TABLE pagos( 
+
+    id_pago integer unsigned unique not null primary key, 
+
+	fecha date,
+    
+    persona varchar(20),
+    
+    inscripcion integer unsigned unique,
+    
+    foreign key (inscripcion) references inscripciones(id_inscripcion), 
+    
+    reserva integer unsigned unique,
+    
+    foreign key (reserva) references reservas(id_reserva)
 
 ); 

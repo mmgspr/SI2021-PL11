@@ -47,6 +47,14 @@ public class ClientesModel {
 			return true;
 		}
 		
+		//SQL para obtener el dni de un socio a partir de su id de socio
+				public static final String SQL_DNI = "SELECT dni FROM clientes WHERE id_socio =";
+				public String getDNI(String id){
+					List<Object[]> lista;
+					lista = db.executeQueryArray(SQL_DNI+"'"+id+"'");
+					return lista.get(0)[0].toString();
+				}
+		
 		//SQL para comprobar si debe alguna cuota
 				public static final String SQL_MOROSO = "SELECT moroso FROM clientes WHERE id_socio =";
 				public int DebeDinero(String id){

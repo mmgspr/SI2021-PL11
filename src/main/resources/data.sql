@@ -5,6 +5,7 @@ DELETE FROM actividades;
 DELETE FROM periodos_inscripcion;
 DELETE FROM instalaciones;
 DELETE FROM clientes;
+DELETE FROM pagos;
 
 -- INSERT INTO socios(id_socio, nombre, fecha_nacimiento, dni) VALUES 
 
@@ -85,4 +86,14 @@ INSERT INTO sesiones(id_sesion, dia, hora_ini, hora_fin, actividad) VALUES
 (3, 'viernes', '9:00:00', '12:00:00', '2'),
 
 (4, 'sabado', '20:00:00', '21:00:00', '3'); 
+
+INSERT INTO pagos(id_pago, fecha, persona, inscripcion, reserva) VALUES
+
+(1, '2022-03-14', '46739273H', NULL, 2),
+
+(3, '2022-03-10', '54487543A', 3, NULL),
+
+(4, '2022-02-26', '58438791C', 2, NULL);
+
+-- (2, '2022-03-14', '46739273H', NULL, 3),
 

@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,18 +24,29 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class cancelarSocio {
 
 	private ReservasModel modeloReservas = new ReservasModel();
+	private PagosModel modeloPagos = new PagosModel();
+	private ClientesModel modeloClientes = new ClientesModel();
+
 	private JFrame frmCancelarReservas;
 	private JTable table;
 	private Login principal;
 	private int id_socio;
+	private String dni;
 	private JLabel sinReservasLabel;
 	
 	private List<Object[]> listaReservas;
+	private List<Object[]> listaPagos;
+	private String[] arrayPagos;
+	private Vector<String> reservasPagadas;
 	private Object[][] matriz;
+	private String[][] matriz2;
 	private Iterator<Object[]> it;
 	private int i;
 	private Object[] vector = new Object[3];
@@ -68,7 +80,7 @@ public class cancelarSocio {
 	public cancelarSocio(Login l) {
 		principal = l;
 		this.id_socio=this.principal.getId_socio();
-		System.out.println(id_socio);
+		this.dni = modeloClientes.getDNI(Integer.toString(id_socio));
 		Calendar cal=Calendar.getInstance();
 		hoy = cal.getTime().getTime();
 		initialize();
@@ -84,35 +96,21 @@ public class cancelarSocio {
 		frmCancelarReservas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
-		frmCancelarReservas.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
 		
 		JButton EliminarBtn = new JButton("Eliminar");
-		EliminarBtn.setBounds(439, 13, 115, 23);
-		panel.add(EliminarBtn);
 		
 		JButton CancelarBtn = new JButton("Cancelar");
-		CancelarBtn.setBounds(10, 229, 115, 23);
-		panel.add(CancelarBtn);
 		
 		JButton AceptarBtn = new JButton("Aceptar");
-		AceptarBtn.setBounds(439, 229, 115, 23);
-		panel.add(AceptarBtn);
 		
 		JLabel ReservasLbl = new JLabel("Reservas activas:");
 		ReservasLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ReservasLbl.setBounds(26, 15, 150, 14);
-		panel.add(ReservasLbl);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 45, 528, 146);
-		panel.add(scrollPane);
 		
 		sinReservasLabel = new JLabel("Parece que no tienes ninguna reserva para cancelar...");
 		sinReservasLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		sinReservasLabel.setBounds(26, 202, 346, 14);
 		sinReservasLabel.setVisible(false);
-		panel.add(sinReservasLabel);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
@@ -129,13 +127,70 @@ public class cancelarSocio {
 				}
 			}
 		});
-		idTxtField.setBounds(317, 14, 96, 20);
-		panel.add(idTxtField);
 		idTxtField.setColumns(10);
 		
 		JLabel idLbl = new JLabel("Id de reserva:");
-		idLbl.setBounds(317, 0, 96, 14);
-		panel.add(idLbl);
+		GroupLayout groupLayout = new GroupLayout(frmCancelarReservas.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+		);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(26)
+					.addComponent(ReservasLbl, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+					.addGap(141)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(idLbl, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+					.addComponent(EliminarBtn, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+					.addGap(10))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(26, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
+					.addGap(10))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(26)
+					.addComponent(sinReservasLabel, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(CancelarBtn, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
+					.addComponent(AceptarBtn, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+					.addGap(10))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(15)
+							.addComponent(ReservasLbl, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(idLbl)
+							.addComponent(idTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap(13, Short.MAX_VALUE)
+							.addComponent(EliminarBtn)))
+					.addGap(9)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addComponent(sinReservasLabel, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+					.addGap(13)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(CancelarBtn)
+						.addComponent(AceptarBtn, Alignment.TRAILING))
+					.addGap(11))
+		);
+		panel.setLayout(gl_panel);
+		frmCancelarReservas.getContentPane().setLayout(groupLayout);
 		
 		
 		
@@ -143,13 +198,23 @@ public class cancelarSocio {
 	}
 	
 	public void RellenarTabla(JTable tabla) {
+		//Obtenemos una lista con los pagos del socio
+		listaPagos = modeloPagos.getPagosCliente(dni);
+		//pasamos esa lista a un array
+		arrayPagos = new String[listaPagos.size()];
+		reservasPagadas = new Vector<String>();
+		for (int i=0;i<listaPagos.size();i++) {
+			arrayPagos[i] = listaPagos.get(i)[0].toString();
+			reservasPagadas.add(modeloPagos.getReserva(arrayPagos[i]));
+		}
 		
+		
+				
 		//Obtenemos una lista con las reservas del socio
 		listaReservas=modeloReservas.todasReservasSocio(id_socio);	
-		System.out.println(listaReservas.size());
 		//si la lista no está vacia, mostramos los elementos
 		if(!listaReservas.isEmpty()) {
-			matriz = new Object[listaReservas.size()][4];					
+			matriz = new Object[listaReservas.size()][5];					
 			it = listaReservas.iterator();				
 			i=0;
 			while(it.hasNext()) {
@@ -169,6 +234,10 @@ public class cancelarSocio {
 							else//ahora la j va atrasada
 								matriz[i][j+1]= vector[j];
 						}
+						if(reservasPagadas.contains(vector[0].toString())) 
+							matriz[i][4] = "Sí";
+						else
+							matriz[i][4] = "No";
 						//modificamos el índice para movernos por las filas de la matriz
 						i++;
 					}
@@ -178,6 +247,15 @@ public class cancelarSocio {
 					e.printStackTrace();
 				}
 			}
+			
+			//copia de las primeras i filas de matriz a matriz2 para que no queden filas en blanco
+			matriz2 = new String[i][5];
+			for(int j = 0; j<i; j++) {
+				for(int k = 0; k<5; k++) {
+					matriz2[j][k] = matriz[j][k].toString();
+				}
+			}
+			
 		}
 		//sino, indicamos que no hay reservas
 		else {
@@ -185,12 +263,12 @@ public class cancelarSocio {
 		}
 		
 		//Modelo de la tabla
-				table.setModel(new DefaultTableModel(matriz	,new String[] {
+				table.setModel(new DefaultTableModel(matriz2,new String[] {
 						"Id", 
 						"Fecha", 
 						"Hora", 
-						"Instalación"
-						//,"Pagada",  
+						"Instalación",
+						"Pagada",  
 						}));
 		
 		
