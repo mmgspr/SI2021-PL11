@@ -7,7 +7,10 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Window;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +30,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class cancelarSocio {
 
@@ -45,6 +50,7 @@ public class cancelarSocio {
 	private List<Object[]> listaPagos;
 	private String[] arrayPagos;
 	private Vector<String> reservasPagadas;
+	private Vector<String> reservasCancelables;
 	private Object[][] matriz;
 	private String[][] matriz2;
 	private Iterator<Object[]> it;
@@ -53,7 +59,7 @@ public class cancelarSocio {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextField idTxtField;
 	private long hoy;
-	
+	private final long diasAntelacion = 5;
 
 	/**
 	 * Launch the application.
@@ -98,6 +104,44 @@ public class cancelarSocio {
 		JPanel panel = new JPanel();
 		
 		JButton EliminarBtn = new JButton("Eliminar");
+		EliminarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String idReserva;
+				if(!idTxtField.getText().equals("")) {
+					idReserva = idTxtField.getText();
+					//se comprueba que el id introducido es válido
+					try {
+						if((modeloReservas.existeReserva(Integer.parseInt(idReserva))) 
+						&& (modeloReservas.getCliente(idReserva).toString().equals(Integer.toString(id_socio)))
+						&& (reservasCancelables.contains(idReserva))) {
+							/*if(reservasPagadas.contains(idReserva)) {
+								//Devolver dinero y eliminar la reserva
+								System.out.println("Devolver el dinero");
+									System.out.println("Nuevo pago negativo o lo que sea");
+								
+								modeloReservas.eliminarReserva(idReserva);
+							}
+							else {
+								//Se elimina la reserva sin devolver el dinero
+								
+							}*/
+						}
+						else {
+							JOptionPane.showMessageDialog(frmCancelarReservas,
+								    "Introduzca un id de reserva válido.",
+								    "Error de id",
+								    JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (NumberFormatException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (HeadlessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		
 		JButton CancelarBtn = new JButton("Cancelar");
 		
@@ -203,6 +247,7 @@ public class cancelarSocio {
 		//pasamos esa lista a un array
 		arrayPagos = new String[listaPagos.size()];
 		reservasPagadas = new Vector<String>();
+		reservasCancelables = new Vector<String>();
 		for (int i=0;i<listaPagos.size();i++) {
 			arrayPagos[i] = listaPagos.get(i)[0].toString();
 			reservasPagadas.add(modeloPagos.getReserva(arrayPagos[i]));
@@ -221,7 +266,8 @@ public class cancelarSocio {
 				//el vector es el siguiente elemento de la lista (una reserva en concreto del cliente)
 				vector=it.next();
 				try {
-					if (hoy+432000000 < sdf.parse(vector[1].toString()).getTime()) {
+					if (hoy+(diasAntelacion*24*60*60*1000) < sdf.parse(vector[1].toString()).getTime()) {
+						reservasCancelables.add(vector[0].toString());
 						//bucle para recorer el vector
 						for(int j=0;j<3;j++) {
 							if(j==0)//si es el id

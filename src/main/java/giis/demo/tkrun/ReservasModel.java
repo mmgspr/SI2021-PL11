@@ -247,6 +247,13 @@ private Database db = new Database();
 			db.executeUpdate(SQL_ELIMINAR_RESERVA,instalacion, fecha);
 		}
 	
+	//Método para eliminar una reserva con el id
+	public static final String SQL_ELIMINAR_RESERVA_ID = "DELETE from reservas WHERE id_reserva = ?;";
+	public void eliminarReserva(String id) {
+
+		db.executeUpdate(SQL_ELIMINAR_RESERVA_ID,id);
+	}
+	
 			
 	//Método para obtener el nombre de las actividades que se encuentran en un periodo determinado	
     public static final String SQL_TODAS_ACTIVIDADES_PERIODO1 = "SELECT nombre, descripcion, fecha_ini, fecha_fin, aforo, precio_socio, precio_no_socio FROM actividades WHERE fecha_fin >=";
@@ -259,16 +266,31 @@ private Database db = new Database();
 	//Método para obtener el cliente a partir  
 	public static final String SQL_CLIENTE1 = "SELECT persona FROM reservas WHERE instalacion = '";
 	public static final String SQL_CLIENTE2 = " AND fecha_reserva = '";
+	public static final String SQL_CLIENTE = "SELECT persona FROM reservas WHERE id_reserva=?";
+
 	
 	public int getCliente(String instalacion, String fecha){
 		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE1+instalacion+"'"+SQL_CLIENTE2 + fecha+"';");	
 		return (int) lista.get(0)[0];
-	} 
+	}
+	
+	public Object getCliente(String id_reserva){
+		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE,id_reserva);	
+		return lista.get(0)[0];
+	}
 	
 	//método para obtener todas las reservas de un socio
 	public static final String SQL_RESERVAS_CLIENTE = "SELECT id_reserva, fecha_reserva, instalacion FROM reservas WHERE persona = ?";
 	public List<Object[]> todasReservasSocio(int n){
 		return db.executeQueryArray(SQL_RESERVAS_CLIENTE,n);	
+	}
+	
+	//método para comprobar si existe una reserva de un socio(osea una reserva hecha por un socio, no concreto)
+	public static final String SQL_EXISTE_RESERVA = "SELECT instalacion FROM reservas WHERE id_reserva = ? AND persona IS NOT NULL";
+	public boolean existeReserva(int id){
+		List<Object[]> l = db.executeQueryArray(SQL_EXISTE_RESERVA,id);	
+		if(l.isEmpty()) return false;
+		return true;
 	}
 	
 }
