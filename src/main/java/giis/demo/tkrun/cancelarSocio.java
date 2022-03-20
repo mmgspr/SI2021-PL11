@@ -114,17 +114,19 @@ public class cancelarSocio {
 						if((modeloReservas.existeReserva(Integer.parseInt(idReserva))) 
 						&& (modeloReservas.getCliente(idReserva).toString().equals(Integer.toString(id_socio)))
 						&& (reservasCancelables.contains(idReserva))) {
-							/*if(reservasPagadas.contains(idReserva)) {
+							if(reservasPagadas.contains(idReserva)) {
 								//Devolver dinero y eliminar la reserva
 								System.out.println("Devolver el dinero");
 									System.out.println("Nuevo pago negativo o lo que sea");
 								
 								modeloReservas.eliminarReserva(idReserva);
+								RellenarTabla(table);
 							}
 							else {
 								//Se elimina la reserva sin devolver el dinero
-								
-							}*/
+								modeloReservas.eliminarReserva(idReserva);
+								RellenarTabla(table);
+							}
 						}
 						else {
 							JOptionPane.showMessageDialog(frmCancelarReservas,
