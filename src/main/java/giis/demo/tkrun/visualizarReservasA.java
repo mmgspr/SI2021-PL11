@@ -25,6 +25,8 @@ import giis.demo.util.Database;
 import giis.demo.util.SwingMain;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 public class visualizarReservasA {
 
 	private JFrame frmVisualizarReservas;
@@ -39,6 +41,7 @@ public class visualizarReservasA {
 	Calendar cal=Calendar.getInstance();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	final long tiempo_actual=cal.getTime().getTime();
+	private JTextField txtIdReserva;
 	
 	/**
 	 * Launch the application a
@@ -84,7 +87,7 @@ public class visualizarReservasA {
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
-		//principal.db.createDatabase(false);
+		//principal.db.createDatabase(false); 
 		//principal.db.loadDatabase();
 		
 		
@@ -147,6 +150,29 @@ public class visualizarReservasA {
 			}
 		});
 		ButtonRecargar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel idLbl = new JLabel("Id de reserva:");
+		
+		JButton btnEliminarReserva = new JButton("Eliminar Reserva");
+		btnEliminarReserva.setEnabled(false);
+		txtIdReserva = new JTextField();
+		txtIdReserva.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				btnEliminarReserva.setEnabled(!txtIdReserva.getText().equals(""));
+				if(!(e.getKeyChar()>='0' && e.getKeyChar()<='9')) {
+					e.setKeyChar((char)127);
+				}
+			}
+		});
+		txtIdReserva.setColumns(10);
+		
+		btnEliminarReserva.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modeloReserv.eliminarReserva(txtIdReserva.getText());
+			}
+		});
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
@@ -158,7 +184,9 @@ public class visualizarReservasA {
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(10)
 							.addComponent(ButtonCancelar)
-							.addPreferredGap(ComponentPlacement.RELATED, 464, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+							.addComponent(btnEliminarReserva, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+							.addGap(149)
 							.addComponent(ButtonRecargar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED))
 						.addGroup(gl_panel.createSequentialGroup()
@@ -170,6 +198,12 @@ public class visualizarReservasA {
 							.addGap(18)
 							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)))
 					.addGap(10))
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addGap(213)
+					.addComponent(idLbl, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtIdReserva, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(275, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -182,10 +216,15 @@ public class visualizarReservasA {
 							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(15)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(idLbl)
+						.addComponent(txtIdReserva, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(ButtonCancelar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ButtonRecargar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+						.addComponent(ButtonRecargar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEliminarReserva, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
 					.addGap(15))
 		);
 		panel.setLayout(gl_panel);
@@ -354,6 +393,4 @@ public class visualizarReservasA {
 			titulos[i]=new SimpleDateFormat("dd-MM").format(cal.getTime());
 		}
 	}
-
-	
 }
