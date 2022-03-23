@@ -87,7 +87,7 @@ public class visualizarReservasA {
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
-		//principal.db.createDatabase(false);
+		//principal.db.createDatabase(false); 
 		//principal.db.loadDatabase();
 		
 		
@@ -154,15 +154,12 @@ public class visualizarReservasA {
 		JLabel idLbl = new JLabel("Id de reserva:");
 		
 		JButton btnEliminarReserva = new JButton("Eliminar Reserva");
-		
+		btnEliminarReserva.setEnabled(false);
 		txtIdReserva = new JTextField();
 		txtIdReserva.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(!txtIdReserva.getText().equals("")) {
-					btnEliminarReserva.setEnabled(true);
-					e.setKeyChar((char)127);
-				}
+				btnEliminarReserva.setEnabled(!txtIdReserva.getText().equals(""));
 				if(!(e.getKeyChar()>='0' && e.getKeyChar()<='9')) {
 					e.setKeyChar((char)127);
 				}
