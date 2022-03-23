@@ -9,6 +9,10 @@ import giis.demo.util.SwingMain;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JSeparator;
@@ -148,5 +152,31 @@ public class inicialAdmin {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setBounds(10, 10, 114, 24);
 		panel.add(lblNewLabel);
+		
+		JButton buttonGenerar = new JButton("Generar txt cuotas");
+		buttonGenerar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		buttonGenerar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//dia de hoy
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String date = sdf.format(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+	            String[] vector1=date.split("-"); 
+			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
+			   System.out.println(dia);
+			    int dia_comprobar=23;
+			    if(dia == dia_comprobar) {
+			    	
+			    	
+			    }
+			    
+				
+				
+				
+			}
+		});
+		buttonGenerar.setBounds(149, 281, 170, 35);
+		panel.add(buttonGenerar);
 	}
 }
