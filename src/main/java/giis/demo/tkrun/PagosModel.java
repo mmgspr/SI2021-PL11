@@ -27,14 +27,21 @@ public class PagosModel {
 	public static final String SQL_ANADE_PAGO = "INSERT INTO pagos (id_pago, fecha, persona, inscripcion, reserva) VALUES (?, ?, ?, ?, ?);";
 	public void anadirPago(String fecha, String persona, String inscripcion, String reserva){
 		
-		db.executeQueryArray(SQL_ANADE_PAGO, Long.toString(siguienteIdPago()) ,fecha, persona, inscripcion, reserva);
+		db.executeUpdate(SQL_ANADE_PAGO, Long.toString(siguienteIdPago()) ,fecha, persona, inscripcion, reserva);
 	}
 	
-	//SQL para añadir un pago
+	//SQL para eliminar un pago con el id
 	public static final String SQL_ELIMINA_PAGO = "DELETE from pagos WHERE id_pago=?;";
 	public void eliminarPago(String id_pago){
 		
-		db.executeQueryArray(SQL_ELIMINA_PAGO, id_pago);
+		db.executeUpdate(SQL_ELIMINA_PAGO, id_pago);
+	}
+	
+	//SQL para eliminar un pago con el id
+	public static final String SQL_ELIMINA_PAGO2 = "DELETE from pagos WHERE reserva=?;";
+	public void eliminarPagoReserva(String id_reserva){
+		
+		db.executeUpdate(SQL_ELIMINA_PAGO2, id_reserva);
 	}
 	
 	//Método para obtener siguiente id

@@ -210,7 +210,7 @@ private Database db = new Database();
 		//Método para actualizar la cuota
 				public static final String SQL_SUMA_CUOTA = "UPDATE clientes SET cuota=? WHERE (id_socio=?);";
 				public void añadeacuota(double cuota, int id_socio) {	
-					System.out.println("La cuota es"+cuota);
+					//System.out.println("La cuota es"+cuota);
 					db.executeUpdate(SQL_SUMA_CUOTA,cuota, id_socio);
 				}
 				
@@ -292,5 +292,12 @@ private Database db = new Database();
 		if(l.isEmpty()) return false;
 		return true;
 	}
+	
+	//método para obtener el precio de una reserva
+		public static final String SQL_PRECIO = "SELECT precio FROM reservas WHERE id_reserva = ?";
+		public double getPrecio(int id_reserva){
+			List<Object[]> l = db.executeQueryArray(SQL_PRECIO,id_reserva);
+			return Double.parseDouble(l.get(0)[0].toString());
+		}
 	
 }

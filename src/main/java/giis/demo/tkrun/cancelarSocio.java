@@ -115,12 +115,18 @@ public class cancelarSocio {
 						&& (modeloReservas.getCliente(idReserva).toString().equals(Integer.toString(id_socio)))
 						&& (reservasCancelables.contains(idReserva))) {
 							if(reservasPagadas.contains(idReserva)) {
-								//Devolver dinero y eliminar la reserva
-								System.out.println("Devolver el dinero");
-									System.out.println("Nuevo pago negativo o lo que sea");
-								
+													
+								double cuota = modeloReservas.nuevaCuota(id_socio);
+								double devolver = modeloReservas.getPrecio(Integer.parseInt(idReserva));
+								modeloReservas.añadeacuota(cuota-devolver, id_socio);
+								//Eliminar pago
+								modeloPagos.eliminarPagoReserva(idReserva);
+								//Eliminar reserva
 								modeloReservas.eliminarReserva(idReserva);
 								RellenarTabla(table);
+								
+								JOptionPane.showMessageDialog(frmCancelarReservas,
+									    "Reserva eliminada, y se restarán "+devolver+" euros de su cuota de fin de mes.");
 							}
 							else {
 								//Se elimina la reserva sin devolver el dinero
