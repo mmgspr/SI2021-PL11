@@ -288,8 +288,6 @@ public class crear_actividad {
 				Iterator<Object[]> iteradorPerInsSel = per_ins_sel_lista.iterator();
 				int iPerInsSel=0;
 				while(iteradorPerInsSel.hasNext()) {
-					//p_i_s[iPerInsSel]=iteradorPerInsSel.next()[0].toString();
-					//iPerInsSel++;
 					String[] vector = new String[3]; 
 					Object[] r=iteradorPerInsSel.next();
 					vector[0]=r[0].toString();
@@ -307,6 +305,25 @@ public class crear_actividad {
 		});
 		getPeriodosIns();
 		
+		String per_ins_selec=comboBox_1_1.getSelectedItem().toString();
+		List<Object[]> per_ins_sel_lista=modeloPer.getFechas(per_ins_selec);
+		String[][] p_i_s=new String[per_ins_sel_lista.size()][3];
+		Iterator<Object[]> iteradorPerInsSel = per_ins_sel_lista.iterator();
+		int iPerInsSel=0;
+		while(iteradorPerInsSel.hasNext()) {
+			String[] vector = new String[3]; 
+			Object[] r=iteradorPerInsSel.next();
+			vector[0]=r[0].toString();
+			vector[1]=r[1].toString();
+			vector[2]=r[2].toString();
+			for(int j=0;j<3;j++) {
+				p_i_s[iPerInsSel][j]=vector[j];
+			}
+			iPerInsSel++;		
+		}
+		textField_5.setText(p_i_s[0][0]);
+		textField_6.setText(p_i_s[0][1]);
+		textField_7.setText(p_i_s[0][2]);
 		
 		comboBox_1_1.setBounds(382, 291, 267, 21);
 		panel.add(comboBox_1_1);
