@@ -25,6 +25,8 @@ import giis.demo.util.Database;
 import giis.demo.util.SwingMain;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 public class visualizarReservasA {
 
 	private JFrame frmVisualizarReservas;
@@ -39,6 +41,7 @@ public class visualizarReservasA {
 	Calendar cal=Calendar.getInstance();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	final long tiempo_actual=cal.getTime().getTime();
+	private JTextField txtIdReserva;
 	
 	/**
 	 * Launch the application a
@@ -84,7 +87,7 @@ public class visualizarReservasA {
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
-		//principal.db.createDatabase(false);
+		//principal.db.createDatabase(false); 
 		//principal.db.loadDatabase();
 		
 		
@@ -147,6 +150,29 @@ public class visualizarReservasA {
 			}
 		});
 		ButtonRecargar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel idLbl = new JLabel("Id de reserva:");
+		
+		JButton btnEliminarReserva = new JButton("Eliminar Reserva");
+		btnEliminarReserva.setEnabled(false);
+		txtIdReserva = new JTextField();
+		txtIdReserva.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				btnEliminarReserva.setEnabled(!txtIdReserva.getText().equals(""));
+				if(!(e.getKeyChar()>='0' && e.getKeyChar()<='9')) {
+					e.setKeyChar((char)127);
+				}
+			}
+		});
+		txtIdReserva.setColumns(10);
+		
+		btnEliminarReserva.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modeloReserv.eliminarReserva(txtIdReserva.getText());
+			}
+		});
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
@@ -158,16 +184,26 @@ public class visualizarReservasA {
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(10)
 							.addComponent(ButtonCancelar)
-							.addPreferredGap(ComponentPlacement.RELATED, 466, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+							.addComponent(btnEliminarReserva, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+							.addGap(149)
 							.addComponent(ButtonRecargar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(32)
-							.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(32)
+									.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
 							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)))
 					.addGap(10))
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addGap(213)
+					.addComponent(idLbl, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtIdReserva, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(275, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -180,10 +216,15 @@ public class visualizarReservasA {
 							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(15)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(idLbl)
+						.addComponent(txtIdReserva, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(ButtonCancelar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ButtonRecargar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+						.addComponent(ButtonRecargar, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEliminarReserva, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
 					.addGap(15))
 		);
 		panel.setLayout(gl_panel);
@@ -247,12 +288,13 @@ public class visualizarReservasA {
 		String diaTotal, horaTotal, nombre_actividad="prueba";
 		Date fecha_reserva;
 		int dias,dia_afectado;
-		long persona=0, actividad;
+		long persona=0, actividad,id_reserva;
 		
 		while(iterador.hasNext()) {
 			vector=iterador.next();
 			if(vector[0]!=null)persona=(long)vector[0];
 			actividad= (long)vector[2];
+			id_reserva=(long)vector[3];
 			boolean esActividad=false;
 			if(actividad!=0) {
 				nombre_actividad=modeloReserv.getActividad(actividad).get(0)[0].toString();
@@ -272,62 +314,62 @@ public class visualizarReservasA {
 				if(esActividad) {
 					switch(horaTotal) {
 					case "09:00":
-						contenido[0][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[0][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "10:00":
-						contenido[1][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[1][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "11:00":
-						contenido[2][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[2][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "12:00":
-						contenido[3][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[3][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "13:00":
-						contenido[4][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[4][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "14:00":
-						contenido[5][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[5][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "15:00":
-						contenido[6][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[6][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "16:00":
-						contenido[7][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[7][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "17:00":
-						contenido[8][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[8][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "18:00":
-						contenido[9][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[9][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "19:00":
-						contenido[10][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[10][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "20:00":
-						contenido[11][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[11][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					case "21:00":
-						contenido[12][dia_afectado]="Reservado("+nombre_actividad+")"; break;
+						contenido[12][dia_afectado]="Reserva("+id_reserva+")("+nombre_actividad+")"; break;
 					}
 				}
 				else {
 					System.out.println(horaTotal);
 					switch(horaTotal) {
 					case "09:00":
-						contenido[0][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[0][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "10:00":
-						contenido[1][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[1][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "11:00":
-						contenido[2][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[2][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "12:00":
-						contenido[3][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[3][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "13:00":
-						contenido[4][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[4][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "14:00":
-						contenido[5][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[5][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "15:00":
-						contenido[6][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[6][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "16:00":
-						contenido[7][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[7][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "17:00":
-						contenido[8][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[8][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "18:00":
-						contenido[9][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[9][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "19:00":
-						contenido[10][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[10][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "20:00":
-						contenido[11][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[11][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					case "21:00":
-						contenido[12][dia_afectado]="Reservado("+persona+")"; break;
+						contenido[12][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
 					}
 				}
 				
@@ -351,6 +393,4 @@ public class visualizarReservasA {
 			titulos[i]=new SimpleDateFormat("dd-MM").format(cal.getTime());
 		}
 	}
-
-	
 }

@@ -5,6 +5,7 @@ DELETE FROM actividades;
 DELETE FROM periodos_inscripcion;
 DELETE FROM instalaciones;
 DELETE FROM clientes;
+DELETE FROM pagos;
 
 -- INSERT INTO socios(id_socio, nombre, fecha_nacimiento, dni) VALUES 
 
@@ -14,19 +15,19 @@ DELETE FROM clientes;
 
 -- (3, 'Juan', '1972-7-15', '13254768D'); 
 
-INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso, contraseña, cuota) VALUES 
+INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso, contraseña, cuota, tlf, direccion) VALUES 
 
-('58438791C',1,'Alvaro', '2001-12-21', 1, '58438791C', 30.30), 
+('58438791C',1,'Alvaro', '2001-12-21', 1, '58438791C', 30.30, '603441826', 'Carretera carbonera, 69, 5G'), 
 
-('54487543A',NULL,'Daniel', '2005-6-24', 0, null, null ), 
+('54487543A',NULL,'Daniel', '2005-6-24', 0, null, null , '123456789', null ), 
 
-('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H',30.30), 
+('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H',30.30, '603666826', 'Carretera carbonera, 71, 5G'), 
 
-('52347843G',NULL,'Martín', '2006-6-24', 0, null, null ),
+('52347843G',NULL,'Martín', '2006-6-24', 0, null, null, '987654321', null ),
 
-('58428791E',3,'Mario', '2004-12-21', 1, '58428791E',30.30),
+('58428791E',3,'Mario', '2004-12-21', 1, '58428791E',30.30, '603666829', 'Fray ceferino, 35, 1A'),
 
-('a', 0, 'dani', null, 0, 'a', 30) ;
+('a', 0, 'dani', null, 0, 'a', 30, '403666829', 'Fray ceferino, 35, 2A') ;
 
 INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES 
 
@@ -39,15 +40,19 @@ INSERT INTO instalaciones(id_instalacion, nombre, deporte, precio) VALUES
 (4, 'Pista de futbol 1', 'Futbol', 3.50);  
 INSERT INTO reservas(id_reserva, persona, instalacion, fecha, fecha_reserva, precio,actividad) VALUES 
 
+(0,NULL,NULL,NULL,NULL,NULL,NULL),
+
 (1,NULL, 3, '2022-2-23', '2022-3-25 17:00:00', '6.25' ,1), 
 
-(2,2, 2,'2022-2-25', '2022-3-20 20:00:00', '4.5' ,0),
+(2,2, 2,'2022-2-25', '2022-3-24 20:00:00', '4.5' ,0),
 
-(3,2, 3,'2022-2-26', '2022-3-20 19:00:00', '3.2' ,0),
+(3,2, 3,'2022-2-26', '2022-4-26 19:00:00', '3.2' ,0),
  
 (4,NULL, 4,'2022-2-26', '2022-3-24 15:00:00', '3.2' ,3),
 
-(5,NULL, 1, '2022-2-23', '2022-3-25 17:00:00', '6.25' ,2); 
+(5,NULL, 1, '2022-2-23', '2022-3-25 17:00:00', '6.25' ,2),
+
+(6,2, 2,'2022-2-25', '2022-4-21 21:00:00', '4.5' ,0); 
 INSERT INTO periodos_inscripcion(id_periodo_inscripcion, nombre, descripcion, fecha_ini_socio, fecha_fin_socio, fecha_fin_no_socio) VALUES 
 
 (1, 'Periodo 1', 'Periodo para verano', '2022-2-24', '2022-3-24', '2022-3-30'), 
@@ -83,4 +88,14 @@ INSERT INTO sesiones(id_sesion, dia, hora_ini, hora_fin, actividad) VALUES
 (3, 'viernes', '9:00:00', '12:00:00', '2'),
 
 (4, 'sabado', '20:00:00', '21:00:00', '3'); 
+
+INSERT INTO pagos(id_pago, fecha, persona, inscripcion, reserva) VALUES
+
+(1, '2022-03-14', '46739273H', NULL, 3),
+
+(3, '2022-03-10', '54487543A', 3, 0),
+
+(4, '2022-02-26', '58438791C', 2, 0);
+
+-- (2, '2022-03-14', '46739273H', NULL, 3),
 

@@ -22,6 +22,7 @@ import javax.swing.SpinnerNumberModel;
 import com.toedter.calendar.JDateChooser;
 
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -56,8 +57,13 @@ public class crear_actividad {
 	private crear_periodo_inscripcion vPeriodoIns;
 	private List<String[]> sesionesLista;
 	
+	
+	
 	JComboBox comboBox_1_1;
 	String[] periodosIns;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -89,7 +95,7 @@ public class crear_actividad {
 	private void initialize() {
 		frmCrearActividad = new JFrame();
 		frmCrearActividad.setTitle("Planificar Actividad");
-		frmCrearActividad.setBounds(100, 100, 700, 500);
+		frmCrearActividad.setBounds(100, 100, 700, 540);
 		frmCrearActividad.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		vSesiones= new crear_sesiones(this);
@@ -254,12 +260,88 @@ public class crear_actividad {
 		panel.add(dateChooser_1);
 		dateChooser_1.setEnabled(false);
 		
+		textField_5 = new JTextField();
+		textField_5.setEditable(false);
+		textField_5.setBounds(512, 353, 125, 20);
+		panel.add(textField_5);
+		textField_5.setColumns(10);
+		
+		textField_6 = new JTextField();
+		textField_6.setEditable(false);
+		textField_6.setColumns(10);
+		textField_6.setBounds(512, 381, 125, 20);
+		panel.add(textField_6);
+		
+		textField_7 = new JTextField();
+		textField_7.setEditable(false);
+		textField_7.setColumns(10);
+		textField_7.setBounds(512, 409, 125, 20);
+		panel.add(textField_7);
+		
 		comboBox_1_1 = new JComboBox();
+		comboBox_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String per_ins_selec=comboBox_1_1.getSelectedItem().toString();
+				List<Object[]> per_ins_sel_lista=modeloPer.getFechas(per_ins_selec);
+				String[][] p_i_s=new String[per_ins_sel_lista.size()][3];
+				Iterator<Object[]> iteradorPerInsSel = per_ins_sel_lista.iterator();
+				int iPerInsSel=0;
+				while(iteradorPerInsSel.hasNext()) {
+					String[] vector = new String[3]; 
+					Object[] r=iteradorPerInsSel.next();
+					vector[0]=r[0].toString();
+					vector[1]=r[1].toString();
+					vector[2]=r[2].toString();
+					for(int j=0;j<3;j++) {
+						p_i_s[iPerInsSel][j]=vector[j];
+					}
+					iPerInsSel++;		
+				}
+				textField_5.setText(p_i_s[0][0]);
+				textField_6.setText(p_i_s[0][1]);
+				textField_7.setText(p_i_s[0][2]);
+			}
+		});
 		getPeriodosIns();
 		
+		String per_ins_selec=comboBox_1_1.getSelectedItem().toString();
+		List<Object[]> per_ins_sel_lista=modeloPer.getFechas(per_ins_selec);
+		String[][] p_i_s=new String[per_ins_sel_lista.size()][3];
+		Iterator<Object[]> iteradorPerInsSel = per_ins_sel_lista.iterator();
+		int iPerInsSel=0;
+		while(iteradorPerInsSel.hasNext()) {
+			String[] vector = new String[3]; 
+			Object[] r=iteradorPerInsSel.next();
+			vector[0]=r[0].toString();
+			vector[1]=r[1].toString();
+			vector[2]=r[2].toString();
+			for(int j=0;j<3;j++) {
+				p_i_s[iPerInsSel][j]=vector[j];
+			}
+			iPerInsSel++;		
+		}
+		textField_5.setText(p_i_s[0][0]);
+		textField_6.setText(p_i_s[0][1]);
+		textField_7.setText(p_i_s[0][2]);
 		
 		comboBox_1_1.setBounds(382, 291, 267, 21);
 		panel.add(comboBox_1_1);
+		
+		String ini = "21-06-2022";
+		Date inicial;
+		try {
+			inicial = new SimpleDateFormat("dd-MM-yyyy").parse(ini);
+			dateChooser.setDate(inicial);
+		} catch (ParseException e1) {
+		}
+		String fin = "23-09-2022";
+		Date fina;
+		try {
+			fina = new SimpleDateFormat("dd-MM-yyyy").parse(fin);
+			dateChooser_1.setDate(fina);
+		} catch (ParseException e1) {
+		}
 		
 		JLabel lblFechaInicial = new JLabel("- Fecha inicial:");
 		lblFechaInicial.setEnabled(false);
@@ -281,6 +363,8 @@ public class crear_actividad {
 					dateChooser_1.setEnabled(true);
 					lblFechaInicial.setEnabled(true);
 					lblFechaFinal.setEnabled(true);
+					dateChooser.setDate(null);
+					dateChooser_1.setDate(null);
 				}
 				else {
 					dateChooser.setDate(null);
@@ -289,6 +373,72 @@ public class crear_actividad {
 					dateChooser_1.setEnabled(false);
 					lblFechaInicial.setEnabled(false);
 					lblFechaFinal.setEnabled(false);
+					if(comboBox_2.getSelectedIndex()==0) {
+						String vera = "21-06-2022";
+						Date verano;
+						try {
+							verano = new SimpleDateFormat("dd-MM-yyyy").parse(vera);
+							dateChooser.setDate(verano);
+						} catch (ParseException e1) {
+						}
+						String oto = "23-09-2022";
+						Date otono;
+						try {
+							otono = new SimpleDateFormat("dd-MM-yyyy").parse(oto);
+							dateChooser_1.setDate(otono);
+						} catch (ParseException e1) {
+						}
+					}
+					if(comboBox_2.getSelectedIndex()==1) {
+						String oto = "23-09-2022";
+						Date otono;
+						try {
+							otono = new SimpleDateFormat("dd-MM-yyyy").parse(oto);
+							dateChooser.setDate(otono);
+						} catch (ParseException e1) {
+						}
+						String inv = "21-12-2022";
+						Date invierno;
+						try {
+							invierno = new SimpleDateFormat("dd-MM-yyyy").parse(inv);
+							dateChooser_1.setDate(invierno);
+						} catch (ParseException e1) {
+						}
+					}
+					if(comboBox_2.getSelectedIndex()==2) {
+						String inv = "21-12-2022";
+						Date invierno;
+						try {
+							invierno = new SimpleDateFormat("dd-MM-yyyy").parse(inv);
+							dateChooser.setDate(invierno);
+						} catch (ParseException e1) {
+						}
+						String prim = "20-03-2023";
+						Date primavera;
+						try {
+							primavera = new SimpleDateFormat("dd-MM-yyyy").parse(prim);
+							dateChooser_1.setDate(primavera);
+						} catch (ParseException e1) {
+						}
+					}
+					if(comboBox_2.getSelectedIndex()==3) {
+						String prim = "20-03-2022";
+						Date primavera;
+						try {
+							primavera = new SimpleDateFormat("dd-MM-yyyy").parse(prim);
+							dateChooser.setDate(primavera);
+						} catch (ParseException e1) {
+						}
+						String vera = "21-06-2022";
+						Date verano;
+						try {
+							verano = new SimpleDateFormat("dd-MM-yyyy").parse(vera);
+							dateChooser_1.setDate(verano);
+						} catch (ParseException e1) {
+						}
+						
+					}
+					
 				}
 			}
 		});
@@ -374,7 +524,7 @@ public class crear_actividad {
 						int iPerIns=0;
 						while(iteradorPerIns.hasNext()) {
 							p_i[iPerIns]=iteradorPerIns.next()[0].toString();
-							iIns++;
+							iPerIns++;
 						}
 						String per_ins=p_i[0];
 						try {
@@ -441,7 +591,7 @@ public class crear_actividad {
 					int iPerIns=0;
 					while(iteradorPerIns.hasNext()) {
 						p_i[iPerIns]=iteradorPerIns.next()[0].toString();
-						iIns++;
+						iPerIns++;
 					}
 					String per_ins=p_i[0];
 					try {
@@ -462,7 +612,7 @@ public class crear_actividad {
 				
 			}
 		});
-		btnNewButton_1.setBounds(591, 432, 85, 21);
+		btnNewButton_1.setBounds(589, 469, 85, 21);
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("Cancelar");
@@ -471,7 +621,7 @@ public class crear_actividad {
 				frmCrearActividad.dispose();
 			}
 		});
-		btnNewButton_1_1.setBounds(10, 432, 85, 21);
+		btnNewButton_1_1.setBounds(10, 469, 85, 21);
 		panel.add(btnNewButton_1_1);
 		
 		JButton btnNewButton_1_1_1 = new JButton("Crear sesiones");
@@ -482,6 +632,23 @@ public class crear_actividad {
 		});
 		btnNewButton_1_1_1.setBounds(10, 346, 135, 21);
 		panel.add(btnNewButton_1_1_1);
+		
+		JLabel lblfechaIniSocios = new JLabel("- Fecha ini. socios:");
+		lblfechaIniSocios.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblfechaIniSocios.setBounds(382, 354, 108, 17);
+		panel.add(lblfechaIniSocios);
+		
+		JLabel lblfechaFinSocios = new JLabel("- Fecha fin socios:");
+		lblfechaFinSocios.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblfechaFinSocios.setBounds(382, 382, 108, 17);
+		panel.add(lblfechaFinSocios);
+		
+		JLabel lblfechaFinNo = new JLabel("- Fecha fin no socios:");
+		lblfechaFinNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblfechaFinNo.setBounds(382, 410, 125, 17);
+		panel.add(lblfechaFinNo);
+		
+		
 			
 		
 	}

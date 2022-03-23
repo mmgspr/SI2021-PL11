@@ -135,7 +135,7 @@ private Database db = new Database();
 
 
 	
-	public static final String SQL_RESERVAS_MANU= "SELECT persona, fecha_reserva, actividad FROM reservas WHERE instalacion=";
+	public static final String SQL_RESERVAS_MANU= "SELECT persona, fecha_reserva, actividad, id_reserva FROM reservas WHERE instalacion=";
 	public List<Object[]> getReservasManu(long id_instalacion){
 		return db.executeQueryArray(SQL_RESERVAS_MANU+ "'"+id_instalacion+"'");
 	}
@@ -210,7 +210,7 @@ private Database db = new Database();
 		//Método para actualizar la cuota
 				public static final String SQL_SUMA_CUOTA = "UPDATE clientes SET cuota=? WHERE (id_socio=?);";
 				public void añadeacuota(double cuota, int id_socio) {	
-					System.out.println("La cuota es"+cuota);
+					//System.out.println("La cuota es"+cuota);
 					db.executeUpdate(SQL_SUMA_CUOTA,cuota, id_socio);
 				}
 				
@@ -247,6 +247,13 @@ private Database db = new Database();
 			db.executeUpdate(SQL_ELIMINAR_RESERVA,instalacion, fecha);
 		}
 	
+	//Método para eliminar una reserva con el id
+	public static final String SQL_ELIMINAR_RESERVA_ID = "DELETE from reservas WHERE id_reserva = ?;";
+	public void eliminarReserva(String id) {
+
+		db.executeUpdate(SQL_ELIMINAR_RESERVA_ID,id);
+	}
+	
 			
 	//Método para obtener el nombre de las actividades que se encuentran en un periodo determinado	
     public static final String SQL_TODAS_ACTIVIDADES_PERIODO1 = "SELECT nombre, descripcion, fecha_ini, fecha_fin, aforo, precio_socio, precio_no_socio FROM actividades WHERE fecha_fin >=";
@@ -259,16 +266,38 @@ private Database db = new Database();
 	//Método para obtener el cliente a partir  
 	public static final String SQL_CLIENTE1 = "SELECT persona FROM reservas WHERE instalacion = '";
 	public static final String SQL_CLIENTE2 = " AND fecha_reserva = '";
+	public static final String SQL_CLIENTE = "SELECT persona FROM reservas WHERE id_reserva=?";
+
 	
 	public int getCliente(String instalacion, String fecha){
 		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE1+instalacion+"'"+SQL_CLIENTE2 + fecha+"';");	
 		return (int) lista.get(0)[0];
-	} 
+	}
+	
+	public Object getCliente(String id_reserva){
+		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE,id_reserva);	
+		return lista.get(0)[0];
+	}
 	
 	//método para obtener todas las reservas de un socio
-	public static final String SQL_RESERVAS_CLIENTE = "SELECT * FROM reservas WHERE persona = ";
+	public static final String SQL_RESERVAS_CLIENTE = "SELECT id_reserva, fecha_reserva, instalacion FROM reservas WHERE persona = ?";
 	public List<Object[]> todasReservasSocio(int n){
-		return db.executeQueryArray(SQL_RESERVAS_CLIENTE+n);	
+		return db.executeQueryArray(SQL_RESERVAS_CLIENTE,n);	
 	}
+	
+	//método para comprobar si existe una reserva de un socio(osea una reserva hecha por un socio, no concreto)
+	public static final String SQL_EXISTE_RESERVA = "SELECT instalacion FROM reservas WHERE id_reserva = ? AND persona IS NOT NULL";
+	public boolean existeReserva(int id){
+		List<Object[]> l = db.executeQueryArray(SQL_EXISTE_RESERVA,id);	
+		if(l.isEmpty()) return false;
+		return true;
+	}
+	
+	//método para obtener el precio de una reserva
+		public static final String SQL_PRECIO = "SELECT precio FROM reservas WHERE id_reserva = ?";
+		public double getPrecio(int id_reserva){
+			List<Object[]> l = db.executeQueryArray(SQL_PRECIO,id_reserva);
+			return Double.parseDouble(l.get(0)[0].toString());
+		}
 	
 }
