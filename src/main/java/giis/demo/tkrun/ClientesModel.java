@@ -68,6 +68,31 @@ public class ClientesModel {
 					}
 								
 				}
+				
+	//Método para instertar un nuevo socio
+	public static final String SQL_NUEVO_SOCIO = "INSERT INTO clientes (dni, id_socio, nombre, fecha_nacimiento, moroso, contraseña, cuota, tlf, direccion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	public void nuevoSocio(String nombre, String fecha_nacimiento, String dni, String tlf, String direccion) {
+		long id;
+		id = siguienteIdSocio();		
+		db.executeUpdate(SQL_NUEVO_SOCIO,dni,id,nombre,fecha_nacimiento,0,dni,30.30,tlf,direccion);
+	}
+	
+	
+	//Método para instertar un nuevo socio
+	public static final String SQL_NUEVO_CLIENTE = "INSERT INTO clientes (dni, id_socio, nombre, fecha_nacimiento, moroso, contraseña, cuota, tlf, direccion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	public void nuevoCliente(String nombre,String dni, String tlf) {
+	long id;
+	id = siguienteIdSocio();		
+	db.executeUpdate(SQL_NUEVO_CLIENTE,dni,null,nombre,null,0,null,null,tlf,null);
+	}
+		
+	//Método para obtener siguiente id
+		public static final String SQL_SIGUIENTE_ID = "SELECT MAX(id_socio) from clientes;";
+		public long siguienteIdSocio() {
+			List<Object[]> lista;
+			lista = db.executeQueryArray(SQL_SIGUIENTE_ID);
+			return (long)lista.get(0)[0] + 1;
+		}
 			
 	
 	/*

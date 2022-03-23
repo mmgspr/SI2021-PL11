@@ -24,6 +24,7 @@ public class inicialAdmin {
 	private Lista_Actividades_Administrador vListaActividadesA;
 	private crear_periodo_inscripcion vCrearPeriodoInscripcion;
 	private reserva_actividad_admin vReservaActividad;
+	private RegistrarCliente vRegistrarCliente;
 	/**
 	 * Launch the application.
 	 */
@@ -148,5 +149,16 @@ public class inicialAdmin {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setBounds(10, 10, 114, 24);
 		panel.add(lblNewLabel);
+		
+		JButton nuevoSocioBtn = new JButton("Nuevo cliente");
+		nuevoSocioBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vRegistrarCliente = new RegistrarCliente(vLogin);
+				vRegistrarCliente.getFrmRegistrarCliente().setVisible(true);
+			}
+		});
+		nuevoSocioBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		nuevoSocioBtn.setBounds(10, 292, 207, 23);
+		panel.add(nuevoSocioBtn);
 	}
 }
