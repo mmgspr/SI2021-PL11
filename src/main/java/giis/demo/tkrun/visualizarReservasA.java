@@ -159,10 +159,13 @@ public class visualizarReservasA {
 		txtIdReserva.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				btnEliminarReserva.setEnabled(!txtIdReserva.getText().equals(""));
 				if(!(e.getKeyChar()>='0' && e.getKeyChar()<='9')) {
 					e.setKeyChar((char)127);
 				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				btnEliminarReserva.setEnabled(!txtIdReserva.getText().equals(""));
 			}
 		});
 		txtIdReserva.setColumns(10);
@@ -170,12 +173,15 @@ public class visualizarReservasA {
 		btnEliminarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modeloReserv.eliminarReserva(txtIdReserva.getText());
+				txtIdReserva.setText("");
+				btnEliminarReserva.setEnabled(false);
+				actualizaModelo(comboBoxInstalacion);
 			}
 		});
 		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
+			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
@@ -184,9 +190,9 @@ public class visualizarReservasA {
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(10)
 							.addComponent(ButtonCancelar)
-							.addPreferredGap(ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
-							.addComponent(btnEliminarReserva, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addGap(149)
+							.addGap(146)
+							.addComponent(btnEliminarReserva, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
 							.addComponent(ButtonRecargar, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED))
 						.addGroup(gl_panel.createSequentialGroup()
@@ -198,7 +204,7 @@ public class visualizarReservasA {
 							.addGap(18)
 							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)))
 					.addGap(10))
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(213)
 					.addComponent(idLbl, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -216,7 +222,7 @@ public class visualizarReservasA {
 							.addComponent(comboBoxInstalacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(15)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 						.addComponent(idLbl)
 						.addComponent(txtIdReserva, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -287,7 +293,7 @@ public class visualizarReservasA {
 		String[] fechayhora;
 		String diaTotal, horaTotal, nombre_actividad="prueba";
 		Date fecha_reserva;
-		int dias,dia_afectado;
+		int dias,dia_afectado=0;
 		long persona=0, actividad,id_reserva;
 		
 		while(iterador.hasNext()) {
@@ -310,6 +316,9 @@ public class visualizarReservasA {
 				if(dias <0) continue;
 				else {
 					dia_afectado = dias+1;
+				}
+				if (dia_afectado > 30) {
+					continue;
 				}
 				if(esActividad) {
 					switch(horaTotal) {
@@ -342,7 +351,6 @@ public class visualizarReservasA {
 					}
 				}
 				else {
-					System.out.println(horaTotal);
 					switch(horaTotal) {
 					case "09:00":
 						contenido[0][dia_afectado]="Reserva("+id_reserva+")(Socio:"+persona+")"; break;
