@@ -87,7 +87,7 @@ public class visualizarReservasA {
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
-		//principal.db.createDatabase(false);
+		//principal.db.createDatabase(false); 
 		//principal.db.loadDatabase();
 		
 		
