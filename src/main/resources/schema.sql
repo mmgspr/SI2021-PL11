@@ -34,7 +34,11 @@ CREATE TABLE clientes(
     
     contraseña varchar(20),
     
-    cuota double 
+    cuota double ,
+    
+    tlf varchar(9),
+    
+    direccion varchar(50)
 
 ); 
 CREATE TABLE instalaciones( 
