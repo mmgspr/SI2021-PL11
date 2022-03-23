@@ -241,6 +241,16 @@ private Database db = new Database();
 					lista = db.executeQueryArray(SQL_CUOTA, id_socio);
 					return (double)lista.get(0)[0];
 				}
+				
+				
+				//Método para obtener la cuota
+				public static final String SQL_PAGOS1 = "SELECT id_socio,cuota from clientes WHERE (id_socio >= 0)";
+				public List<Object[]> nuevaCuota1() {
+					List<Object[]> lista;
+					lista = db.executeQueryArray(SQL_PAGOS1);
+					return lista;
+				}
+				
 	
 	
 	
@@ -300,14 +310,12 @@ private Database db = new Database();
 		return (int) lista.get(0)[0];
 	}
 	
-<<<<<<< HEAD
-	
-=======
+
 	public Object getCliente(String id_reserva){
 		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE,id_reserva);	
 		return lista.get(0)[0];
 	}
->>>>>>> branch 'Trabajo' of https://github.com/uo275943/SI2021-PL11.git
+
 	
 	//método para obtener todas las reservas de un socio
 	public static final String SQL_RESERVAS_CLIENTE = "SELECT id_reserva, fecha_reserva, instalacion FROM reservas WHERE persona = ?";

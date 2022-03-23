@@ -1,4 +1,7 @@
 package giis.demo.tkrun;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JSeparator;
@@ -22,6 +27,7 @@ public class inicialAdmin {
 
 	private JFrame frmIndex;
 	private Login vLogin;
+	private ReservasModel modeloReservas = new ReservasModel();
 	private visualizarReservasA vVisualizarReservasA;
 	private reserva_admin_cliente vReservaAdmin;
 	private crear_actividad vCrearActividad;
@@ -166,9 +172,44 @@ public class inicialAdmin {
 			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
 			   System.out.println(dia);
 			    int dia_comprobar=23;
+			    
+			    try {
+		            String ruta = "C:\\Users\\David\\eclipse-workspace\\Doc.txt";
+		            String contenido = "Contenido de ejemplo";
+		            File file = new File(ruta);
+		            // Si el archivo no existe es creado
+		            if (!file.exists()) {
+		                file.createNewFile();
+		            }
+		            FileWriter fw = new FileWriter(file);
+		            BufferedWriter bw = new BufferedWriter(fw);
+		            bw.write(contenido);
+		            
+		            
+		          
+				    bw.write("\n Pollas");
+				    bw.close();
+				    
+		        } catch (Exception e1) {
+		            e1.printStackTrace();
+		        }
+			    
+			    
+			  
+			    
+			    
 			    if(dia == dia_comprobar) {
+			    	int j=modeloReservas.nuevaCuota1().size();
 			    	
-			    	
+			    	List<Object[]> lista=modeloReservas.nuevaCuota1();
+					String[] nombre=new String[lista.size()];
+					Iterator<Object[]> iterador = lista.iterator();
+					
+					int i=0;
+					while(iterador.hasNext()) {
+						nombre[i]=iterador.next()[0].toString();
+						i++;
+					}
 			    }
 			    
 				
