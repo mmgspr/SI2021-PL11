@@ -120,9 +120,7 @@ public class ver_pagos_socio {
 		}
 		*/
 		
-		
-		
-		//listaReservas=modeloReservas.
+		listaReservas=modeloReservas.getReservasSocioTodo(id_socio);
 		
 		/*
 		table.setModel(new DefaultTableModel(
