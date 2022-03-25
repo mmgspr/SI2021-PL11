@@ -335,7 +335,7 @@ public class reserva_actividad_admin {
 						
 						if (Rcliente == 1) {
 							JOptionPane.showMessageDialog(frmReservaParaActividad,
-								     
+								      
 								   // + "Cliente: " + clientes_borrados.get(0)[2] 
 								    mensaje,
 								    "Éxito al reservar",

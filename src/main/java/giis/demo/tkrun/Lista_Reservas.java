@@ -90,6 +90,7 @@ public class Lista_Reservas {
 		panel.add(lblFechaFin);
 		
 		table = new JTable();
+		table.setToolTipText("");
 		table.setBounds(30, 61, 526, 221);
 		panel.add(table);
 		
@@ -164,14 +165,8 @@ public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 		}
 			i++;
 		}
-		table.setModel(new DefaultTableModel(
-				
-				matriz
-				
-				
-				,
-				new String[] {
-					"id_reserva", "Instalacion", "Fecha de Reserva","Fecha Reservada", "Precio","Actividad"
+		table.setModel(new DefaultTableModel(matriz,new String[] {
+				"id_reserva", "Instalacion", "Fecha de Reserva","Fecha Reservada", "Precio","Actividad"
 				}
 				
 			));
