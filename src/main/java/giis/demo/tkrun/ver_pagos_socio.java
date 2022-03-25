@@ -119,15 +119,31 @@ public class ver_pagos_socio {
 			i++;
 		}
 		*/
-		
+		String[][] datosTabla=new String[listaReservas.size()][4];
 		listaReservas=modeloReservas.getReservasSocioTodo(id_socio);
+		Object[][] matriz = new Object[listaReservas.size()][7];
+		Iterator<Object[]> iterador = listaReservas.iterator();				
+		int i=0;
+		while(iterador.hasNext()) {
+			Object[] vector = new Object[7]; 
+			vector=iterador.next();
+			for(int j=0;j<7;j++) {	
+			  matriz[i][j]= vector[j];
+		}
+			i++;
+		}
+		for(int k=0;k<i;k++) {
+			datosTabla[k][0]=matriz[k][5].toString();
+			datosTabla[k][1]=matriz[k][3].toString();
+			datosTabla[k][0]=matriz[k][5].toString();
+		}
 		
 		/*
 		table.setModel(new DefaultTableModel(
 				
 				matriz,
 				new String[] {
-					"Id", "Fecha", "Estado"
+					"Cantidad", "Fecha", "Motivo", "Estado"
 				}
 				
 			));
