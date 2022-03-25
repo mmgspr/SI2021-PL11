@@ -1,7 +1,11 @@
 package giis.demo.tkrun;
+import java.util.concurrent.*;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -173,10 +177,12 @@ public class inicialAdmin {
 	            String[] vector1=date.split("-"); 
 			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
 			   System.out.println(dia);
-			    int dia_comprobar=23;
+			    int dia_comprobar=25;
+			    
+			    
 			    
 			    try {
-		            String ruta = "src/main/resources/Doc.txt";
+		            String ruta = "src/main/resources/Contabilidad.txt";
 		            String contenido = "Cuotas a pasar a cada socio \n";
 		            File file = new File(ruta);
 		            // Si el archivo no existe es creado
@@ -186,6 +192,8 @@ public class inicialAdmin {
 		            FileWriter fw = new FileWriter(file);
 		            BufferedWriter bw = new BufferedWriter(fw);
 		            bw.write(contenido);
+		            
+		            if(dia==dia_comprobar) {
 		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
 		            Iterator<Object[]> iterador = listaPagos.iterator();						    		
 		    		while(iterador.hasNext()) {
@@ -193,6 +201,38 @@ public class inicialAdmin {
 		    			bw.write("El socio "+vector[0]+" con el id: "+vector[1]+" ,debe pagar la cuota: "+vector[2]+
 		    					"$ junto con el coste de reservas: "+vector[3]+"$ y el coste de las actividades: "+vector[4]+"$\n");
 		    		}
+		    		
+		            }
+		            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+		            final Runnable runnable = new Runnable() {
+		                int countdownStarter = 20;
+
+		                public void run() {
+
+		                    //System.out.println(countdownStarter);
+		                    countdownStarter--;
+
+		                    if (countdownStarter < 0) {
+		                       //System.out.println("Timer Over!");
+		                    	
+									try {
+										BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+										bw.write("");
+										bw.close();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+								 
+		                        scheduler.shutdown();
+		                    }
+		                }
+		            };
+		            scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
+		            
+		            
 		          
 				    
 				    bw.close();
@@ -205,19 +245,6 @@ public class inicialAdmin {
 			  
 			    
 			    
-			    if(dia == dia_comprobar) {
-			    	int j=modeloReservas.nuevaCuota1().size();
-			    	
-			    	List<Object[]> lista=modeloReservas.nuevaCuota1();
-					String[] nombre=new String[lista.size()];
-					Iterator<Object[]> iterador = lista.iterator();
-					
-					int i=0;
-					while(iterador.hasNext()) {
-						nombre[i]=iterador.next()[0].toString();
-						i++;
-					}
-			    }
 			    
 				
 				
