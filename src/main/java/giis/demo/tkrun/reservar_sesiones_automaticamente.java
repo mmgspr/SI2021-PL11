@@ -11,8 +11,12 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 
 public class reservar_sesiones_automaticamente {
@@ -87,7 +91,7 @@ public class reservar_sesiones_automaticamente {
 				//Reservar sesiones
 				/*
 				List<Object[]> sesiones = modeloSesiones.getSesionesActividad(Long.toString(modeloActividades.getIdActividad((String)comboBox.getSelectedItem())));
-				String diaSemana = getDayString(dateChooser_1_1.getDate(), new Locale("es", "ES"));
+				String diaSemana = getDayString(modeloActividades.getFechaIniActividad((String)comboBox.getSelectedItem()), new Locale("es", "ES"));
 				System.out.println(diaSemana);
 				Iterator<Object[]> it = sesiones.iterator();
 				Object sesion[];
@@ -126,5 +130,10 @@ public class reservar_sesiones_automaticamente {
 		panel.add(btnNewButton);
 		
 		
+	}
+	
+	public static String getDayString(Date date, Locale locale) {
+		DateFormat formatter = new SimpleDateFormat("EEEE", locale);
+		return formatter.format(date);
 	}
 }

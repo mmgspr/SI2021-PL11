@@ -338,4 +338,15 @@ private Database db = new Database();
 			return Double.parseDouble(l.get(0)[0].toString());
 		}
 	
+		
+		
+		
+		
+		//SQL para ver todas las reservas de un socio
+		public static final String SQL_RESERVAS_SOCIO_TODO = "SELECT (id_reserva, persona, instalacion, fecha, fecha_reserva, precio,actividad) FROM reservas WHERE instalacion=";
+		public List<Object[]> getReservasSocioTodo(int persona){
+			
+			//return db.executeQueryArray(SQL_RESERVAS_INSTALACION+"'"+instalacion+"'");
+			return db.executeQueryArray(SQL_RESERVAS_SOCIO_TODO, persona);
+		}
 }
