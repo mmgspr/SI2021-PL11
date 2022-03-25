@@ -315,6 +315,10 @@ private Database db = new Database();
 		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE,id_reserva);	
 		return lista.get(0)[0];
 	}
+	public int getClienteInt(String id_reserva){
+		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE,id_reserva);	
+		return Math.toIntExact((long)lista.get(0)[0]);
+	}
 
 	
 	//método para obtener todas las reservas de un socio
@@ -338,4 +342,14 @@ private Database db = new Database();
 			return Double.parseDouble(l.get(0)[0].toString());
 		}
 	
+		
+		
+		
+		
+		//SQL para ver todas las reservas de un socio
+		public static final String SQL_RESERVAS_SOCIO_TODO = "SELECT id_reserva, persona, instalacion, fecha, fecha_reserva, precio,actividad FROM reservas WHERE persona= ? ORDER BY fecha DESC";
+		public List<Object[]> getReservasSocioTodo(int persona){
+			
+			return db.executeQueryArray(SQL_RESERVAS_SOCIO_TODO, persona);
+		}
 }

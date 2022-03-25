@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
@@ -19,6 +20,16 @@ public class ver_pagos_socio {
 
 	private JFrame frmVerPagos;
 	private JTable table;
+	private Login vLogin;
+	private ReservasModel modeloReservas = new ReservasModel();
+	private PagosModel modeloPagos = new PagosModel();
+	private ClientesModel modeloClientes = new ClientesModel();
+	private List<Object[]> listaReservas;
+	private List<Object[]> listaPagos;
+	private String[] arrayPagos;
+	private Vector<String> reservasPagadas;
+	
+	int id_socio;
 
 	/**
 	 * Launch the application.
@@ -41,6 +52,12 @@ public class ver_pagos_socio {
 	 */
 	public ver_pagos_socio() {
 		initialize();
+	}
+	
+	public ver_pagos_socio(Login login) {
+		initialize();
+		this.vLogin = login;
+		this.id_socio=this.vLogin.getId_socio();
 	}
 
 	/**
@@ -85,10 +102,10 @@ public class ver_pagos_socio {
 		
 	}
 	
-	/*
+	
 	public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 		
-		
+		/*
 		List<Object[]> listaActividades=modeloReservas.getActividadPeriodo(Inicio, Fin);	
 		Object[][] matriz = new Object[listaActividades.size()][3];					
 		Iterator<Object[]> iterador = listaActividades.iterator();				
@@ -101,16 +118,36 @@ public class ver_pagos_socio {
 		}
 			i++;
 		}
+		*/
+		String[][] datosTabla=new String[listaReservas.size()][4];
+		listaReservas=modeloReservas.getReservasSocioTodo(id_socio);
+		Object[][] matriz = new Object[listaReservas.size()][7];
+		Iterator<Object[]> iterador = listaReservas.iterator();				
+		int i=0;
+		while(iterador.hasNext()) {
+			Object[] vector = new Object[7]; 
+			vector=iterador.next();
+			for(int j=0;j<7;j++) {	
+			  matriz[i][j]= vector[j];
+		}
+			i++;
+		}
+		for(int k=0;k<i;k++) {
+			datosTabla[k][0]=matriz[k][5].toString();
+			datosTabla[k][1]=matriz[k][3].toString();
+			
+		}
 		
+		/*
 		table.setModel(new DefaultTableModel(
 				
 				matriz,
 				new String[] {
-					"Id", "Fecha", "Estado"
+					"Cantidad", "Fecha", "Motivo", "Estado"
 				}
 				
 			));
-		
+		*/
 	}
-	*/
+	
 }
