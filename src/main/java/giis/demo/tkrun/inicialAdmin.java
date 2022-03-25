@@ -176,7 +176,7 @@ public class inicialAdmin {
 			    int dia_comprobar=23;
 			    
 			    try {
-		            String ruta = "C:\\Users\\David\\eclipse-workspace\\Doc.txt";
+		            String ruta = "src/main/resources/Doc.txt";
 		            String contenido = "Contenido de ejemplo";
 		            File file = new File(ruta);
 		            // Si el archivo no existe es creado
@@ -186,10 +186,14 @@ public class inicialAdmin {
 		            FileWriter fw = new FileWriter(file);
 		            BufferedWriter bw = new BufferedWriter(fw);
 		            bw.write(contenido);
-		            
-		            
+		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
+		            Iterator<Object[]> iterador = listaPagos.iterator();						    		
+		    		while(iterador.hasNext()) {
+		    			Object[] vector = iterador.next();
+		    			bw.write(vector[0]+"debe pagar"+vector[1]+"\n");
+		    		}
 		          
-				    bw.write("\n Pollas");
+				    
 				    bw.close();
 				    
 		        } catch (Exception e1) {
