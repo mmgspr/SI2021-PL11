@@ -177,7 +177,7 @@ public class inicialAdmin {
 	            String[] vector1=date.split("-"); 
 			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
 			   System.out.println(dia);
-			    int dia_comprobar=25;
+			    int dia_comprobar=26;
 			    
 			    
 			    
@@ -202,7 +202,7 @@ public class inicialAdmin {
 		    					"$ junto con el coste de reservas: "+vector[3]+"$ y el coste de las actividades: "+vector[4]+"$\n");
 		    		}
 		    		
-		            }
+		            
 		            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 		            final Runnable runnable = new Runnable() {
@@ -236,7 +236,7 @@ public class inicialAdmin {
 		          
 				    
 				    bw.close();
-				    
+			    }
 		        } catch (Exception e1) {
 		            e1.printStackTrace();
 		        }
