@@ -177,7 +177,7 @@ public class inicialAdmin {
 			    
 			    try {
 		            String ruta = "src/main/resources/Doc.txt";
-		            String contenido = "Contenido de ejemplo";
+		            String contenido = "Cuotas a pasar a cada socio \n";
 		            File file = new File(ruta);
 		            // Si el archivo no existe es creado
 		            if (!file.exists()) {
