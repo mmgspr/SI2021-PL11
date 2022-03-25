@@ -1,4 +1,4 @@
-Contenido de ejemplo2debe pagar30.3
-3debe pagar30.3
-1debe pagar30.3
-0debe pagar30.0
+Contenido de ejemploEl socio con el id: 0 debe pagar: 30.0
+El socio con el id: 1 debe pagar: 30.3
+El socio con el id: 2 debe pagar: 30.3
+El socio con el id: 3 debe pagar: 30.3
