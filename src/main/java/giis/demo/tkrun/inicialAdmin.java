@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class inicialAdmin {
 
@@ -177,23 +178,25 @@ public class inicialAdmin {
 	            String[] vector1=date.split("-"); 
 			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
 			   System.out.println(dia);
-			    int dia_comprobar=26;
+			    int dia_comprobar=25;
 			    
 			    
 			    
 			    try {
-		            String ruta = "src/main/resources/Contabilidad.txt";
-		            String contenido = "Cuotas a pasar a cada socio \n";
-		            File file = new File(ruta);
-		            // Si el archivo no existe es creado
-		            if (!file.exists()) {
-		                file.createNewFile();
-		            }
-		            FileWriter fw = new FileWriter(file);
-		            BufferedWriter bw = new BufferedWriter(fw);
-		            bw.write(contenido);
+		            
 		            
 		            if(dia==dia_comprobar) {
+		            	String ruta = "src/main/resources/Contabilidad.txt";
+			            String contenido = "Cuotas a pasar a cada socio \n";
+			            File file = new File(ruta);
+			            // Si el archivo no existe es creado
+			            if (!file.exists()) {
+			                file.createNewFile();
+			            }
+			            FileWriter fw = new FileWriter(file);
+			            BufferedWriter bw = new BufferedWriter(fw);
+			            bw.write(contenido);
+			            
 		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
 		            Iterator<Object[]> iterador = listaPagos.iterator();						    		
 		    		while(iterador.hasNext()) {
@@ -206,7 +209,7 @@ public class inicialAdmin {
 		            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 		            final Runnable runnable = new Runnable() {
-		                int countdownStarter = 20;
+		                int countdownStarter = 120;
 
 		                public void run() {
 
@@ -237,6 +240,12 @@ public class inicialAdmin {
 				    
 				    bw.close();
 			    }
+		            else {
+		            	JOptionPane.showMessageDialog(frmIndex,
+		    				    "No puedes generar el fichero un día que no sea el 25",
+		    				    "Error Generando",
+		    				    JOptionPane.ERROR_MESSAGE);
+		            }
 		        } catch (Exception e1) {
 		            e1.printStackTrace();
 		        }
