@@ -227,7 +227,7 @@ private Database db = new Database();
 		
 	
 		//Método para actualizar la cuota
-				public static final String SQL_SUMA_CUOTA = "UPDATE clientes SET cuota=? WHERE (id_socio=?);";
+				public static final String SQL_SUMA_CUOTA = "UPDATE clientes SET cuotaReservas=? WHERE (id_socio=?);";
 				public void añadeacuota(double cuota, int id_socio) {	
 					//System.out.println("La cuota es"+cuota);
 					db.executeUpdate(SQL_SUMA_CUOTA,cuota, id_socio);
@@ -235,7 +235,7 @@ private Database db = new Database();
 				
 				
 				//Método para obtener la cuota
-				public static final String SQL_CUOTA = "SELECT cuota from clientes WHERE (id_socio=?);";
+				public static final String SQL_CUOTA = "SELECT cuotaReservas from clientes WHERE (id_socio=?);";
 				public double nuevaCuota(int id_socio) {
 					List<Object[]> lista;
 					lista = db.executeQueryArray(SQL_CUOTA, id_socio);
@@ -244,7 +244,7 @@ private Database db = new Database();
 				
 				
 				//Método para obtener la cuota
-				public static final String SQL_PAGOS1 = "SELECT id_socio,cuota from clientes WHERE (id_socio >= 0)";
+				public static final String SQL_PAGOS1 = "SELECT nombre, id_socio, cuotaInicial, cuotaReservas, cuotaActividades from clientes WHERE (id_socio >= 0)";
 				public List<Object[]> nuevaCuota1() {
 					List<Object[]> lista;
 					lista = db.executeQueryArray(SQL_PAGOS1);

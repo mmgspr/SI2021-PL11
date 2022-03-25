@@ -161,7 +161,7 @@ public class inicialAdmin {
 		panel.add(lblNewLabel);
 		
 
-		JButton buttonGenerar = new JButton("Generar txt cuotas");
+		JButton buttonGenerar = new JButton("Generar Txt Cuotas");
 		buttonGenerar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		buttonGenerar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,8 +189,9 @@ public class inicialAdmin {
 		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
 		            Iterator<Object[]> iterador = listaPagos.iterator();						    		
 		    		while(iterador.hasNext()) {
-		    			Object[] vector = iterador.next();
-		    			bw.write("El socio con el id: "+vector[0]+" debe pagar: "+vector[1]+"\n");
+		    			Object[] vector = iterador.next();		    	
+		    			bw.write("El socio "+vector[0]+" con el id: "+vector[1]+" ,debe pagar la cuota: "+vector[2]+
+		    					"$ junto con el coste de reservas: "+vector[3]+"$ y el coste de las actividades: "+vector[4]+"$\n");
 		    		}
 		          
 				    
@@ -223,7 +224,7 @@ public class inicialAdmin {
 				
 			}
 		});
-		buttonGenerar.setBounds(149, 281, 170, 35);
+		buttonGenerar.setBounds(305, 292, 181, 24);
 		panel.add(buttonGenerar);
 
 		JButton nuevoSocioBtn = new JButton("Nuevo cliente");
