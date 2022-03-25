@@ -27,6 +27,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 public class visualizarReservasA {
 
 	private JFrame frmVisualizarReservas;
@@ -172,10 +175,35 @@ public class visualizarReservasA {
 		
 		btnEliminarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modeloReserv.eliminarReserva(txtIdReserva.getText());
+				String id_reserva = txtIdReserva.getText();
+				int id_socio=(int)modeloReserv.getCliente(txtIdReserva.getText());
+				double cuota = modeloReserv.nuevaCuota(id_socio);
+				double devolver = modeloReserv.getPrecio(Integer.parseInt(txtIdReserva.getText()));
+				modeloReserv.añadeacuota(cuota-devolver, id_socio);
+				
+				try {
+		            String ruta = "src/main/resources/ReservaSocio"+Integer.toString(id_socio)+".txt";
+		            String contenido = "Se le ha eliminado la reserva: "+ id_reserva +" por causas administrativas.\nSe le devolverá el importe a final de mes.\n";
+		            File file = new File(ruta);
+		            // Si el archivo no existe es creado
+		            if (!file.exists()) {
+		                file.createNewFile();
+		            }
+		            FileWriter fw = new FileWriter(file);
+		            BufferedWriter bw = new BufferedWriter(fw);
+		            bw.write(contenido);
+				    bw.close();
+				    
+		        } catch (Exception e1) {
+		            e1.printStackTrace();
+		        }
+				
+				modeloReserv.eliminarReserva(id_reserva);
 				txtIdReserva.setText("");
 				btnEliminarReserva.setEnabled(false);
 				actualizaModelo(comboBoxInstalacion);
+				
+				
 			}
 		});
 		
