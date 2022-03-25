@@ -190,7 +190,7 @@ public class inicialAdmin {
 		            Iterator<Object[]> iterador = listaPagos.iterator();						    		
 		    		while(iterador.hasNext()) {
 		    			Object[] vector = iterador.next();
-		    			bw.write(vector[0]+"debe pagar"+vector[1]+"\n");
+		    			bw.write("El socio con el id: "+vector[0]+" debe pagar: "+vector[1]+"\n");
 		    		}
 		          
 				    
