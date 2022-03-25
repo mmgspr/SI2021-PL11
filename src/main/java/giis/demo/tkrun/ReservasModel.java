@@ -315,6 +315,10 @@ private Database db = new Database();
 		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE,id_reserva);	
 		return lista.get(0)[0];
 	}
+	public int getClienteInt(String id_reserva){
+		List<Object[]> lista= db.executeQueryArray(SQL_CLIENTE,id_reserva);	
+		return Math.toIntExact((long)lista.get(0)[0]);
+	}
 
 	
 	//método para obtener todas las reservas de un socio
