@@ -135,7 +135,7 @@ public class ver_pagos_socio {
 		for(int k=0;k<i;k++) {
 			datosTabla[k][0]=matriz[k][5].toString();
 			datosTabla[k][1]=matriz[k][3].toString();
-			datosTabla[k][0]=matriz[k][5].toString();
+			
 		}
 		
 		/*
