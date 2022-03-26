@@ -66,7 +66,7 @@ public class PagosModel {
 		}
 		
 		//SQL para comprobar si inscripcion pagada
-			public static final String SQL_PAGO_RESERVA = "SELECT id_pago FROM pagos WHERE inscripcion=?";
+			public static final String SQL_PAGO_RESERVA = "SELECT id_pago FROM pagos WHERE reserva=?";
 			public boolean getPagoReserva(String reserva){
 					
 				List<Object[]> l = db.executeQueryArray(SQL_PAGO_RESERVA, reserva);

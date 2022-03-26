@@ -159,6 +159,7 @@ public class ver_pagos_socio {
 		Object[][] mIns = new Object[listaInscripciones.size()][4];
 		Iterator<Object[]> iIns = listaInscripciones.iterator();
 		String instal;
+		boolean pagado=false;
 		int i=0;
 		while(iRes.hasNext()) {
 			Object[] vector = new Object[7]; 
@@ -190,7 +191,15 @@ public class ver_pagos_socio {
 			datosTabla[k][2]=instalacion;
 			
 			//Estado Comprobar si hay pago
-			//datosTabla[k][3]=matriz[k][3].toString();
+			
+			pagado=modeloPagos.getPagoReserva(mRes[k][0].toString());
+			if(pagado) {
+				datosTabla[k][3]="Pagado";
+			}
+			else {
+				datosTabla[k][3]="Pendiente";
+			}
+			System.out.println(datosTabla[k][3]);
 			System.out.println("FOR 1");
 		}
 		for(int k=i;k<i+y;k++) {
