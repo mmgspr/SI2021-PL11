@@ -57,6 +57,17 @@ public class InstalacionesModel {
 		return precio;
 	}
 	
+	//obtener el nombre de una instalacion
+		public static final String SQL_NOMBRE_INSTALACION = "SELECT nombre FROM instalaciones WHERE id_instalacion=";
+		
+		public String getNombreInstalacion(String id){
+			List<Object[]> lista;
+			String nombre;
+			lista= db.executeQueryArray(SQL_NOMBRE_INSTALACION+"'"+id+"'");	
+			nombre = lista.get(0)[0].toString();
+			return nombre;
+		}
+	
 	
 	
 			

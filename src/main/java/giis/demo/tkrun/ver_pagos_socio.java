@@ -33,7 +33,10 @@ public class ver_pagos_socio {
 	private ReservasModel modeloReservas = new ReservasModel();
 	private PagosModel modeloPagos = new PagosModel();
 	private ClientesModel modeloClientes = new ClientesModel();
+	private InstalacionesModel modeloInstalaciones = new InstalacionesModel();
+	private InscripcionesModel modeloInscripciones = new InscripcionesModel();
 	private List<Object[]> listaReservas;
+	private List<Object[]> listaInscripciones;
 	private List<Object[]> listaPagos;
 	private String[] arrayPagos;
 	private Vector<String> reservasPagadas;
@@ -144,32 +147,70 @@ public class ver_pagos_socio {
 	
 	public void RellenarTabla(JTable tabla, String Inicio, String Fin) {
 		
-		
 		listaReservas=modeloReservas.getReservasSocioTodo(id_socio, Inicio, Fin);
-		System.out.println("Entra");
-		String[][] datosTabla=new String[listaReservas.size()][4];
-		Object[][] matriz = new Object[listaReservas.size()][7];
-		Iterator<Object[]> iterador = listaReservas.iterator();				
+		String ids=""+id_socio;
+		//System.out.println(ids);
+		String dni=modeloClientes.getDNI(ids);
+		listaInscripciones=modeloInscripciones.getTodasInscripcionesSocio(dni, Inicio, Fin);
+		//System.out.println("Entra");
+		String[][] datosTabla=new String[listaReservas.size()+listaInscripciones.size()][4];
+		Object[][] mRes = new Object[listaReservas.size()][7];
+		Iterator<Object[]> iRes = listaReservas.iterator();	
+		Object[][] mIns = new Object[listaInscripciones.size()][4];
+		Iterator<Object[]> iIns = listaInscripciones.iterator();
+		String instal;
 		int i=0;
-		while(iterador.hasNext()) {
+		while(iRes.hasNext()) {
 			Object[] vector = new Object[7]; 
-			vector=iterador.next();
+			vector=iRes.next();
 			for(int j=0;j<7;j++) {	
-			  matriz[i][j]= vector[j];
-		}
+			  mRes[i][j]= vector[j];
+			}
 			i++;
 		}
+		int y=0;
+		while(iIns.hasNext()) {
+			Object[] vector = new Object[4]; 
+			vector=iIns.next();
+			for(int j=0;j<4;j++) {	
+			  mIns[y][j]= vector[j];
+			}
+			y++;
+		}
 		for(int k=0;k<i;k++) {
-			datosTabla[k][0]=matriz[k][5].toString();
-			datosTabla[k][1]=matriz[k][3].toString();
-			System.out.println("FOR\n");
+			//Precio
+			datosTabla[k][0]=mRes[k][5].toString();
+			//Fecha
+			datosTabla[k][1]=mRes[k][3].toString();
 			
+			//Instalacion
+			instal=mRes[k][2].toString();
+			System.out.println(instal);
+			String instalacion=modeloInstalaciones.getNombreInstalacion(instal);
+			//datosTabla[k][2]=mRes[k][2].toString();
+			
+			//Estado Comprobar si hay pago
+			//datosTabla[k][3]=matriz[k][3].toString();
+			System.out.println("FOR 1");
+		}
+		for(int k=i;k<i+y;k++) {
+			//Precio Sacar precio ins socio
+			//datosTabla[k][0]=mIns[k][5].toString();
+			//Fecha
+			datosTabla[k][1]=mIns[k][3].toString();
+			
+			//Actividad Sacar nombre actividad
+			//datosTabla[k][2]=mIns[k][2].toString();
+			
+			//Estado Comprobar si hay pago
+			//datosTabla[k][3]=matriz[k][3].toString();
+			System.out.println("FOR 1");
 		}
 		
 		
 		table.setModel(new DefaultTableModel(
 				
-				matriz,
+				datosTabla,
 				new String[] {
 					"Cantidad", "Fecha", "Motivo", "Estado"
 				}
