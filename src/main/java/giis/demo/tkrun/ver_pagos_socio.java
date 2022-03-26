@@ -113,9 +113,13 @@ public class ver_pagos_socio {
 				else if(dateIni.getTime()-dateFin.getTime()>0) {
 					JOptionPane.showMessageDialog(frmVerPagos,"La fecha final no puede ser anterior a la inicial.","Error",JOptionPane.ERROR_MESSAGE);
 				}
-				String ini=sdf.format(dateIni);
-				String fin=sdf.format(dateFin);
-				RellenarTabla(table,ini,fin);
+				else {
+					String ini=sdf.format(dateIni);
+					String fin=sdf.format(dateFin);
+					System.out.println(ini);
+					System.out.println(fin);
+					RellenarTabla(table,ini,fin);
+				}
 			}
 		});
 		btnNewButton.setBounds(341, 38, 85, 21);
@@ -141,9 +145,9 @@ public class ver_pagos_socio {
 	public void RellenarTabla(JTable tabla, String Inicio, String Fin) {
 		
 		
-		
-		String[][] datosTabla=new String[listaReservas.size()][4];
 		listaReservas=modeloReservas.getReservasSocioTodo(id_socio, Inicio, Fin);
+		System.out.println("Entra");
+		String[][] datosTabla=new String[listaReservas.size()][4];
 		Object[][] matriz = new Object[listaReservas.size()][7];
 		Iterator<Object[]> iterador = listaReservas.iterator();				
 		int i=0;
