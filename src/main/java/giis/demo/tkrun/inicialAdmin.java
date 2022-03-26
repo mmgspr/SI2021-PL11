@@ -40,6 +40,7 @@ public class inicialAdmin {
 	private crear_periodo_inscripcion vCrearPeriodoInscripcion;
 	private reserva_actividad_admin vReservaActividad;
 	private RegistrarCliente vRegistrarCliente;
+	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
 	/**
 	 * Launch the application.
 	 */
@@ -273,6 +274,17 @@ public class inicialAdmin {
 		nuevoSocioBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		nuevoSocioBtn.setBounds(10, 292, 207, 23);
 		panel.add(nuevoSocioBtn);
+		
+		JButton btnNewButton_1_5_1 = new JButton("Reservar sesiones auto.");
+		btnNewButton_1_5_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vReservarSesionesAutomaticamente = new reservar_sesiones_automaticamente();
+				vReservarSesionesAutomaticamente.getFrmReservarSesionesAutomticamente().setVisible(true);
+			}
+		});
+		btnNewButton_1_5_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_5_1.setBounds(10, 101, 207, 23);
+		panel.add(btnNewButton_1_5_1);
 
 	}
 }

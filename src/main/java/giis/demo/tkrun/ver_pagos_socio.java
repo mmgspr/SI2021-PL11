@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -15,6 +16,8 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ver_pagos_socio {
 
@@ -99,6 +102,15 @@ public class ver_pagos_socio {
 		table.setBounds(10, 251, 416, -167);
 		panel.add(table);
 		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmVerPagos.dispose();
+			}
+		});
+		btnVolver.setBounds(173, 229, 85, 21);
+		panel.add(btnVolver);
+		
 		
 	}
 	
@@ -148,6 +160,10 @@ public class ver_pagos_socio {
 				
 			));
 		*/
+	}
+	
+	public Window getFrmVerPagos() {
+		return this.frmVerPagos;
 	}
 	
 }

@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -119,6 +121,7 @@ public class reservar_sesiones_automaticamente {
 				Date hi=null;
 				Date hf=null;
 				String comp=null;
+				String msg="- Colisiones:\n";
 
 				while(ini.getTime()-fin.getTime()<=0) {
 					String diaSemana=getDayString(ini,es);
@@ -135,12 +138,12 @@ public class reservar_sesiones_automaticamente {
 						}
 						if (sesion[0].equals(diaSemana)) {
 							diaHora=sdf.format(ini)+" "+ sesion[1];
-							System.out.println(diaHora);
+							//System.out.println(diaHora);
 							horaFin=sdf.format(ini)+" "+ sesion[2];
-							System.out.println(horaFin);
+							//System.out.println(horaFin);
 							try {
 								hi=dh.parse(diaHora);
-								System.out.println(dh.format(hi));
+								//System.out.println(dh.format(hi));
 								hf=dh.parse(horaFin);
 							} catch (ParseException e1) {
 							}
@@ -153,19 +156,23 @@ public class reservar_sesiones_automaticamente {
 								comp=dh.format(hi.getTime());
 								int cliente = modeloReservas.comprobarDisponibilidadActividad(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()), comp);
 								if (cliente==-1) {
+									/*
 									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente,
 									    "Está ocupado por otra actividad.",
 									    "Error al reservar",
 									    JOptionPane.ERROR_MESSAGE);
+									    */
+									msg=msg+"No se ha podido reservar la fecha '"+comp+"'. Está ocupada por otra actividad.\n";
 								}
 								else if (cliente == 0){
 									//modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
-									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Reservado.\n");
+									//JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Reservado.\n");
 								}
 								else {
 									//modeloReservas.eliminarReserva(Integer.parseInt(id), diaHora);
 									//modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
-									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Estaba reservado por un cliente pero tienes prioridad.\n");
+									//JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Estaba reservado por un cliente pero tienes prioridad.\n");
+									msg=msg+"Se ha cancelado la reserva del socio con id "+cliente+" en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
 								}
 								//SUMAMOS UNA HORA
 								c_hora.setTime(hi);
@@ -174,9 +181,7 @@ public class reservar_sesiones_automaticamente {
 									hi = dh.parse(dh.format(c_hora.getTime()));
 									//System.out.println(c_hora);
 								} catch (ParseException e1) {	
-								}
-								
-								
+								}	
 							}
 						}
 					}
@@ -184,52 +189,26 @@ public class reservar_sesiones_automaticamente {
 					c_ini.add(Calendar.DATE, 1);
 					try {
 						ini = sdf.parse(sdf.format(c_ini.getTime()));
-						System.out.println(getDayString(ini,es));
+						//System.out.println(getDayString(ini,es));
 					} catch (ParseException e1) {	
 					}
 				}
-				
-				
-				/*
-				String diaSemana = getDayString(modeloActividades.getFechaIniActividad((String)comboBox.getSelectedItem()), new Locale("es", "ES"));
-				System.out.println(diaSemana);
-				Iterator<Object[]> it = sesiones.iterator();
-				Object sesion[];
-				boolean encontrado = false;
-				while(it.hasNext()) {
-					sesion = (Object[])it.next();
-					if (sesion[0].equals(diaSemana)) {
-						diaHora=sdf.format(dateChooser_1_1.getDate())+" "+ sesion[1];
-						encontrado = true;
-					}
+				if(msg.equals("- Colisiones:\n")) {
+					msg="No hay ninguna colisión.\n";
 				}
-				if (encontrado == true){
-					//diaHora=sdf.format(dateChooser_1_1.getDate())+" 20:00:00";
-					int cliente = modeloReservas.comprobarDisponibilidadActividad(id, diaHora);
-					if (cliente==-1) {
-						JOptionPane.showMessageDialog(frmReservaParaActividad,
-							    "Está ocupado por otra actividad.",
-							    "Error al reservar",
-							    JOptionPane.ERROR_MESSAGE);
-					}
-					else if (cliente == 0){
-						modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
-						JOptionPane.showMessageDialog(frmReservaParaActividad, "Reservado.\n");
-					}
-					else {
-						modeloReservas.eliminarReserva(Integer.parseInt(id), diaHora);
-						modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
-						JOptionPane.showMessageDialog(frmReservaParaActividad, "Estaba reservado por un cliente pero tienes prioridad.\n");
-					}
-				}
-				else JOptionPane.showMessageDialog(frmReservaParaActividad, "La actividad elegida no tiene una sesión en el día especificado.\n");
-				*/
+				JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente,  msg, "Colisiones", JOptionPane.INFORMATION_MESSAGE);
+				
 			}
 		});
 		btnNewButton.setBounds(73, 75, 195, 21);
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Volver");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmReservarSesionesAutomticamente.dispose();
+			}
+		});
 		btnNewButton_1.setBounds(122, 127, 89, 23);
 		panel.add(btnNewButton_1);
 		
@@ -239,5 +218,9 @@ public class reservar_sesiones_automaticamente {
 	public static String getDayString(Date date, Locale locale) {
 		DateFormat formatter = new SimpleDateFormat("EEEE", locale);
 		return formatter.format(date);
+	}
+	
+	public Window getFrmReservarSesionesAutomticamente() {
+		return this.frmReservarSesionesAutomticamente;
 	}
 }

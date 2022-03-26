@@ -23,6 +23,7 @@ public class inicialSocio {
 	private cancelarSocio vCancelarSocio;
 	private Lista_Reservas vLista_Reservas;
 	private JLabel lblBienvenido;
+	private ver_pagos_socio vVerPagosSocio;
 	/**
 	 * Launch the application.
 	 */
@@ -119,6 +120,17 @@ public class inicialSocio {
 		});
 		btnNewButton.setBounds(298, 219, 207, 20);
 		panel.add(btnNewButton);
+		
+		JButton btnNewButton_1_2_1 = new JButton("Ver Pagos");
+		btnNewButton_1_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vVerPagosSocio = new ver_pagos_socio(vLogin);
+				vVerPagosSocio.getFrmVerPagos().setVisible(true);
+			}
+		});
+		btnNewButton_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_2_1.setBounds(25, 250, 207, 23);
+		panel.add(btnNewButton_1_2_1);
 		
 	}
 	
