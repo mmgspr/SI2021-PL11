@@ -36,7 +36,7 @@ public class visualizarReservasA {
 	private JTable table;
 	private InstalacionesModel modeloInstal = new InstalacionesModel();
 	private ReservasModel modeloReserv=new ReservasModel();
-	private SwingMain principal;
+	private PagosModel modeloPagos=new PagosModel();
 	private DefaultTableModel tableModel;
 	private Object[][] contenidos;
 	private String titulos[]=new String[31];
@@ -176,32 +176,44 @@ public class visualizarReservasA {
 		btnEliminarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String id_reserva = txtIdReserva.getText();
-				int id_socio=(int)modeloReserv.getCliente(txtIdReserva.getText());
-				double cuota = modeloReserv.nuevaCuota(id_socio);
-				double devolver = modeloReserv.getPrecio(Integer.parseInt(txtIdReserva.getText()));
-				modeloReserv.añadeacuota(cuota-devolver, id_socio);
+				try{
+					int id_socio=modeloReserv.getClienteInt(id_reserva);
+						double cuota = modeloReserv.nuevaCuota(id_socio);
+						double devolver = modeloReserv.getPrecio(Integer.parseInt(txtIdReserva.getText()));
+						modeloReserv.añadeacuota(cuota-devolver, id_socio);
+						
+						try {
+				            String ruta = "src/main/resources/ReservaSocio"+Integer.toString(id_socio)+".txt";
+				            String contenido = "Se le ha eliminado la reserva: "+ id_reserva +" por causas administrativas.\nSe le devolverá el importe a final de mes.\n";
+				            File file = new File(ruta);
+				            // Si el archivo no existe es creado
+				            if (!file.exists()) {
+				                file.createNewFile();
+				            }
+				            FileWriter fw = new FileWriter(file);
+				            BufferedWriter bw = new BufferedWriter(fw);
+				            bw.write(contenido);
+						    bw.close();
+						    
+				        } catch (Exception e1) {
+				            e1.printStackTrace();
+				        }
+						modeloPagos.eliminarPagoReserva(id_reserva);
+						modeloReserv.eliminarReserva(id_reserva);
+
+						
+						txtIdReserva.setText("");
+						btnEliminarReserva.setEnabled(false);
+						actualizaModelo(comboBoxInstalacion);
+				}
+				catch(Exception e1){
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(frmVisualizarReservas,
+						    "La reserva deseada no pertenece a un cliente sino una actividad.",
+						    "Error",
+						    JOptionPane.ERROR_MESSAGE);
+				}
 				
-				try {
-		            String ruta = "src/main/resources/ReservaSocio"+Integer.toString(id_socio)+".txt";
-		            String contenido = "Se le ha eliminado la reserva: "+ id_reserva +" por causas administrativas.\nSe le devolverá el importe a final de mes.\n";
-		            File file = new File(ruta);
-		            // Si el archivo no existe es creado
-		            if (!file.exists()) {
-		                file.createNewFile();
-		            }
-		            FileWriter fw = new FileWriter(file);
-		            BufferedWriter bw = new BufferedWriter(fw);
-		            bw.write(contenido);
-				    bw.close();
-				    
-		        } catch (Exception e1) {
-		            e1.printStackTrace();
-		        }
-				
-				modeloReserv.eliminarReserva(id_reserva);
-				txtIdReserva.setText("");
-				btnEliminarReserva.setEnabled(false);
-				actualizaModelo(comboBoxInstalacion);
 				
 				
 			}
