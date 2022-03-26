@@ -187,7 +187,7 @@ public class ver_pagos_socio {
 			instal=mRes[k][2].toString();
 			System.out.println(instal);
 			String instalacion=modeloInstalaciones.getNombreInstalacion(instal);
-			//datosTabla[k][2]=mRes[k][2].toString();
+			datosTabla[k][2]=instalacion;
 			
 			//Estado Comprobar si hay pago
 			//datosTabla[k][3]=matriz[k][3].toString();
