@@ -149,7 +149,7 @@ public class reservar_sesiones_automaticamente {
 							//System.out.println("encontrado");
 							while(hi.getTime()<hf.getTime()) {
 								//System.out.println("menor hora final");
-								int cliente = modeloReservas.comprobarDisponibilidadActividad(comboBox.getSelectedItem().toString(), diaHora);
+								int cliente = modeloReservas.comprobarDisponibilidadActividad(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()), diaHora);
 								if (cliente==-1) {
 									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente,
 									    "Está ocupado por otra actividad.",
