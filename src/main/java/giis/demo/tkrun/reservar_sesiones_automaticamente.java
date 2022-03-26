@@ -6,18 +6,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
 
 public class reservar_sesiones_automaticamente {
 
@@ -25,6 +29,10 @@ public class reservar_sesiones_automaticamente {
 	
 	private SesionesModel modeloSesiones = new SesionesModel();
 	private ActividadesModel modeloActividades = new ActividadesModel();
+	private ReservasModel modeloReservas = new ReservasModel();
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat dh = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	/**
 	 * Launch the application.
@@ -89,8 +97,98 @@ public class reservar_sesiones_automaticamente {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Reservar sesiones
+				
+				List<Object[]> sesiones = modeloSesiones.getSesionesActividad(Long.toString(modeloActividades.getIdActividad(comboBox.getSelectedItem().toString())));
+				String fecha_ini = modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString());
+				String fecha_fin = modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString());
+				//System.out.println(fecha_ini);
+				Date ini=null;
+				Date fin=null;
+				try {
+					ini = sdf.parse(fecha_ini);
+					fin = sdf.parse(fecha_fin);
+				} catch (ParseException e1) {
+				}
+				
+				Calendar c_ini = Calendar.getInstance();
+				Calendar c_hora = Calendar.getInstance();
+				Locale es = new Locale("es", "ES");
+				boolean encontrado=false;
+				String diaHora=null;
+				String horaFin=null;
+				Date hi=null;
+				Date hf=null;
+
+				while(ini.getTime()-fin.getTime()<=0) {
+					String diaSemana=getDayString(ini,es);
+					Iterator<Object[]> it = sesiones.iterator();
+					Object sesion[];
+					while(it.hasNext()) {
+						encontrado=false;
+						sesion = (Object[])it.next();
+						if (sesion[0].equals("miercoles")) {
+							sesion[0]="miércoles";
+						}
+						if (sesion[0].equals("sabado")) {
+							sesion[0]="sábado";
+						}
+						if (sesion[0].equals(diaSemana)) {
+							diaHora=sdf.format(ini)+" "+ sesion[1];
+							System.out.println(diaHora);
+							horaFin=sdf.format(ini)+" "+ sesion[2];
+							System.out.println(horaFin);
+							try {
+								hi=dh.parse(diaHora);
+								System.out.println(dh.format(hi));
+								hf=dh.parse(horaFin);
+							} catch (ParseException e1) {
+							}
+							encontrado=true;
+						}
+						if (encontrado){
+							//System.out.println("encontrado");
+							while(hi.getTime()<hf.getTime()) {
+								//System.out.println("menor hora final");
+								int cliente = modeloReservas.comprobarDisponibilidadActividad(comboBox.getSelectedItem().toString(), diaHora);
+								if (cliente==-1) {
+									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente,
+									    "Está ocupado por otra actividad.",
+									    "Error al reservar",
+									    JOptionPane.ERROR_MESSAGE);
+								}
+								else if (cliente == 0){
+									//modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
+									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Reservado.\n");
+								}
+								else {
+									//modeloReservas.eliminarReserva(Integer.parseInt(id), diaHora);
+									//modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
+									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Estaba reservado por un cliente pero tienes prioridad.\n");
+								}
+								//SUMAMOS UNA HORA
+								c_hora.setTime(hi);
+								c_hora.add(Calendar.HOUR, 1);
+								try {
+									hi = dh.parse(dh.format(c_hora.getTime()));
+									System.out.println(c_hora);
+								} catch (ParseException e1) {	
+								}
+								
+								
+							}
+						}
+					}
+					c_ini.setTime(ini);
+					c_ini.add(Calendar.DATE, 1);
+					try {
+						ini = sdf.parse(sdf.format(c_ini.getTime()));
+						System.out.println(getDayString(ini,es));
+					} catch (ParseException e1) {	
+					}
+				}
+				
+				
 				/*
-				List<Object[]> sesiones = modeloSesiones.getSesionesActividad(Long.toString(modeloActividades.getIdActividad((String)comboBox.getSelectedItem())));
 				String diaSemana = getDayString(modeloActividades.getFechaIniActividad((String)comboBox.getSelectedItem()), new Locale("es", "ES"));
 				System.out.println(diaSemana);
 				Iterator<Object[]> it = sesiones.iterator();
@@ -126,8 +224,12 @@ public class reservar_sesiones_automaticamente {
 				*/
 			}
 		});
-		btnNewButton.setBounds(75, 132, 195, 21);
+		btnNewButton.setBounds(73, 75, 195, 21);
 		panel.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Volver");
+		btnNewButton_1.setBounds(122, 127, 89, 23);
+		panel.add(btnNewButton_1);
 		
 		
 	}

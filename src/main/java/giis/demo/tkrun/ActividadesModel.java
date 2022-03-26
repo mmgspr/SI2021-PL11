@@ -51,19 +51,19 @@ public class ActividadesModel {
 	//Método para obtener la fecha inicial de una actividad
 		public static final String SQL_FECHA_INICIAL_ACTIVIDAD = "SELECT fecha_ini FROM actividades WHERE nombre=";
 		
-		public long getFechaIniActividad(String nombre){
+		public String getFechaIniActividad(String nombre){
 			List<Object[]> lista;
-			lista = db.executeQueryArray(SQL_ID_ACTIVIDAD+"'"+nombre+"'");
-			return (long)lista.get(0)[0]; 	
+			lista = db.executeQueryArray(SQL_FECHA_INICIAL_ACTIVIDAD+"'"+nombre+"'");
+			return lista.get(0)[0].toString(); 	
 		}
 		
 	//Método para obtener la fecha final de una actividad
 		public static final String SQL_FECHA_FINAL_ACTIVIDAD = "SELECT fecha_fin FROM actividades WHERE nombre=";
 		
-		public long getFechaFinActividad(String nombre){
+		public String getFechaFinActividad(String nombre){
 			List<Object[]> lista;
-			lista = db.executeQueryArray(SQL_ID_ACTIVIDAD+"'"+nombre+"'");
-			return (long)lista.get(0)[0]; 	
+			lista = db.executeQueryArray(SQL_FECHA_FINAL_ACTIVIDAD+"'"+nombre+"'");
+			return lista.get(0)[0].toString(); 	
 		}
 	
 }
