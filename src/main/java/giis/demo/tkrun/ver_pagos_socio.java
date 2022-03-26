@@ -187,15 +187,11 @@ public class ver_pagos_socio {
 			datosTabla[k][0]=mRes[k][5].toString();
 			//Fecha
 			datosTabla[k][1]=mRes[k][3].toString();
-			
 			//Instalacion
 			instal=mRes[k][2].toString();
-			//System.out.println(instal);
 			String instalacion="Reserva instalación: "+modeloInstalaciones.getNombreInstalacion(instal);
 			datosTabla[k][2]=instalacion;
-			
-			//Estado Comprobar si hay pago
-			
+			//Estado	
 			pagado=modeloPagos.getPagoReserva(mRes[k][0].toString());
 			if(pagado) {
 				datosTabla[k][3]="Pagado";
@@ -204,23 +200,32 @@ public class ver_pagos_socio {
 				datosTabla[k][3]="Pendiente";
 			}
 			System.out.println(datosTabla[k][3]);
+			
 			System.out.println("FOR 1");
 		}
 		for(int k=i;k<y+i;k++) {
-			//Precio Sacar precio ins socio
+			//Precio 
 			datosTabla[k][0]=modeloActividades.getPrecioSocioActividad(mIns[k][2].toString());
 			//Fecha
 			datosTabla[k][1]=mIns[k][3].toString();
-			
-			//Actividad Sacar nombre actividad
+			//Actividad 
 			String actividad="Inscripción actividad: "+modeloActividades.getNombreActividad(mIns[k][2].toString());
 			datosTabla[k][2]=actividad;
-			
 			//Estado Comprobar si hay pago
-			//datosTabla[k][3]=matriz[k][3].toString();
+			pagado=modeloPagos.getPagoInscripcion(mIns[k][0].toString());
+			if(pagado) {
+				datosTabla[k][3]="Pagado";
+			}
+			else {
+				datosTabla[k][3]="Pendiente";
+			}
+			System.out.println(datosTabla[k][3]);
+			
 			System.out.println("FOR 2");
 		}
-		
+		for(int k=0; k<y+i; k++) {
+			System.out.printf("%s | %s | %s | %s \n", datosTabla[k][0],datosTabla[k][1],datosTabla[k][2],datosTabla[k][3]);
+		}
 		
 		table.setModel(new DefaultTableModel(
 				

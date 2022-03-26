@@ -96,7 +96,7 @@ CREATE TABLE actividades(
 
     id_actividad  integer unsigned unique not null primary key, 
 
-    nombre varchar(50), 
+    nombre varchar(50) unique, 
 
     descripcion varchar(200), 
 
