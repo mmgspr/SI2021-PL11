@@ -52,4 +52,30 @@ public class PagosModel {
 		return (long)lista.get(0)[0] + 1;
 	}
 	
+	//SQL para comprobar si inscripcion pagada
+		public static final String SQL_PAGO_INSCRIPCION = "SELECT id_pago FROM pagos WHERE inscripcion=?";
+		public boolean getPagoInscripcion(String inscripcion){
+			
+			List<Object[]> l = db.executeQueryArray(SQL_PAGO_INSCRIPCION, inscripcion);
+			if (l.isEmpty()) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		
+		//SQL para comprobar si inscripcion pagada
+			public static final String SQL_PAGO_RESERVA = "SELECT id_pago FROM pagos WHERE reserva=?";
+			public boolean getPagoReserva(String reserva){
+					
+				List<Object[]> l = db.executeQueryArray(SQL_PAGO_RESERVA, reserva);
+				if (l.isEmpty()) {
+					return false;
+				}
+				else {
+					return true;
+				}
+			}
+	
 }

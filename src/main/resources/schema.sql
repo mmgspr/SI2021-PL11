@@ -34,7 +34,11 @@ CREATE TABLE clientes(
     
     contraseña varchar(20),
     
-    cuota double ,
+    cuotaInicial double ,
+    
+    cuotaReservas double ,
+    
+    cuotaActividades double ,
     
     tlf varchar(9),
     
@@ -92,7 +96,7 @@ CREATE TABLE actividades(
 
     id_actividad  integer unsigned unique not null primary key, 
 
-    nombre varchar(50), 
+    nombre varchar(50) unique, 
 
     descripcion varchar(200), 
 
@@ -166,3 +170,4 @@ CREATE TABLE pagos(
     foreign key (reserva) references reservas(id_reserva)
 
 ); 
+
