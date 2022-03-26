@@ -18,6 +18,8 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -35,6 +37,8 @@ public class reservar_sesiones_automaticamente {
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat dh = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
 	/**
 	 * Launch the application.
@@ -165,14 +169,15 @@ public class reservar_sesiones_automaticamente {
 									msg=msg+"No se ha podido reservar la fecha '"+comp+"'. Está ocupada por otra actividad.\n";
 								}
 								else if (cliente == 0){
-									//modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
+									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
+									
 									//JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Reservado.\n");
 								}
 								else {
-									//modeloReservas.eliminarReserva(Integer.parseInt(id), diaHora);
-									//modeloReservas.nuevaReserva(0, Integer.parseInt(id), sdf.format(currentDate), diaHora, "0", modeloActividades.siguienteIdActividad());
+									modeloReservas.eliminarReserva(Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), comp);
+									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
 									//JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Estaba reservado por un cliente pero tienes prioridad.\n");
-									msg=msg+"Se ha cancelado la reserva del socio con id "+cliente+" en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
+									msg=msg+"Se ha cancelado una reserva de socio en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
 								}
 								//SUMAMOS UNA HORA
 								c_hora.setTime(hi);

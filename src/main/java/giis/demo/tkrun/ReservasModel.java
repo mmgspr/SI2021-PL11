@@ -347,9 +347,9 @@ private Database db = new Database();
 		
 		
 		//SQL para ver todas las reservas de un socio
-		public static final String SQL_RESERVAS_SOCIO_TODO = "SELECT id_reserva, persona, instalacion, fecha, fecha_reserva, precio,actividad FROM reservas WHERE persona= ? ORDER BY fecha DESC";
-		public List<Object[]> getReservasSocioTodo(int persona){
+		public static final String SQL_RESERVAS_SOCIO_TODO = "SELECT id_reserva, persona, instalacion, fecha, fecha_reserva, precio,actividad FROM reservas WHERE persona= ? AND fecha>='?' AND fecha<='?' ORDER BY fecha DESC";
+		public List<Object[]> getReservasSocioTodo(int persona, String ini, String fin){
 			
-			return db.executeQueryArray(SQL_RESERVAS_SOCIO_TODO, persona);
+			return db.executeQueryArray(SQL_RESERVAS_SOCIO_TODO, persona, ini, fin);
 		}
 }
