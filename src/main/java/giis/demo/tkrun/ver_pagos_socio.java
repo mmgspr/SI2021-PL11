@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,11 +37,13 @@ public class ver_pagos_socio {
 	private ClientesModel modeloClientes = new ClientesModel();
 	private InstalacionesModel modeloInstalaciones = new InstalacionesModel();
 	private InscripcionesModel modeloInscripciones = new InscripcionesModel();
+	private ActividadesModel modeloActividades = new ActividadesModel();
 	private List<Object[]> listaReservas;
 	private List<Object[]> listaInscripciones;
 	private List<Object[]> listaPagos;
 	private String[] arrayPagos;
 	private Vector<String> reservasPagadas;
+	private DefaultTableModel tableModel;
 	
 	int id_socio;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -186,8 +190,8 @@ public class ver_pagos_socio {
 			
 			//Instalacion
 			instal=mRes[k][2].toString();
-			System.out.println(instal);
-			String instalacion=modeloInstalaciones.getNombreInstalacion(instal);
+			//System.out.println(instal);
+			String instalacion="Reserva instalación: "+modeloInstalaciones.getNombreInstalacion(instal);
 			datosTabla[k][2]=instalacion;
 			
 			//Estado Comprobar si hay pago
@@ -202,18 +206,19 @@ public class ver_pagos_socio {
 			System.out.println(datosTabla[k][3]);
 			System.out.println("FOR 1");
 		}
-		for(int k=i;k<i+y;k++) {
+		for(int k=i;k<y+i;k++) {
 			//Precio Sacar precio ins socio
 			//datosTabla[k][0]=mIns[k][5].toString();
 			//Fecha
 			datosTabla[k][1]=mIns[k][3].toString();
 			
 			//Actividad Sacar nombre actividad
-			//datosTabla[k][2]=mIns[k][2].toString();
+			String actividad="Inscripción actividad: ";
+			datosTabla[k][2]=actividad;
 			
 			//Estado Comprobar si hay pago
 			//datosTabla[k][3]=matriz[k][3].toString();
-			System.out.println("FOR 1");
+			System.out.println("FOR 2");
 		}
 		
 		

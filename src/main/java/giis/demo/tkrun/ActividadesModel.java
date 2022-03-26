@@ -66,13 +66,14 @@ public class ActividadesModel {
 			return lista.get(0)[0].toString(); 	
 		}
 		
-	//Método para obtener la instalacion de una actividad
-			public static final String SQL_INSTALACION_ACTIVIDAD = "SELECT instalacion FROM actividades WHERE nombre=";
+	//Método para obtener el nombre de una actividad
+			public static final String SQL_NOMBRE_ACTIVIDAD = "SELECT nombre FROM actividades WHERE id_actividad=";
 				
-			public String getInstalacionActividad(String nombre){
+			public String getNombreActividad(String id){
 				List<Object[]> lista;
-				lista = db.executeQueryArray(SQL_INSTALACION_ACTIVIDAD+"'"+nombre+"'");
+				lista = db.executeQueryArray(SQL_NOMBRE_ACTIVIDAD+"'"+id+"'");
 				return lista.get(0)[0].toString(); 	
 			}
+			
 	
 }
