@@ -179,9 +179,7 @@ public class visualizarReservasA {
 				try{
 					int id_socio=modeloReserv.getClienteInt(id_reserva);
 						double cuota = modeloReserv.nuevaCuota(id_socio);
-						System.out.printf("%f\n", cuota);
 						double devolver = modeloReserv.getPrecio(Integer.parseInt(txtIdReserva.getText()));
-						System.out.printf("%f\n", devolver);
 						modeloReserv.añadeacuota(cuota-devolver, id_socio);
 						
 						try {
