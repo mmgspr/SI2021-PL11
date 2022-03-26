@@ -118,6 +118,7 @@ public class reservar_sesiones_automaticamente {
 				String horaFin=null;
 				Date hi=null;
 				Date hf=null;
+				String comp=null;
 
 				while(ini.getTime()-fin.getTime()<=0) {
 					String diaSemana=getDayString(ini,es);
@@ -148,8 +149,9 @@ public class reservar_sesiones_automaticamente {
 						if (encontrado){
 							//System.out.println("encontrado");
 							while(hi.getTime()<hf.getTime()) {
-								//System.out.println("menor hora final");
-								int cliente = modeloReservas.comprobarDisponibilidadActividad(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()), diaHora);
+								//System.out.println(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()));
+								comp=dh.format(hi.getTime());
+								int cliente = modeloReservas.comprobarDisponibilidadActividad(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()), comp);
 								if (cliente==-1) {
 									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente,
 									    "Está ocupado por otra actividad.",
@@ -170,7 +172,7 @@ public class reservar_sesiones_automaticamente {
 								c_hora.add(Calendar.HOUR, 1);
 								try {
 									hi = dh.parse(dh.format(c_hora.getTime()));
-									System.out.println(c_hora);
+									//System.out.println(c_hora);
 								} catch (ParseException e1) {	
 								}
 								
