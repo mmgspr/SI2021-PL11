@@ -74,6 +74,14 @@ public class ActividadesModel {
 				lista = db.executeQueryArray(SQL_NOMBRE_ACTIVIDAD+"'"+id+"'");
 				return lista.get(0)[0].toString(); 	
 			}
-			
+		
+			//Método para obtener el precio de socio de una actividad
+			public static final String SQL_PRECIO_SOCIO_ACTIVIDAD = "SELECT precio_socio FROM actividades WHERE id_actividad=";
+				
+			public String getPrecioSocioActividad(String id){
+				List<Object[]> lista;
+				lista = db.executeQueryArray(SQL_PRECIO_SOCIO_ACTIVIDAD+"'"+id+"'");
+				return lista.get(0)[0].toString(); 	
+			}
 	
 }

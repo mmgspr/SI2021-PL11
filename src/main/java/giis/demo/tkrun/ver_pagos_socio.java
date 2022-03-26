@@ -208,12 +208,12 @@ public class ver_pagos_socio {
 		}
 		for(int k=i;k<y+i;k++) {
 			//Precio Sacar precio ins socio
-			//datosTabla[k][0]=mIns[k][5].toString();
+			datosTabla[k][0]=modeloActividades.getPrecioSocioActividad(mIns[k][2].toString());
 			//Fecha
 			datosTabla[k][1]=mIns[k][3].toString();
 			
 			//Actividad Sacar nombre actividad
-			String actividad="Inscripción actividad: ";
+			String actividad="Inscripción actividad: "+modeloActividades.getNombreActividad(mIns[k][2].toString());
 			datosTabla[k][2]=actividad;
 			
 			//Estado Comprobar si hay pago
