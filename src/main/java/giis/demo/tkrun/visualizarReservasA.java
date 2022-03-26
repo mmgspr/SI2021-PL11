@@ -179,11 +179,13 @@ public class visualizarReservasA {
 				try{
 					int id_socio=modeloReserv.getClienteInt(id_reserva);
 						double cuota = modeloReserv.nuevaCuota(id_socio);
+						System.out.printf("%f\n", cuota);
 						double devolver = modeloReserv.getPrecio(Integer.parseInt(txtIdReserva.getText()));
+						System.out.printf("%f\n", devolver);
 						modeloReserv.añadeacuota(cuota-devolver, id_socio);
 						
 						try {
-				            String ruta = "src/main/resources/ReservaSocio"+Integer.toString(id_socio)+".txt";
+				            String ruta = "src/main/resources/Reserva"+id_reserva+"Socio"+Integer.toString(id_socio)+".txt";
 				            String contenido = "Se le ha eliminado la reserva: "+ id_reserva +" por causas administrativas.\nSe le devolverá el importe a final de mes.\n";
 				            File file = new File(ruta);
 				            // Si el archivo no existe es creado
