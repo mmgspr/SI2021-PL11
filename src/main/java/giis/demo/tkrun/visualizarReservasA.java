@@ -183,7 +183,7 @@ public class visualizarReservasA {
 						modeloReserv.añadeacuota(cuota-devolver, id_socio);
 						
 						try {
-				            String ruta = "src/main/resources/ReservaSocio"+Integer.toString(id_socio)+".txt";
+				            String ruta = "src/main/resources/Reserva"+id_reserva+"Socio"+Integer.toString(id_socio)+".txt";
 				            String contenido = "Se le ha eliminado la reserva: "+ id_reserva +" por causas administrativas.\nSe le devolverá el importe a final de mes.\n";
 				            File file = new File(ruta);
 				            // Si el archivo no existe es creado
