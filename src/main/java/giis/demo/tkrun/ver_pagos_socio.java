@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Window;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -125,7 +126,11 @@ public class ver_pagos_socio {
 				}
 				else {
 					String ini=sdf.format(dateIni);
-					String fin=sdf.format(dateFin);
+					//String fin=sdf.format(dateFin);
+					Calendar cal=Calendar.getInstance();
+					cal.setTime(dateFin);
+					cal.add(Calendar.DATE, 1);
+					String fin = sdf.format(cal.getTime());
 					//System.out.println(ini);
 					//System.out.println(fin);
 					RellenarTabla(table,ini,fin);
