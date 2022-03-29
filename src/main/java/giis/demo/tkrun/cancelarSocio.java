@@ -60,8 +60,6 @@ public class cancelarSocio {
 	private JTextField idTxtField;
 	private long hoy;
 	
-	//para parametrizar
-	private final long diasAntelacion = 5;
 	
 	
 
@@ -277,7 +275,7 @@ public class cancelarSocio {
 				//el vector es el siguiente elemento de la lista (una reserva en concreto del cliente)
 				vector=it.next();
 				try {
-					if (hoy+(diasAntelacion*24*60*60*1000) < sdf.parse(vector[1].toString()).getTime()) {
+					if (hoy+(principal.getDiasAntelacion()*24*60*60*1000) < sdf.parse(vector[1].toString()).getTime()) {
 						reservasCancelables.add(vector[0].toString());
 						//bucle para recorer el vector
 						for(int j=0;j<3;j++) {
