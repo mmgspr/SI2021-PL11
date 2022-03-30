@@ -30,6 +30,14 @@ public class Login {
 	private inicialSocio vInicialSocio;
 	private SwingMain vSwing;
 
+	
+	//Variables parametrizacion
+	private int diasAntelacion=5;
+	private int dia_comprobar=25;
+	private int Hora_Max=3;
+	private int horasDiaMax=4;
+  	private int horasPeriodoMax=10;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -169,5 +177,49 @@ public class Login {
 				    "Error de credenciales",
 				    JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+
+	
+	
+	
+	public int getDiasAntelacion() {
+		return diasAntelacion;
+	}
+
+	public void setDiasAntelacion(int diasAntelacion) {
+		this.diasAntelacion = diasAntelacion;
+	}
+
+	public int getDia_comprobar() {
+		return dia_comprobar;
+	}
+
+	public void setDia_comprobar(int dia_comprobar) {
+		this.dia_comprobar = dia_comprobar;
+	}
+
+	public int getHora_Max() {
+		return Hora_Max;
+	}
+
+	public void setHora_Max(int hora_Max) {
+		Hora_Max = hora_Max;
+	}
+
+	public int getHorasDiaMax() {
+		return horasDiaMax;
+	}
+
+	public void setHorasDiaMax(int horasDiaMax) {
+		this.horasDiaMax = horasDiaMax;
+	}
+
+	public int getHorasPeriodoMax() {
+		return horasPeriodoMax;
+	}
+
+	public void setHorasPeriodoMax(int horasPeriodoMax) {
+		this.horasPeriodoMax = horasPeriodoMax;
 	}
 }

@@ -378,10 +378,10 @@ public class Reservar_Instalacion_Socio {
 				 hora = (String)comboBoxHoraIni.getSelectedItem();
 				List<Object[]> I= modeloReservas.getListaReservasUsuario(id_socioS, id);
 				int contador=0;
-				int Hora_Max=3;
+
 				for(int k=0; k<I.size();k++){
 					if(getFecha((I.get(k)[0]).toString()).equals(date)) {
-						if( ( (getHora((I.get(k)[0]).toString())) <= ((getHora1(hora))+Hora_Max)) && ( (getHora((I.get(k)[0]).toString())) >= ((getHora1(hora))-Hora_Max))) {								
+						if( ( (getHora((I.get(k)[0]).toString())) <= ((getHora1(hora))+vLogin.getHora_Max())) && ( (getHora((I.get(k)[0]).toString())) >= ((getHora1(hora))-vLogin.getHora_Max()))) {								
 							//System.out.println("\nHora Bucle"+(getHora((I.get(k)[0]).toString())));
 						   // System.out.println("\nHoraIni"+(getHora1(hora)-Hora_Max));
 						   // System.out.println("\nHoraFin"+(getHora1(hora)+Hora_Max));
@@ -394,7 +394,7 @@ public class Reservar_Instalacion_Socio {
 				
 				boolean seguidas=true;
 				
-				if(contador>=Hora_Max) {
+				if(contador>=vLogin.getHora_Max()) {
 					seguidas=false;
 				}
 				else 
@@ -405,12 +405,11 @@ public class Reservar_Instalacion_Socio {
 		   	    String Date00 = sdf.format(d1)+" "+"00:00:00";
 		   	   
 		   	    
-		   	 int horasDiaMax=4;
-		   	 int horasPeriodoMax=10;
+		   	 
 		   	    
-if(modeloReservas.getListaReservasUsuario2(id_socioS, Date0, Date11).size() < horasDiaMax) {	
+if(modeloReservas.getListaReservasUsuario2(id_socioS, Date0, Date11).size() < vLogin.getHorasDiaMax()) {	
 				
-	if(modeloReservas.getListaReservasUsuario1(id_socioS,Date00).size() < horasPeriodoMax ) {
+	if(modeloReservas.getListaReservasUsuario1(id_socioS,Date00).size() < vLogin.getHorasPeriodoMax()) {
 		if(seguidas) {
 				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
 					//obtener el precio de la instalacion seleccionada
