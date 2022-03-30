@@ -15,9 +15,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Login {
 
@@ -29,6 +34,7 @@ public class Login {
 	private inicialAdmin vInicialAdmin;
 	private inicialSocio vInicialSocio;
 	private SwingMain vSwing;
+	
 
 	
 	//Variables parametrizacion
@@ -111,6 +117,7 @@ public class Login {
 		});
 		btnEntrar.setBounds(102, 151, 89, 23);
 		frmLogin.getContentPane().add(btnEntrar);
+		cargaParametros();
 	}
 
 	public inicialAdmin getvInicialAdmin() {
@@ -221,5 +228,33 @@ public class Login {
 
 	public void setHorasPeriodoMax(int horasPeriodoMax) {
 		this.horasPeriodoMax = horasPeriodoMax;
+	}
+	
+	public void cargaParametros() {
+		try{
+			Scanner sc = new Scanner("src/main/resources/Parametros.csv");
+			sc.useDelimiter(";");
+			int i=0;
+			while(sc.hasNext()) {
+				String valor = sc.next();
+				switch(i) {
+					case 0: dia_comprobar=Integer.parseInt(valor); break;
+					case 1: diasAntelacion=Integer.parseInt(valor); break;
+					case 2: Hora_Max=Integer.parseInt(valor); break;
+					case 3: horasDiaMax=Integer.parseInt(valor); break;
+					case 4: horasPeriodoMax=Integer.parseInt(valor); break;
+				}
+				i++;
+			}
+			
+			
+			
+			
+			
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

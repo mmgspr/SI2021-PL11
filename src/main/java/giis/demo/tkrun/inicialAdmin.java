@@ -192,68 +192,62 @@ public class inicialAdmin {
 			    
 			    
 			    try {
+
 			    	 if(dia==vLogin.getDia_comprobar()) {
-			  		   System.out.println("Holaaa");
+			  		  // System.out.println("Holaaa");
 			         	modeloReservas.añadeacuota1();
 			         	modeloReservas.añadeacuota2();
 			  	   }
 			    	
-			    	
-			    	String ruta = "src/main/resources/Contabilidad.txt";
-		            String contenido = "Cuotas a pasar a cada socio \n";
-		            File file = new File(ruta);
-		            // Si el archivo no existe es creado
-		            if (!file.exists()) {
-		                file.createNewFile();
-		            }
-		            FileWriter fw = new FileWriter(file);
-		            BufferedWriter bw = new BufferedWriter(fw);
-		            bw.write(contenido);
+
+		            	String ruta = "src/main/resources/Contabilidad.txt";
+			            String contenido = "Cuotas a pasar a cada socio \n";
+			            File file = new File(ruta);
+			            // Si el archivo no existe es creado
+			            if (!file.exists()) {
+			                file.createNewFile();
+			            }
+			            FileWriter fw = new FileWriter(file);
+			            BufferedWriter bw = new BufferedWriter(fw);
+			            bw.write(contenido);
+			            
+		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
+		            Iterator<Object[]> iterador = listaPagos.iterator();
 		            
-	            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
-	            Iterator<Object[]> iterador = listaPagos.iterator();						    		
-	    		while(iterador.hasNext()) {
-	    			Object[] vector = iterador.next();		    	
-	    			bw.write("El socio "+vector[0]+" con el id: "+vector[1]+" ,debe pagar la cuota: "+vector[2]+
-	    					"$ junto con el coste de reservas: "+vector[3]+"$ y el coste de las actividades: "+vector[4]+"$\n");
-	    		}
-	    		
-	            
-	            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-	            final Runnable runnable = new Runnable() {
-	                int countdownStarter = 8000;
-
-	                public void run() {
-
-	                    //System.out.println(countdownStarter);
-	                    countdownStarter--;
-
-	                    if (countdownStarter < 0) {
-	                       //System.out.println("Timer Over!");
-	                    	
-								try {
-									BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
-									bw.write("");
-									bw.close();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								
-							 
-	                        scheduler.shutdown();
-	                    }
-	                }
-	            };
-	            scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
-	            
-	            
-	          
-			    
-			    bw.close();
+		    		while(iterador.hasNext()) {
+		    			Object[] vector = iterador.next();		    	
+		    			bw.write("El socio "+vector[0]+" con el id: "+vector[1]+" ,debe pagar la cuota: "+vector[2]+
+		    					"$ junto con el coste de reservas: "+vector[3]+"$ y el coste de las actividades: "+vector[4]+"$\n");
+		    		}
+		    		
 		            
-			   
+		            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+		            final Runnable runnable = new Runnable() {
+		                int countdownStarter = 120;
+
+		                public void run() {
+
+		                    
+		                    countdownStarter--;
+
+		                    if (countdownStarter < 0) {		                     		                    	
+									try {
+										BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+										bw.write("");
+										bw.close();
+									} catch (IOException e) {
+									
+										e.printStackTrace();
+									}
+																	 
+		                        scheduler.shutdown();
+		                    }
+		                }
+		            };
+		            scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);		                  				    
+				    bw.close();
+			       
 		            
 		        } catch (Exception e1) {
 		            e1.printStackTrace();

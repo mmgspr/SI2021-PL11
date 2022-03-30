@@ -11,6 +11,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.awt.event.ActionEvent;
 
 public class Parametrizacion {
@@ -124,11 +127,26 @@ public class Parametrizacion {
 		frmParametrizacion.getContentPane().add(btnActualizarParametros);
 	}
 	private void setParametros() {
-		vLogin.setDia_comprobar((int)spDiasComp.getValue());
-		vLogin.setDiasAntelacion((int)spDiaAnte.getValue());
-		vLogin.setHora_Max((int)spHoraMax.getValue());
-		vLogin.setHorasDiaMax((int)spHoraDiaMax.getValue());
-		vLogin.setHorasPeriodoMax((int)spHoraPeriodoMax.getValue());
+		try {
+            String ruta = "src/main/resources/Parametros.csv";
+            String contenido = Integer.toString((int)spDiasComp.getValue()) +";"
+            		+ Integer.toString((int)spDiaAnte.getValue()) +";"
+            		+ Integer.toString((int)spHoraMax.getValue()) +";"
+            		+ Integer.toString((int)spHoraDiaMax.getValue()) +";"
+            		+ Integer.toString((int)spHoraPeriodoMax.getValue());
+            File file = new File(ruta);
+            // Si el archivo no existe es creado
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(contenido);
+		    bw.close();
+		    
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
 		
 	}
 
