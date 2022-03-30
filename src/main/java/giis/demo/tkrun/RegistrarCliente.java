@@ -16,6 +16,8 @@ import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RegistrarCliente {
 
@@ -64,7 +66,7 @@ public class RegistrarCliente {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
@@ -118,6 +120,18 @@ public class RegistrarCliente {
 		panel.add(nombreTxt);
 		
 		nacimientoTxt = new JTextField();
+		/*nacimientoTxt.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyChar() < '0' || e.getKeyChar() > '9' || nacimientoTxt.getText().length()==10) {
+					e.setKeyChar((char)127);
+				}
+				if(nacimientoTxt.getText().length()==4 || nacimientoTxt.getText().length()==7) {
+					nacimientoTxt.setText(nacimientoTxt.getText()+"-");
+				}
+				
+			}
+		});*/
 		nacimientoTxt.setColumns(10);
 		nacimientoTxt.setBounds(157, 124, 96, 20);
 		panel.add(nacimientoTxt);

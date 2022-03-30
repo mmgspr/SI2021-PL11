@@ -59,7 +59,9 @@ public class cancelarSocio {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextField idTxtField;
 	private long hoy;
-	private final long diasAntelacion = 5;
+	
+	
+	
 
 	/**
 	 * Launch the application.
@@ -151,9 +153,12 @@ public class cancelarSocio {
 			}
 		});
 		
-		JButton CancelarBtn = new JButton("Cancelar");
-		
 		JButton AceptarBtn = new JButton("Aceptar");
+		AceptarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmCancelarReservas.dispose();
+			}
+		});
 		
 		JLabel ReservasLbl = new JLabel("Reservas activas:");
 		ReservasLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -211,10 +216,8 @@ public class cancelarSocio {
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(26)
 					.addComponent(sinReservasLabel, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(10)
-					.addComponent(CancelarBtn, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(439, Short.MAX_VALUE)
 					.addComponent(AceptarBtn, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
 					.addGap(10))
 		);
@@ -236,9 +239,7 @@ public class cancelarSocio {
 					.addGap(11)
 					.addComponent(sinReservasLabel, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
 					.addGap(13)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(CancelarBtn)
-						.addComponent(AceptarBtn, Alignment.TRAILING))
+					.addComponent(AceptarBtn)
 					.addGap(11))
 		);
 		panel.setLayout(gl_panel);
@@ -274,7 +275,7 @@ public class cancelarSocio {
 				//el vector es el siguiente elemento de la lista (una reserva en concreto del cliente)
 				vector=it.next();
 				try {
-					if (hoy+(diasAntelacion*24*60*60*1000) < sdf.parse(vector[1].toString()).getTime()) {
+					if (hoy+(principal.getDiasAntelacion()*24*60*60*1000) < sdf.parse(vector[1].toString()).getTime()) {
 						reservasCancelables.add(vector[0].toString());
 						//bucle para recorer el vector
 						for(int j=0;j<3;j++) {

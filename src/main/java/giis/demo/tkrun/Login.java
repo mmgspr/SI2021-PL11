@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login {
 
@@ -28,6 +30,14 @@ public class Login {
 	private inicialSocio vInicialSocio;
 	private SwingMain vSwing;
 
+	
+	//Variables parametrizacion
+	private int diasAntelacion=5;
+	private int dia_comprobar=25;
+	private int Hora_Max=3;
+	private int horasDiaMax=4;
+  	private int horasPeriodoMax=10;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -82,50 +92,21 @@ public class Login {
 		txtId_usuario.setColumns(10);
 		
 		txtContraseña = new JPasswordField();
+		txtContraseña.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyChar()==KeyEvent.VK_ENTER) {
+					login();
+				}
+			}
+		});
 		txtContraseña.setBounds(168, 83, 86, 20);
 		frmLogin.getContentPane().add(txtContraseña);
 		
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String pass;
-				if(!txtId_usuario.getText().equals("") && !Arrays.equals(txtContraseña.getPassword(), "".toCharArray())) {
-					//entrar como admin
-					if(txtId_usuario.getText().equals("admin") && Arrays.equals(txtContraseña.getPassword(), "admin".toCharArray())){
-						vInicialAdmin.getFrmIndex().setVisible(true);
-						frmLogin.setVisible(false);
-					}
-					else { //entrar como socio
-						try {
-							setId_socio(Integer.parseInt(txtId_usuario.getText()));
-							List<Object[]> lista = modelClientes.getContraseña(Integer.toString(id_socio));
-							pass=lista.get(0)[0].toString();
-							if(Arrays.equals(txtContraseña.getPassword(), pass.toCharArray())) {
-								vInicialSocio.generaLbl();
-								vInicialSocio.getFrmIndex().setVisible(true);
-								frmLogin.setVisible(false);
-								
-							}
-							else {
-								JOptionPane.showMessageDialog(frmLogin,
-									    "Las credenciales introducidas son erroneas.",
-									    "Error de credenciales",
-									    JOptionPane.ERROR_MESSAGE);
-							}
-						} catch (Exception e2) {
-							JOptionPane.showMessageDialog(frmLogin,
-								    "El usuario ha de ser su número de socio.",
-								    "Error de credenciales",
-								    JOptionPane.ERROR_MESSAGE);
-						}
-						}
-					}
-				else {
-					JOptionPane.showMessageDialog(frmLogin,
-						    "Las credenciales introducidas son erroneas.",
-						    "Error de credenciales",
-						    JOptionPane.ERROR_MESSAGE);
-				}
+				login();
 			}
 		});
 		btnEntrar.setBounds(102, 151, 89, 23);
@@ -156,5 +137,89 @@ public class Login {
 	public Window getFrmIndex() {
 		// TODO Auto-generated method stub
 		return frmLogin;
+	}
+	public void login() {
+		String pass;
+		if(!txtId_usuario.getText().equals("") && !Arrays.equals(txtContraseña.getPassword(), "".toCharArray())) {
+			//entrar como admin
+			if(txtId_usuario.getText().equals("admin") && Arrays.equals(txtContraseña.getPassword(), "admin".toCharArray())){
+				vInicialAdmin.getFrmIndex().setVisible(true);
+				frmLogin.setVisible(false);
+			}
+			else { //entrar como socio
+				try {
+					setId_socio(Integer.parseInt(txtId_usuario.getText()));
+					List<Object[]> lista = modelClientes.getContraseña(Integer.toString(id_socio));
+					pass=lista.get(0)[0].toString();
+					if(Arrays.equals(txtContraseña.getPassword(), pass.toCharArray())) {
+						vInicialSocio.generaLbl();
+						vInicialSocio.getFrmIndex().setVisible(true);
+						frmLogin.setVisible(false);
+						
+					}
+					else {
+						JOptionPane.showMessageDialog(frmLogin,
+							    "Las credenciales introducidas son erroneas.",
+							    "Error de credenciales",
+							    JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(frmLogin,
+						    "El usuario ha de ser su número de socio.",
+						    "Error de credenciales",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				}
+			}
+		else {
+			JOptionPane.showMessageDialog(frmLogin,
+				    "Las credenciales introducidas son erroneas.",
+				    "Error de credenciales",
+				    JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+
+	
+	
+	
+	public int getDiasAntelacion() {
+		return diasAntelacion;
+	}
+
+	public void setDiasAntelacion(int diasAntelacion) {
+		this.diasAntelacion = diasAntelacion;
+	}
+
+	public int getDia_comprobar() {
+		return dia_comprobar;
+	}
+
+	public void setDia_comprobar(int dia_comprobar) {
+		this.dia_comprobar = dia_comprobar;
+	}
+
+	public int getHora_Max() {
+		return Hora_Max;
+	}
+
+	public void setHora_Max(int hora_Max) {
+		Hora_Max = hora_Max;
+	}
+
+	public int getHorasDiaMax() {
+		return horasDiaMax;
+	}
+
+	public void setHorasDiaMax(int horasDiaMax) {
+		this.horasDiaMax = horasDiaMax;
+	}
+
+	public int getHorasPeriodoMax() {
+		return horasPeriodoMax;
+	}
+
+	public void setHorasPeriodoMax(int horasPeriodoMax) {
+		this.horasPeriodoMax = horasPeriodoMax;
 	}
 }

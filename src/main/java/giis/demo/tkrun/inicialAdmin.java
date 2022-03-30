@@ -1,7 +1,11 @@
 package giis.demo.tkrun;
+import java.util.concurrent.*;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -22,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class inicialAdmin {
 
@@ -35,6 +40,12 @@ public class inicialAdmin {
 	private crear_periodo_inscripcion vCrearPeriodoInscripcion;
 	private reserva_actividad_admin vReservaActividad;
 	private RegistrarCliente vRegistrarCliente;
+	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
+	
+	// Variables para parametrizacion
+	private Parametrizacion vParametrizacion;
+	
+
 	/**
 	 * Launch the application.
 	 */
@@ -89,7 +100,7 @@ public class inicialAdmin {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton.setBounds(10, 147, 207, 23);
+		btnNewButton.setBounds(10, 125, 207, 23);
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1_1 = new JButton("Reservar Instalación\r\n\r\n");
@@ -124,7 +135,7 @@ public class inicialAdmin {
 			}
 		});
 		btnNewButton_1_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_1_5.setBounds(305, 147, 181, 23);
+		btnNewButton_1_5.setBounds(305, 91, 181, 23);
 		panel.add(btnNewButton_1_5);
 		
 		JButton btnNewButton_1_6 = new JButton("Reserva para Actividad\r\n\r\n");
@@ -135,7 +146,7 @@ public class inicialAdmin {
 				vReservaActividad.getFrmReservaActividad().setVisible(true);
 			}
 		});
-		btnNewButton_1_6.setBounds(305, 238, 181, 23);
+		btnNewButton_1_6.setBounds(305, 125, 181, 23);
 		panel.add(btnNewButton_1_6);
 		
 		JButton btnNewButton_1_7 = new JButton("Lista Actividades\r\n\r\n");
@@ -148,7 +159,7 @@ public class inicialAdmin {
 			
 			}
 		});
-		btnNewButton_1_7.setBounds(10, 238, 207, 23);
+		btnNewButton_1_7.setBounds(10, 159, 207, 23);
 		panel.add(btnNewButton_1_7);
 		
 		JSeparator separator = new JSeparator();
@@ -161,8 +172,8 @@ public class inicialAdmin {
 		panel.add(lblNewLabel);
 		
 
-		JButton buttonGenerar = new JButton("Generar txt cuotas");
-		buttonGenerar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JButton buttonGenerar = new JButton("Generar Txt Cuotas");
+		buttonGenerar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonGenerar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -173,25 +184,75 @@ public class inicialAdmin {
 	            String[] vector1=date.split("-"); 
 			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
 			   System.out.println(dia);
-			    int dia_comprobar=23;
+			   
+			    
+			    
 			    
 			    try {
-		            String ruta = "/SI2021-PL11/src/main/resources/Doc.txt";
-		            String contenido = "Contenido de ejemplo";
-		            File file = new File(ruta);
-		            // Si el archivo no existe es creado
-		            if (!file.exists()) {
-		                file.createNewFile();
-		            }
-		            FileWriter fw = new FileWriter(file);
-		            BufferedWriter bw = new BufferedWriter(fw);
-		            bw.write(contenido);
+
+		            
+		            
+		            if(dia==vLogin.getDia_comprobar()) {
+		            	String ruta = "src/main/resources/Contabilidad.txt";
+			            String contenido = "Cuotas a pasar a cada socio \n";
+			            File file = new File(ruta);
+			            // Si el archivo no existe es creado
+			            if (!file.exists()) {
+			                file.createNewFile();
+			            }
+			            FileWriter fw = new FileWriter(file);
+			            BufferedWriter bw = new BufferedWriter(fw);
+			            bw.write(contenido);
+			            
+		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
+		            Iterator<Object[]> iterador = listaPagos.iterator();						    		
+		    		while(iterador.hasNext()) {
+		    			Object[] vector = iterador.next();		    	
+		    			bw.write("El socio "+vector[0]+" con el id: "+vector[1]+" ,debe pagar la cuota: "+vector[2]+
+		    					"$ junto con el coste de reservas: "+vector[3]+"$ y el coste de las actividades: "+vector[4]+"$\n");
+		    		}
+		    		
+		            
+		            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+		            final Runnable runnable = new Runnable() {
+		                int countdownStarter = 120;
+
+		                public void run() {
+
+		                    //System.out.println(countdownStarter);
+		                    countdownStarter--;
+
+		                    if (countdownStarter < 0) {
+		                       //System.out.println("Timer Over!");
+		                    	
+									try {
+										BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+										bw.write("");
+										bw.close();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+								 
+		                        scheduler.shutdown();
+		                    }
+		                }
+		            };
+		            scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
 		            
 		            
 		          
-				    bw.write("\n Pollas");
-				    bw.close();
 				    
+				    bw.close();
+			    }
+		            else {
+		            	JOptionPane.showMessageDialog(frmIndex,
+		    				    "No puedes generar el fichero un día que no sea el 25",
+		    				    "Error Generando",
+		    				    JOptionPane.ERROR_MESSAGE);
+		            }
 		        } catch (Exception e1) {
 		            e1.printStackTrace();
 		        }
@@ -200,26 +261,13 @@ public class inicialAdmin {
 			  
 			    
 			    
-			    if(dia == dia_comprobar) {
-			    	int j=modeloReservas.nuevaCuota1().size();
-			    	
-			    	List<Object[]> lista=modeloReservas.nuevaCuota1();
-					String[] nombre=new String[lista.size()];
-					Iterator<Object[]> iterador = lista.iterator();
-					
-					int i=0;
-					while(iterador.hasNext()) {
-						nombre[i]=iterador.next()[0].toString();
-						i++;
-					}
-			    }
 			    
 				
 				
 				
 			}
 		});
-		buttonGenerar.setBounds(149, 281, 170, 35);
+		buttonGenerar.setBounds(305, 159, 181, 24);
 		panel.add(buttonGenerar);
 
 		JButton nuevoSocioBtn = new JButton("Nuevo cliente");
@@ -230,8 +278,32 @@ public class inicialAdmin {
 			}
 		});
 		nuevoSocioBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		nuevoSocioBtn.setBounds(10, 292, 207, 23);
+		nuevoSocioBtn.setBounds(10, 193, 207, 23);
 		panel.add(nuevoSocioBtn);
+		
+		JButton btnNewButton_1_5_1 = new JButton("Reservar sesiones auto.");
+		btnNewButton_1_5_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vReservarSesionesAutomaticamente = new reservar_sesiones_automaticamente();
+				vReservarSesionesAutomaticamente.getFrmReservarSesionesAutomticamente().setVisible(true);
+			}
+		});
+		btnNewButton_1_5_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_5_1.setBounds(10, 91, 207, 23);
+		panel.add(btnNewButton_1_5_1);
+		Parametrizacion vParametrizacion = new Parametrizacion(vLogin);
+		JButton btnParametros = new JButton("Cambiar Parametros");
+		btnParametros.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vParametrizacion.getFrmParametrizacion().setVisible(true);
+			}
+		});
+		btnParametros.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnParametros.setBounds(305, 193, 181, 24);
+		panel.add(btnParametros);
 
 	}
+
+	
+	
 }
