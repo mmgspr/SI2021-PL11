@@ -1,0 +1,2 @@
+Usted acaba de cancelar la reserva con id: 2
+No estaba pagada, luego no se le devolverá nada.

@@ -1,0 +1,2 @@
+Usted acaba de cancelar la reserva con id: 3
+La reserva estaba pagada, se le devolverán 3.2 euros a fin de mes.
