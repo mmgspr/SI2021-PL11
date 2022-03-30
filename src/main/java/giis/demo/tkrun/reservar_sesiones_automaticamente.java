@@ -126,6 +126,8 @@ public class reservar_sesiones_automaticamente {
 				Date hf=null;
 				String comp=null;
 				String msg="- Colisiones:\n";
+				String id_socio="";
+				String n_actividad="";
 
 				while(ini.getTime()-fin.getTime()<=0) {
 					String diaSemana=getDayString(ini,es);
@@ -160,24 +162,16 @@ public class reservar_sesiones_automaticamente {
 								comp=dh.format(hi.getTime());
 								int cliente = modeloReservas.comprobarDisponibilidadActividad(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()), comp);
 								if (cliente==-1) {
-									/*
-									JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente,
-									    "Está ocupado por otra actividad.",
-									    "Error al reservar",
-									    JOptionPane.ERROR_MESSAGE);
-									    */
-									msg=msg+"No se ha podido reservar la fecha '"+comp+"'. Está ocupada por otra actividad.\n";
+									
+									msg=msg+"No se ha podido reservar la fecha '"+comp+"'. Está ocupada por la actividad '"+n_actividad+"'.";
 								}
 								else if (cliente == 0){
 									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
-									
-									//JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Reservado.\n");
 								}
 								else {
 									modeloReservas.eliminarReserva(Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), comp);
 									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
-									//JOptionPane.showMessageDialog(frmReservarSesionesAutomticamente, "Estaba reservado por un cliente pero tienes prioridad.\n");
-									msg=msg+"Se ha cancelado una reserva de socio en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
+									msg=msg+"Se ha cancelado una reserva del sociocon id '"+id_socio+"' en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
 								}
 								//SUMAMOS UNA HORA
 								c_hora.setTime(hi);
