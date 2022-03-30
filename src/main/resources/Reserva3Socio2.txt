@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+Se le ha eliminado la reserva: 3 por causas administrativas.
+Se le devolverá el importe a final de mes.
+=======
+Usted acaba de cancelar la reserva con id: 3
+La reserva estaba pagada, se le devolverán 3.2 euros a fin de mes.
+>>>>>>> refs/heads/cancelar_socio

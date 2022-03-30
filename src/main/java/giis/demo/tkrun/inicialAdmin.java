@@ -41,6 +41,11 @@ public class inicialAdmin {
 	private reserva_actividad_admin vReservaActividad;
 	private RegistrarCliente vRegistrarCliente;
 	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
+	
+	// Variables para parametrizacion
+	private Parametrizacion vParametrizacion;
+	
+
 	/**
 	 * Launch the application.
 	 */
@@ -95,7 +100,7 @@ public class inicialAdmin {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton.setBounds(10, 147, 207, 23);
+		btnNewButton.setBounds(10, 125, 207, 23);
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1_1 = new JButton("Reservar Instalación\r\n\r\n");
@@ -130,7 +135,7 @@ public class inicialAdmin {
 			}
 		});
 		btnNewButton_1_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_1_5.setBounds(305, 147, 181, 23);
+		btnNewButton_1_5.setBounds(305, 91, 181, 23);
 		panel.add(btnNewButton_1_5);
 		
 		JButton btnNewButton_1_6 = new JButton("Reserva para Actividad\r\n\r\n");
@@ -141,7 +146,7 @@ public class inicialAdmin {
 				vReservaActividad.getFrmReservaActividad().setVisible(true);
 			}
 		});
-		btnNewButton_1_6.setBounds(305, 238, 181, 23);
+		btnNewButton_1_6.setBounds(305, 125, 181, 23);
 		panel.add(btnNewButton_1_6);
 		
 		JButton btnNewButton_1_7 = new JButton("Lista Actividades\r\n\r\n");
@@ -154,7 +159,7 @@ public class inicialAdmin {
 			
 			}
 		});
-		btnNewButton_1_7.setBounds(10, 238, 207, 23);
+		btnNewButton_1_7.setBounds(10, 159, 207, 23);
 		panel.add(btnNewButton_1_7);
 		
 		JSeparator separator = new JSeparator();
@@ -168,7 +173,7 @@ public class inicialAdmin {
 		
 
 		JButton buttonGenerar = new JButton("Generar Txt Cuotas");
-		buttonGenerar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		buttonGenerar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonGenerar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -179,14 +184,14 @@ public class inicialAdmin {
 	            String[] vector1=date.split("-"); 
 			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
 			   System.out.println(dia);
-			    int dia_comprobar=25;
+			   
 			    
 			    
 			    
 			    try {
 		            
 		            
-		            if(dia==dia_comprobar) {
+		            if(dia==vLogin.getDia_comprobar()) {
 		            	String ruta = "src/main/resources/Contabilidad.txt";
 			            String contenido = "Cuotas a pasar a cada socio \n";
 			            File file = new File(ruta);
@@ -261,7 +266,7 @@ public class inicialAdmin {
 				
 			}
 		});
-		buttonGenerar.setBounds(305, 292, 181, 24);
+		buttonGenerar.setBounds(305, 159, 181, 24);
 		panel.add(buttonGenerar);
 
 		JButton nuevoSocioBtn = new JButton("Nuevo cliente");
@@ -272,7 +277,7 @@ public class inicialAdmin {
 			}
 		});
 		nuevoSocioBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		nuevoSocioBtn.setBounds(10, 292, 207, 23);
+		nuevoSocioBtn.setBounds(10, 193, 207, 23);
 		panel.add(nuevoSocioBtn);
 		
 		JButton btnNewButton_1_5_1 = new JButton("Reservar sesiones auto.");
@@ -283,8 +288,21 @@ public class inicialAdmin {
 			}
 		});
 		btnNewButton_1_5_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_1_5_1.setBounds(10, 101, 207, 23);
+		btnNewButton_1_5_1.setBounds(10, 91, 207, 23);
 		panel.add(btnNewButton_1_5_1);
+		Parametrizacion vParametrizacion = new Parametrizacion(vLogin);
+		JButton btnParametros = new JButton("Cambiar Parametros");
+		btnParametros.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vParametrizacion.getFrmParametrizacion().setVisible(true);
+			}
+		});
+		btnParametros.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnParametros.setBounds(305, 193, 181, 24);
+		panel.add(btnParametros);
 
 	}
+
+	
+	
 }

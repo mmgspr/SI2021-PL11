@@ -27,6 +27,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -60,8 +64,6 @@ public class cancelarSocio {
 	private JTextField idTxtField;
 	private long hoy;
 	
-	//para parametrizar
-	private final long diasAntelacion = 5;
 	
 	
 
@@ -119,10 +121,27 @@ public class cancelarSocio {
 						&& (modeloReservas.getCliente(idReserva).toString().equals(Integer.toString(id_socio)))
 						&& (reservasCancelables.contains(idReserva))) {
 							if(reservasPagadas.contains(idReserva)) {
-													
 								double cuota = modeloReservas.nuevaCuota(id_socio);
 								double devolver = modeloReservas.getPrecio(Integer.parseInt(idReserva));
 								modeloReservas.añadeacuota(cuota-devolver, id_socio);
+								//txt
+								try {
+						            String ruta = "src/main/resources/Reserva"+idReserva+"Socio"+Integer.toString(id_socio)+".txt";
+						            String contenido = "Usted acaba de cancelar la reserva con id: "+ idReserva +"\nLa reserva estaba pagada, se le devolverán "+devolver+" euros a fin de mes.\n";
+						            File file = new File(ruta);
+						            // Si el archivo no existe es creado
+						            if (!file.exists()) {
+						                file.createNewFile();
+						            }
+						            FileWriter fw = new FileWriter(file);
+						            BufferedWriter bw = new BufferedWriter(fw);
+						            bw.write(contenido);
+								    bw.close();
+								    
+						        } catch (Exception e1) {
+						            e1.printStackTrace();
+						        }
+													
 								//Eliminar pago
 								modeloPagos.eliminarPagoReserva(idReserva);
 								//Eliminar reserva
@@ -133,9 +152,27 @@ public class cancelarSocio {
 									    "Reserva eliminada, y se restarán "+devolver+" euros de su cuota de fin de mes.");
 							}
 							else {
+								//txt
+								try {
+						            String ruta = "src/main/resources/Reserva"+idReserva+"Socio"+Integer.toString(id_socio)+".txt";
+						            String contenido = "Usted acaba de cancelar la reserva con id: "+ idReserva +"\nNo estaba pagada, luego no se le devolverá nada.\n";
+						            File file = new File(ruta);
+						            // Si el archivo no existe es creado
+						            if (!file.exists()) {
+						                file.createNewFile();
+						            }
+						            FileWriter fw = new FileWriter(file);
+						            BufferedWriter bw = new BufferedWriter(fw);
+						            bw.write(contenido);
+								    bw.close();
+								    
+						        } catch (Exception e1) {
+						            e1.printStackTrace();
+						        }
 								//Se elimina la reserva sin devolver el dinero
 								modeloReservas.eliminarReserva(idReserva);
 								RellenarTabla(table);
+								
 							}
 						}
 						else {
@@ -277,7 +314,7 @@ public class cancelarSocio {
 				//el vector es el siguiente elemento de la lista (una reserva en concreto del cliente)
 				vector=it.next();
 				try {
-					if (hoy+(diasAntelacion*24*60*60*1000) < sdf.parse(vector[1].toString()).getTime()) {
+					if (hoy+(principal.getDiasAntelacion()*24*60*60*1000) < sdf.parse(vector[1].toString()).getTime()) {
 						reservasCancelables.add(vector[0].toString());
 						//bucle para recorer el vector
 						for(int j=0;j<3;j++) {
