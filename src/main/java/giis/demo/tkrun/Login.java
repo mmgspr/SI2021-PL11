@@ -19,7 +19,9 @@ import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,7 +45,8 @@ public class Login {
 	private int Hora_Max=3;
 	private int horasDiaMax=4;
   	private int horasPeriodoMax=10;
-	
+
+  	public static final String delimiter = ";";
 	/**
 	 * Launch the application.
 	 */
@@ -117,7 +120,7 @@ public class Login {
 		});
 		btnEntrar.setBounds(102, 151, 89, 23);
 		frmLogin.getContentPane().add(btnEntrar);
-		cargaParametros();
+		cargaParametros("src/main/resources/Parametros.csv");
 	}
 
 	public inicialAdmin getvInicialAdmin() {
@@ -230,31 +233,35 @@ public class Login {
 		this.horasPeriodoMax = horasPeriodoMax;
 	}
 	
-	public void cargaParametros() {
+	public void cargaParametros(String ruta) {
 		try{
-			Scanner sc = new Scanner("src/main/resources/Parametros.csv");
-			sc.useDelimiter(";");
-			int i=0;
-			while(sc.hasNext()) {
-				String valor = sc.next();
-				switch(i) {
-					case 0: dia_comprobar=Integer.parseInt(valor); break;
-					case 1: diasAntelacion=Integer.parseInt(valor); break;
-					case 2: Hora_Max=Integer.parseInt(valor); break;
-					case 3: horasDiaMax=Integer.parseInt(valor); break;
-					case 4: horasPeriodoMax=Integer.parseInt(valor); break;
-				}
-				i++;
-			}
-			
-			
-			
-			
-			
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+			File file = new File(ruta);
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+		    String line = " ";
+		    String[] tempArr;
+		    int i=0;
+		    while ((line = br.readLine()) != null) {
+		        tempArr = line.split(delimiter);
+		        for (String tempStr: tempArr) {
+		        	switch(i) {
+		        	
+			        case 0: dia_comprobar=Integer.parseInt(tempStr); break;
+					case 1: diasAntelacion=Integer.parseInt(tempStr); break;
+					case 2: Hora_Max=Integer.parseInt(tempStr); break;
+					case 3: horasDiaMax=Integer.parseInt(tempStr); break;
+					case 4: horasPeriodoMax=Integer.parseInt(tempStr); break;
+		        	}
+		        	i++;
+		          
+		        }
+		        System.out.println();
+		      }
+		      br.close();
+		    }
+		    catch(IOException ioe) {
+		      ioe.printStackTrace();
+		    }
+				
 	}
 }
