@@ -40,11 +40,11 @@ public class Login {
 
 	
 	//Variables parametrizacion
-	private int diasAntelacion=5;
-	private int dia_comprobar=25;
-	private int Hora_Max=3;
-	private int horasDiaMax=4;
-  	private int horasPeriodoMax=10;
+	private int diasAntelacion;
+	private int dia_comprobar;
+	private int Hora_Max;
+	private int horasDiaMax;
+  	private int horasPeriodoMax;
 
   	public static final String delimiter = ";";
 	/**
@@ -78,6 +78,7 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		cargaParametros("src/main/resources/Parametros.csv");
 		frmLogin = new JFrame();
 		frmLogin.setTitle("Login");
 		frmLogin.setBounds(100, 100, 302, 224);
@@ -120,7 +121,7 @@ public class Login {
 		});
 		btnEntrar.setBounds(102, 151, 89, 23);
 		frmLogin.getContentPane().add(btnEntrar);
-		cargaParametros("src/main/resources/Parametros.csv");
+		
 	}
 
 	public inicialAdmin getvInicialAdmin() {
@@ -244,6 +245,7 @@ public class Login {
 		    while ((line = br.readLine()) != null) {
 		        tempArr = line.split(delimiter);
 		        for (String tempStr: tempArr) {
+		        	System.out.println(tempStr + i);
 		        	switch(i) {
 		        	
 			        case 0: dia_comprobar=Integer.parseInt(tempStr); break;
