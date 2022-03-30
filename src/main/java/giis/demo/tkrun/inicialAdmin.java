@@ -189,6 +189,7 @@ public class inicialAdmin {
 			    
 			    
 			    try {
+
 		            
 		            
 		            if(dia==vLogin.getDia_comprobar()) {
