@@ -226,11 +226,25 @@ private Database db = new Database();
 		
 		
 	
-//Método para actualizar la cuota
+//Método para actualizar la cuota de un cliente
 public static final String SQL_SUMA_CUOTA = "UPDATE clientes SET cuotaReservas=? WHERE (id_socio=?);";
 public void añadeacuota(double cuota, int id_socio) {	
 	//System.out.println("La cuota es"+cuota);
 	db.executeUpdate(SQL_SUMA_CUOTA,cuota, id_socio);
+}
+
+//Método para actualizar la cuota de todos los clientes a 0
+public static final String SQL_SUMA_CUOTA1 = "UPDATE clientes SET cuotaReservas=?;";
+public void añadeacuota1() {	
+	//System.out.println("La cuota es"+cuota);
+	db.executeUpdate(SQL_SUMA_CUOTA1,0);
+}
+
+//Método para actualizar la cuota actividad de todos los clientes a 0
+public static final String SQL_SUMA_CUOTA2 = "UPDATE clientes SET cuotaActividades=?;";
+public void añadeacuota2() {	
+	//System.out.println("La cuota es"+cuota);
+	db.executeUpdate(SQL_SUMA_CUOTA2,0);
 }
 
 
@@ -240,6 +254,7 @@ public double nuevaCuota(int id_socio) {
 	List<Object[]> lista;
 	lista = db.executeQueryArray(SQL_CUOTA, id_socio);
 	return (double)lista.get(0)[0];
+	
 }
 
 

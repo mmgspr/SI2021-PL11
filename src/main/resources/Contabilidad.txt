@@ -1,0 +1,5 @@
+Cuotas a pasar a cada socio 
+El socio Dani con el id: 0 ,debe pagar la cuota: 30.0$ junto con el coste de reservas: 0.0$ y el coste de las actividades: 0.0$
+El socio Alvaro con el id: 1 ,debe pagar la cuota: 30.3$ junto con el coste de reservas: 0.0$ y el coste de las actividades: 0.0$
+El socio Roberto con el id: 2 ,debe pagar la cuota: 30.3$ junto con el coste de reservas: 0.0$ y el coste de las actividades: 0.0$
+El socio Mario con el id: 3 ,debe pagar la cuota: 30.3$ junto con el coste de reservas: 0.0$ y el coste de las actividades: 0.0$
