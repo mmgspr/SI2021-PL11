@@ -352,4 +352,28 @@ public List<Object[]> nuevaCuota1() {
 			
 			return db.executeQueryArray(SQL_RESERVAS_SOCIO_TODO, persona, ini, fin);
 		}
+		
+		//SQL para ver la actividad de una reserva
+		public static final String SQL_ACTIVIDAD_RESERVA = "SELECT actividad FROM reservas WHERE fecha_reserva=?";
+		public String getActividadReserva(String fecha){
+			
+			List<Object[]> l = db.executeQueryArray(SQL_ACTIVIDAD_RESERVA, fecha);
+			return l.get(0)[0].toString();
+		}
+		
+		//SQL para ver el socio de una reserva
+				public static final String SQL_SOCIO_RESERVA = "SELECT persona FROM reservas WHERE fecha_reserva=?";
+				public String getSocioReserva(String fecha){
+					
+					List<Object[]> l = db.executeQueryArray(SQL_SOCIO_RESERVA, fecha);
+					return l.get(0)[0].toString();
+				}
+				
+				//SQL para ver el socio de una reserva
+				public static final String SQL_ID_RESERVA_F = "SELECT id_reserva FROM reservas WHERE fecha_reserva=?";
+				public String getIdReservaF(String fecha){
+					
+					List<Object[]> l = db.executeQueryArray(SQL_ID_RESERVA_F, fecha);
+					return l.get(0)[0].toString();
+				}
 }
