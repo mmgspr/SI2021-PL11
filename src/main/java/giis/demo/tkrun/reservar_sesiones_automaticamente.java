@@ -162,16 +162,19 @@ public class reservar_sesiones_automaticamente {
 								comp=dh.format(hi.getTime());
 								int cliente = modeloReservas.comprobarDisponibilidadActividad(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()), comp);
 								if (cliente==-1) {
-									
-									msg=msg+"No se ha podido reservar la fecha '"+comp+"'. Está ocupada por la actividad '"+n_actividad+"'.";
+									n_actividad=modeloActividades.getNombreActividad(modeloReservas.getActividadReserva(comp));
+									//System.out.println(n_actividad);
+									msg=msg+"No se ha podido reservar la fecha '"+comp+"'. Está ocupada por la actividad '"+n_actividad+"'.\n";
 								}
 								else if (cliente == 0){
 									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
 								}
 								else {
+									id_socio=modeloReservas.getSocioReserva(comp);
+									System.out.println(id_socio);
 									modeloReservas.eliminarReserva(Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), comp);
 									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
-									msg=msg+"Se ha cancelado una reserva del sociocon id '"+id_socio+"' en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
+									msg=msg+"Se ha cancelado una reserva del socio con id '"+id_socio+"' en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
 								}
 								//SUMAMOS UNA HORA
 								c_hora.setTime(hi);
