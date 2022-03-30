@@ -176,7 +176,7 @@ public class inicialAdmin {
 			    int dia_comprobar=23;
 			    
 			    try {
-		            String ruta = "C:\\Users\\David\\eclipse-workspace\\Doc.txt";
+		            String ruta = "/SI2021-PL11/src/main/resources/Doc.txt";
 		            String contenido = "Contenido de ejemplo";
 		            File file = new File(ruta);
 		            // Si el archivo no existe es creado
