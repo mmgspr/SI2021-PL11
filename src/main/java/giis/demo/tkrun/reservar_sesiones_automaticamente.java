@@ -15,6 +15,9 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -171,10 +174,26 @@ public class reservar_sesiones_automaticamente {
 								}
 								else {
 									id_socio=modeloReservas.getSocioReserva(comp);
-									System.out.println(id_socio);
+									//System.out.println(id_socio);
 									modeloReservas.eliminarReserva(Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), comp);
 									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
 									msg=msg+"Se ha cancelado una reserva del socio con id '"+id_socio+"' en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
+									try {
+							            String ruta = "src/main/resources/Reserva"+modeloReservas.getIdReservaF(comp)+"Socio"+id_socio+".txt";
+							            String contenido = "Se le ha cancelado la reserva: "+ modeloReservas.getIdReservaF(comp) +" por causas administrativas.\nSe le devolverá el importe a final de mes si ya estaba pagada.\n";
+							            File file = new File(ruta);
+							            // Si el archivo no existe es creado
+							            if (!file.exists()) {
+							                file.createNewFile();
+							            }
+							            FileWriter fw = new FileWriter(file);
+							            BufferedWriter bw = new BufferedWriter(fw);
+							            bw.write(contenido);
+									    bw.close();
+									    
+							        } catch (Exception e1) {
+							            e1.printStackTrace();
+							        }
 								}
 								//SUMAMOS UNA HORA
 								c_hora.setTime(hi);

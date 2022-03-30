@@ -368,4 +368,12 @@ public List<Object[]> nuevaCuota1() {
 					List<Object[]> l = db.executeQueryArray(SQL_SOCIO_RESERVA, fecha);
 					return l.get(0)[0].toString();
 				}
+				
+				//SQL para ver el socio de una reserva
+				public static final String SQL_ID_RESERVA_F = "SELECT id_reserva FROM reservas WHERE fecha_reserva=?";
+				public String getIdReservaF(String fecha){
+					
+					List<Object[]> l = db.executeQueryArray(SQL_ID_RESERVA_F, fecha);
+					return l.get(0)[0].toString();
+				}
 }
