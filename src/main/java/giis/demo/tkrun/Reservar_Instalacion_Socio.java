@@ -170,7 +170,7 @@ public class Reservar_Instalacion_Socio {
 		panel.add(comboBoxHoraIni);
 		
 		JButton ButtonReservar = new JButton("Reservar\r\n");
-		ButtonReservar.setEnabled(false);
+		ButtonReservar.setEnabled(true);
 		ButtonReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//id_instalacion
@@ -437,7 +437,7 @@ if(modeloReservas.getListaReservasUsuario2(id_socioS, Date0, Date11).size() < ho
 												+"\n  Fecha de reserva: "+diaHora
 												+"\n  Selección de pago: "+comboBoxMetodo.getSelectedItem());	
 										modeloReservas.nuevaReserva1(Integer.parseInt(id_socio), Integer.parseInt(id), sdf.format(d1), diaHora, precio ,0);
-										ButtonReservar.setSelected(false);
+										ButtonReservar.setSelected(true);
 									}
 									
 								//CheckBoxEstaLibre.setSelected(true);																
@@ -496,7 +496,7 @@ else {
 	
 }
 		
-		ButtonReservar.setEnabled(false);
+		ButtonReservar.setEnabled(true);
 		contador=0;
 		//System.out.println(contador);
 		seguidas=true;
@@ -508,159 +508,7 @@ else {
 			}
 		});
 		
-		JButton ButtonComprobar = new JButton("Comprobar\r\n");
-		ButtonComprobar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//id_instalacion
-				String id;
-				
-				List<Object[]> lista=modelo.getIdInstalacion((String)comboBoxInstalaciones.getSelectedItem());
-				String[] nombre=new String[lista.size()];
-				Iterator<Object[]> iterador = lista.iterator();
-				
-				int i=0;
-				while(iterador.hasNext()) {
-					nombre[i]=iterador.next()[0].toString();
-					i++;
-				}
-				
-				//Id instalacion
-				id = nombre[0];
-				//System.out.println(id);
-				
-				
-				
-				//fecha
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			    String date = sdf.format(dateChooserInicio.getDate());
-				String hora = (String)comboBoxHoraIni.getSelectedItem();
-				String diaHora = date+" "+hora;
-				//System.out.println(diaHora);
-				
-				
 		
-				
-				//fecha de hoy
-				Date d1 = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-				
-				
-				//diferencia entre las dos fechas
-				long diferencia_dias= 0;
-				long diferencia_años= 0;
-				try {
-					//pasar de string a fecha
-		            Date d2 = sdf.parse(date);
-		  
-		            //Calcular la diferencia en milisegundos
-		            long difference_In_Time
-		                = d2.getTime() - d1.getTime();
-		  
-		            // Calcular la diferencia en segundos, minutos, horas, años y dias
-		            long difference_In_Seconds
-		                = (difference_In_Time
-		                   / 1000)
-		                  % 60;
-		  
-		            long difference_In_Minutes
-		                = (difference_In_Time
-		                   / (1000 * 60))
-		                  % 60;
-		  
-		            long difference_In_Hours
-		                = (difference_In_Time
-		                   / (1000 * 60 * 60))
-		                  % 24;
-		  
-		            long difference_In_Years
-		                = (difference_In_Time
-		                   / (1000l * 60 * 60 * 24 * 365));
-		  
-		            long difference_In_Days
-		                = (difference_In_Time
-		                   / (1000 * 60 * 60 * 24))
-		                  % 365;
-		            diferencia_dias = difference_In_Days;
-		            diferencia_años = difference_In_Years;
-		           
-		        }
-		  
-		        // Catch the Exception
-		        catch (ParseException excepcion) {
-		            excepcion.printStackTrace();
-		        }
-				
-				
-					
-	            //id del socio
-				
-				int id_socioS = vLogin.getId_socio();
-				String id_socio = String.valueOf(id_socioS); 
-		   			
-				if (modeloReservas.comprobarDisponibilidad(id, diaHora)) {
-					//obtener el precio de la instalacion seleccionada
-					precio = modelo.getPrecio((String)comboBoxInstalaciones.getSelectedItem());										
-					textFieldCoste.setText(precio);
-					
-					if (modeloClientes.validarId(id_socio)) {
-						if (diferencia_dias >= 0 && diferencia_años >= 0) {
-							if (diferencia_dias <= 15 || diferencia_años>0) {	
-								  // System.out.printf("%d",);
-									if ((modeloClientes.DebeDinero(id_socio))==1) {																																							
-										 //  CheckBoxPuedesReservar.setSelected(false);
-										   JOptionPane.showMessageDialog(frmReservarInstalacin ," No se ha podido reservar. \n Está libre pero debes dinero. \n               ¡MOROSO! ","Error",JOptionPane.ERROR_MESSAGE);										   								              											
-										   ButtonReservar.setEnabled(false);
-									}		
-									else {																				
-										//CheckBoxPuedesReservar.setSelected(true);
-										JOptionPane.showMessageDialog(frmReservarInstalacin, "  Podrías reservar.\n"
-												+ "  Precio de la reserva: "+precio
-												+"\n  Socio que lo solicita: "+id_socio
-												+"\n  Instalación a reservar: "+id
-												+"\n  Fecha de reserva: "+diaHora);	
-										ButtonReservar.setEnabled(true);
-									}
-									
-								//CheckBoxEstaLibre.setSelected(true);																
-							}								
-							else {
-								JOptionPane.showMessageDialog(frmReservarInstalacin,
-									    "No puedes reservar con más de 15 días de antelación.",
-									    "No puedes reservar",
-									    JOptionPane.ERROR_MESSAGE);	
-								 ButtonReservar.setEnabled(false);
-							}	
-						}
-						else {
-							JOptionPane.showMessageDialog(frmReservarInstalacin,
-								    "No puedes reservar para una fecha ya pasada.",
-								    "No puedes reservar",
-								    JOptionPane.ERROR_MESSAGE);	
-							 ButtonReservar.setEnabled(false);
-						}
-				}
-					else {
-						JOptionPane.showMessageDialog(frmReservarInstalacin,
-							    "Introduce un número de socio válido.",
-							    "No puedes reservar",
-							    JOptionPane.ERROR_MESSAGE);	
-						 ButtonReservar.setEnabled(false);
-					}											
-				}
-				else {
-					JOptionPane.showMessageDialog(frmReservarInstalacin,
-						    "Está ocupado.",
-						    "No puedes reservar",
-						    JOptionPane.ERROR_MESSAGE);
-					 ButtonReservar.setEnabled(false);
-					
-				}
-				
-				
-			}
-		});
-		ButtonComprobar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ButtonComprobar.setBounds(161, 232, 110, 21);
-		panel.add(ButtonComprobar);
 		
 		ButtonReservar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ButtonReservar.setBounds(295, 232, 113, 21);
