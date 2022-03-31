@@ -21,6 +21,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Lista_Reservas {
 
@@ -67,57 +71,33 @@ public class Lista_Reservas {
 		frmListaReservas.setBounds(100, 100, 596, 377);
 		frmListaReservas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel panel = new JPanel();
-		frmListaReservas.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		JScrollPane scrollPane = new JScrollPane();
 		
-		JDateChooser dateChooserFin = new JDateChooser();
-		dateChooserFin.setBounds(307, 21, 116, 19);
-		panel.add(dateChooserFin);
+		JLabel LabelPeriodo = new JLabel("Inicio de Periodo:");
+		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JDateChooser dateChooserInicio = new JDateChooser();
-		dateChooserInicio.setBounds(113, 21, 103, 19);
-		panel.add(dateChooserInicio);
+		dateChooserInicio.setToolTipText("");
 		
-		JLabel lblNewLabel = new JLabel("Fecha Inicio:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel.setBounds(30, 21, 73, 19);
-		panel.add(lblNewLabel);
+		JLabel lblNewLabel = new JLabel("Fin de Periodo:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JLabel lblFechaFin = new JLabel("Fecha Fin:");
-		lblFechaFin.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblFechaFin.setBounds(241, 21, 73, 19);
-		panel.add(lblFechaFin);
+		JDateChooser dateChooserFin = new JDateChooser();
 		
-		table = new JTable();
-		table.setToolTipText("");
-		table.setBounds(30, 61, 526, 221);
-		panel.add(table);
-		
-		JButton btnNewButton = new JButton("Aceptar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton ButtonComprobar = new JButton("Comprobar");
+		ButtonComprobar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmListaReservas.dispose();
-			}
-		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnNewButton.setBounds(249, 301, 103, 29);
-		panel.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Comprobar");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 Date DateIniSoc = dateChooserInicio.getDate();
+				
+				Date DateIniSoc = dateChooserInicio.getDate();
 				 Date DateFinSoc = dateChooserFin.getDate();
 				 
-				
 				 if((DateIniSoc==null) || (DateFinSoc==null)) {
 					 
-						JOptionPane.showMessageDialog(frmListaReservas,"No se ha podido mostrar la Lista de Reservas. \nIntroduce una fecha inicial y una fecha final.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frmListaReservas,"No se ha podido mostrar la Lista de Actividades. \nIntroduce una fecha inicial y una fecha final.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 				 else {
 					 if(DateFinSoc.getTime()-DateIniSoc.getTime()<0) {
-						 JOptionPane.showMessageDialog(frmListaReservas,"No se ha podido crear la Lista de Reservas. \n La fecha final no puede ser menor a la inicial.","Error",JOptionPane.ERROR_MESSAGE); 
+						 JOptionPane.showMessageDialog(frmListaReservas,"No se ha podido crear la Lista de Actividades. \n La fecha final no puede ser menor a la inicial.","Error",JOptionPane.ERROR_MESSAGE); 
 					 }
 					 else {
 				//fechaInicio
@@ -133,40 +113,103 @@ public class Lista_Reservas {
 				RellenarTablas(table, Inicio, Fin);
 				
 					 }
-						
-				
 			}
 			}
 		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnNewButton_1.setBounds(448, 21, 108, 21);
-		panel.add(btnNewButton_1);
+		ButtonComprobar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JButton ButtonCancelar = new JButton("Aceptar");
+		ButtonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmListaReservas.dispose();
+			}
+		});
+		ButtonCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		GroupLayout groupLayout = new GroupLayout(frmListaReservas.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(256, Short.MAX_VALUE)
+					.addComponent(ButtonCancelar, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addGap(231))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 566, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(dateChooserInicio, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addGap(34)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(dateChooserFin, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(ButtonComprobar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+						.addComponent(dateChooserInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addComponent(ButtonComprobar)
+							.addComponent(dateChooserFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+					.addGap(18)
+					.addComponent(ButtonCancelar, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID Reserva", "ID Socio", "Instalacion", "Fecha", "Fecha Reserva", "Precio", "Actividad"
+			}
+		));
+		scrollPane.setViewportView(table);
+		frmListaReservas.getContentPane().setLayout(groupLayout);
+		//scrollPane.setViewportView(table_1);
 	}
 	public Window getFrmListaReservas() {
 		// TODO Auto-generated method stub
 		return this.frmListaReservas;
 	}
+	
 public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 		
 		
-		List<Object[]> listaActividades=modeloReservas.getActividadPeriodo2(Inicio, Fin, id_socio);	
+		List<Object[]> listaActividades=modeloReservas.getReservasSocioTodo(id_socio, Inicio, Fin);	
 	
-		Object[][] matriz = new Object[listaActividades.size()][6];					
+		Object[][] matriz = new Object[listaActividades.size()][7];					
 		Iterator<Object[]> iterador = listaActividades.iterator();				
 		int i=0;
 		while(iterador.hasNext()) {
-			Object[] vector = new Object[6]; 
+			Object[] vector = new Object[7]; 
 			vector=iterador.next();
 			
-			for(int j=0;j<6;j++) {
+			for(int j=0;j<7;j++) {
 				
 			  matriz[i][j]= vector[j];
 			
 		}
 			i++;
 		}
-		table.setModel(new DefaultTableModel(matriz,new String[] {
-				"id_reserva", "Instalacion", "Fecha de Reserva","Fecha Reservada", "Precio","Actividad"
+		table.setModel(new DefaultTableModel(
+				
+				matriz
+				
+				
+				,
+				new String[] {
+						"ID Reserva", "ID Socio", "Instalacion", "Fecha", "Fecha Reserva", "Precio", "Actividad"
 				}
 				
 			));
