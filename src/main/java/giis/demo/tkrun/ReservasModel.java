@@ -369,26 +369,29 @@ public List<Object[]> nuevaCuota1() {
 		}
 		
 		//SQL para ver la actividad de una reserva
-		public static final String SQL_ACTIVIDAD_RESERVA = "SELECT actividad FROM reservas WHERE fecha_reserva=?";
-		public String getActividadReserva(String fecha){
+		public static final String SQL_ACTIVIDAD_RESERVA = "SELECT actividad FROM reservas WHERE fecha_reserva=? AND instalacion=?";
+		public String getActividadReserva(String fecha, String actividad){
 			
-			List<Object[]> l = db.executeQueryArray(SQL_ACTIVIDAD_RESERVA, fecha);
+			List<Object[]> l = db.executeQueryArray(SQL_ACTIVIDAD_RESERVA, fecha, actividad);
 			return l.get(0)[0].toString();
 		}
 		
 		//SQL para ver el socio de una reserva
-				public static final String SQL_SOCIO_RESERVA = "SELECT persona FROM reservas WHERE fecha_reserva=?";
-				public String getSocioReserva(String fecha){
+				public static final String SQL_SOCIO_RESERVA = "SELECT persona FROM reservas WHERE fecha_reserva=? AND instalacion=?";
+				public String getSocioReserva(String fecha, String actividad){
 					
-					List<Object[]> l = db.executeQueryArray(SQL_SOCIO_RESERVA, fecha);
+					List<Object[]> l = db.executeQueryArray(SQL_SOCIO_RESERVA, fecha, actividad);
 					return l.get(0)[0].toString();
 				}
 				
 				//SQL para ver el socio de una reserva
-				public static final String SQL_ID_RESERVA_F = "SELECT id_reserva FROM reservas WHERE fecha_reserva=?";
-				public String getIdReservaF(String fecha){
+				public static final String SQL_ID_RESERVA_F = "SELECT id_reserva FROM reservas WHERE fecha_reserva=? AND instalacion=?";
+				public String getIdReservaF(String fecha, String actividad){
 					
-					List<Object[]> l = db.executeQueryArray(SQL_ID_RESERVA_F, fecha);
+					List<Object[]> l = db.executeQueryArray(SQL_ID_RESERVA_F, fecha, actividad);
 					return l.get(0)[0].toString();
 				}
+				
+				
+
 }

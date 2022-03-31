@@ -245,7 +245,6 @@ public class Login {
 		    while ((line = br.readLine()) != null) {
 		        tempArr = line.split(delimiter);
 		        for (String tempStr: tempArr) {
-		        	System.out.println(tempStr + i);
 		        	switch(i) {
 		        	
 			        case 0: dia_comprobar=Integer.parseInt(tempStr); break;

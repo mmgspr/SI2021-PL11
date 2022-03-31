@@ -37,6 +37,7 @@ public class reservar_sesiones_automaticamente {
 	private SesionesModel modeloSesiones = new SesionesModel();
 	private ActividadesModel modeloActividades = new ActividadesModel();
 	private ReservasModel modeloReservas = new ReservasModel();
+	private InstalacionesModel modeloInstalaciones = new InstalacionesModel();
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat dh = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -163,24 +164,25 @@ public class reservar_sesiones_automaticamente {
 							while(hi.getTime()<hf.getTime()) {
 								//System.out.println(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()));
 								comp=dh.format(hi.getTime());
-								int cliente = modeloReservas.comprobarDisponibilidadActividad(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString()), comp);
+								String instalacion=modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString());
+								int cliente = modeloReservas.comprobarDisponibilidadActividad(instalacion, comp);
 								if (cliente==-1) {
-									n_actividad=modeloActividades.getNombreActividad(modeloReservas.getActividadReserva(comp));
+									n_actividad=modeloActividades.getNombreActividad(modeloReservas.getActividadReserva(comp,instalacion));
 									//System.out.println(n_actividad);
 									msg=msg+"No se ha podido reservar la fecha '"+comp+"'. Está ocupada por la actividad '"+n_actividad+"'.\n";
 								}
 								else if (cliente == 0){
-									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
+									modeloReservas.nuevaReserva(0, Integer.parseInt(instalacion), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
 								}
 								else {
-									id_socio=modeloReservas.getSocioReserva(comp);
+									id_socio=modeloReservas.getSocioReserva(comp,instalacion);
 									//System.out.println(id_socio);
-									modeloReservas.eliminarReserva(Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), comp);
-									modeloReservas.nuevaReserva(0, Integer.parseInt(modeloActividades.getInstalacionActividad(comboBox.getSelectedItem().toString())), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
+									modeloReservas.eliminarReserva(Integer.parseInt(instalacion), comp);
+									modeloReservas.nuevaReserva(0, Integer.parseInt(instalacion), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
 									msg=msg+"Se ha cancelado una reserva del socio con id '"+id_socio+"' en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
 									try {
-							            String ruta = "src/main/resources/Reserva"+modeloReservas.getIdReservaF(comp)+"Socio"+id_socio+".txt";
-							            String contenido = "Se le ha cancelado la reserva: "+ modeloReservas.getIdReservaF(comp) +" por causas administrativas.\nSe le devolverá el importe a final de mes si ya estaba pagada.\n";
+							            String ruta = "src/main/resources/Reserva"+modeloReservas.getIdReservaF(comp,instalacion)+"Socio"+id_socio+".txt";
+							            String contenido = "Se le ha cancelado la reserva con fecha '"+ comp +"' en la instalación '"+modeloInstalaciones.getNombreInstalacion(instalacion)+"' por causas administrativas.\nSe le devolverá el importe a final de mes si ya estaba pagada.\n";
 							            File file = new File(ruta);
 							            // Si el archivo no existe es creado
 							            if (!file.exists()) {
