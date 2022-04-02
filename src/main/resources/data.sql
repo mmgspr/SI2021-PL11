@@ -56,7 +56,9 @@ INSERT INTO reservas(id_reserva, persona, instalacion, fecha, fecha_reserva, pre
 
 (7,2, 3,'2022-2-25', '2022-3-28 10:00:00', '6.25' ,0),
 
-(8,NULL, 3,'2022-2-25', '2022-3-2 16:00:00', '6.25' ,2);
+(8,NULL, 3,'2022-2-25', '2022-3-2 16:00:00', '6.25' ,2),
+
+(9,1, 3,'2022-2-25', '2022-2-28 10:00:00', '6.25' ,0);
 
  
 INSERT INTO periodos_inscripcion(id_periodo_inscripcion, nombre, descripcion, fecha_ini_socio, fecha_fin_socio, fecha_fin_no_socio) VALUES 
@@ -105,7 +107,13 @@ INSERT INTO pagos(id_pago, fecha, persona, inscripcion, reserva) VALUES
 
 (3, '2022-03-10', '54487543A', 3, 0),
 
-(4, '2022-02-26', '58438791C', 2, 0);
+(4, '2022-02-26', '58438791C', 2, 0),
+
+(5, '2022-02-25', '46739273H', NULL, 7),
+
+(6, '2022-03-29', '46739273H', NULL, 6),
+
+(7, '2022-03-25', '46739273H', 4, 0);
 
 -- (2, '2022-03-14', '46739273H', NULL, 3),
 
