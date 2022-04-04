@@ -101,7 +101,7 @@ INSERT INTO sesiones(id_sesion, dia, hora_ini, hora_fin, actividad) VALUES
 
 INSERT INTO pagos(id_pago, fecha, persona, inscripcion, reserva) VALUES
 
-(1, '2022-03-14', '46739273H', NULL, 3),
+(1, '2022-03-14', '46739273H', NULL, 6),
 
 (3, '2022-03-10', '54487543A', 3, 0),
 
