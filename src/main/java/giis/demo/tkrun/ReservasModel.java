@@ -226,11 +226,25 @@ private Database db = new Database();
 		
 		
 	
-//Método para actualizar la cuota
+//Método para actualizar la cuota de un cliente
 public static final String SQL_SUMA_CUOTA = "UPDATE clientes SET cuotaReservas=? WHERE (id_socio=?);";
 public void añadeacuota(double cuota, int id_socio) {	
 	//System.out.println("La cuota es"+cuota);
 	db.executeUpdate(SQL_SUMA_CUOTA,cuota, id_socio);
+}
+
+//Método para actualizar la cuota de todos los clientes a 0
+public static final String SQL_SUMA_CUOTA1 = "UPDATE clientes SET cuotaReservas=?;";
+public void añadeacuota1() {	
+	//System.out.println("La cuota es"+cuota);
+	db.executeUpdate(SQL_SUMA_CUOTA1,0);
+}
+
+//Método para actualizar la cuota actividad de todos los clientes a 0
+public static final String SQL_SUMA_CUOTA2 = "UPDATE clientes SET cuotaActividades=?;";
+public void añadeacuota2() {	
+	//System.out.println("La cuota es"+cuota);
+	db.executeUpdate(SQL_SUMA_CUOTA2,0);
 }
 
 
@@ -240,6 +254,7 @@ public double nuevaCuota(int id_socio) {
 	List<Object[]> lista;
 	lista = db.executeQueryArray(SQL_CUOTA, id_socio);
 	return (double)lista.get(0)[0];
+	
 }
 
 
@@ -347,7 +362,7 @@ public List<Object[]> nuevaCuota1() {
 		
 		
 		//SQL para ver todas las reservas de un socio
-		public static final String SQL_RESERVAS_SOCIO_TODO = "SELECT id_reserva, persona, instalacion, fecha, fecha_reserva, precio,actividad FROM reservas WHERE persona= ? AND fecha>=? AND fecha<=? ORDER BY fecha DESC";
+		public static final String SQL_RESERVAS_SOCIO_TODO = "SELECT id_reserva, persona, instalacion, fecha, fecha_reserva, precio, actividad FROM reservas WHERE persona= ? AND fecha>=? AND fecha<=? ORDER BY fecha DESC";
 		public List<Object[]> getReservasSocioTodo(int persona, String ini, String fin){
 			
 			return db.executeQueryArray(SQL_RESERVAS_SOCIO_TODO, persona, ini, fin);

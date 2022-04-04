@@ -66,7 +66,10 @@ public class inicialAdmin {
 	 * Create the application.
 	 */
 	public inicialAdmin() {
-		initialize();
+
+       	initialize();
+   
+	   
 	}
 
 	
@@ -183,16 +186,20 @@ public class inicialAdmin {
 				String date = sdf.format(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 	            String[] vector1=date.split("-"); 
 			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
-			   System.out.println(dia);
+			   // System.out.println(dia);
 			   
 			    
 			    
 			    
 			    try {
 
-		            
-		            
-		            if(dia==vLogin.getDia_comprobar()) {
+			    	 if(dia==vLogin.getDia_comprobar()) {
+			  		  // System.out.println("Holaaa");
+			         	modeloReservas.añadeacuota1();
+			         	modeloReservas.añadeacuota2();
+			  	   }
+			    	
+
 		            	String ruta = "src/main/resources/Contabilidad.txt";
 			            String contenido = "Cuotas a pasar a cada socio \n";
 			            File file = new File(ruta);
@@ -205,7 +212,8 @@ public class inicialAdmin {
 			            bw.write(contenido);
 			            
 		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
-		            Iterator<Object[]> iterador = listaPagos.iterator();						    		
+		            Iterator<Object[]> iterador = listaPagos.iterator();
+		            
 		    		while(iterador.hasNext()) {
 		    			Object[] vector = iterador.next();		    	
 		    			bw.write("El socio "+vector[0]+" con el id: "+vector[1]+" ,debe pagar la cuota: "+vector[2]+
@@ -220,39 +228,27 @@ public class inicialAdmin {
 
 		                public void run() {
 
-		                    //System.out.println(countdownStarter);
+		                    
 		                    countdownStarter--;
 
-		                    if (countdownStarter < 0) {
-		                       //System.out.println("Timer Over!");
-		                    	
+		                    if (countdownStarter < 0) {		                     		                    	
 									try {
 										BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
 										bw.write("");
 										bw.close();
 									} catch (IOException e) {
-										// TODO Auto-generated catch block
+									
 										e.printStackTrace();
 									}
-									
-								 
+																	 
 		                        scheduler.shutdown();
 		                    }
 		                }
 		            };
-		            scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
-		            
-		            
-		          
-				    
+		            scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);		                  				    
 				    bw.close();
-			    }
-		            else {
-		            	JOptionPane.showMessageDialog(frmIndex,
-		    				    "No puedes generar el fichero un día que no sea el 25",
-		    				    "Error Generando",
-		    				    JOptionPane.ERROR_MESSAGE);
-		            }
+			       
+		            
 		        } catch (Exception e1) {
 		            e1.printStackTrace();
 		        }
