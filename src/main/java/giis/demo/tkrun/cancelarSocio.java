@@ -172,6 +172,8 @@ public class cancelarSocio {
 								//Se elimina la reserva sin devolver el dinero
 								modeloReservas.eliminarReserva(idReserva);
 								RellenarTabla(table);
+								JOptionPane.showMessageDialog(frmCancelarReservas,
+									    "Reserva eliminada, no estaba pagada.");
 								
 							}
 						}
