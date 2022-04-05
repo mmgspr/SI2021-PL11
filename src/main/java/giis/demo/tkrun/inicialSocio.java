@@ -112,6 +112,7 @@ public class inicialSocio {
 		panel.add(eliminarReservasBtn);
 		
 		JButton btnNewButton = new JButton("Ver Lista de Reservas");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vLista_Reservas = new Lista_Reservas(vLogin);

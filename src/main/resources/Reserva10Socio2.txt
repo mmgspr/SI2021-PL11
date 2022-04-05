@@ -1,2 +1,2 @@
-Se le ha cancelado la reserva con fecha '2022-02-28 10:00:00' en la instalación 'Pista de padel 1' por causas administrativas.
-Se le devolverá el importe a final de mes si ya estaba pagada.
+Se le ha eliminado la reserva: 10 por causas administrativas.
+Se le devolverá el importe a final de mes.
