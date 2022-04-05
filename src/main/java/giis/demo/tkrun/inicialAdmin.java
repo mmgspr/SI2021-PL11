@@ -224,7 +224,7 @@ public class inicialAdmin {
 		            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 		            final Runnable runnable = new Runnable() {
-		                int countdownStarter = 120;
+		                int countdownStarter = 86400;
 
 		                public void run() {
 
