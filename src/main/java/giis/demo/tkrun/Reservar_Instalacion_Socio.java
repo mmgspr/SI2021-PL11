@@ -473,7 +473,7 @@ if(modeloReservas.getListaReservasUsuario2(id_socioS, Date0, Date11).size() < vL
 		}
 		else {
 			JOptionPane.showMessageDialog(frmReservarInstalacin,
-				    "No puedes reservar más de "+Integer.toString(vLogin.getHorasDiaMax())+" seguidas",
+				    "No puedes reservar más de "+Integer.toString(vLogin.getHorasDiaMax()-1)+"h seguidas",
 				    "Error Reservando",
 				    JOptionPane.ERROR_MESSAGE);
 		}
@@ -481,7 +481,7 @@ if(modeloReservas.getListaReservasUsuario2(id_socioS, Date0, Date11).size() < vL
 	else {
 		
 		JOptionPane.showMessageDialog(frmReservarInstalacin,
-			    "No puedes reservar más de"+Integer.toString(vLogin.getHorasPeriodoMax())+" en el periodo de 15 días",
+			    "No puedes reservar más de "+Integer.toString(vLogin.getHorasPeriodoMax())+"h en el periodo de 15 días",
 			    "Error Reservando",
 			    JOptionPane.ERROR_MESSAGE);
 		
@@ -489,7 +489,7 @@ if(modeloReservas.getListaReservasUsuario2(id_socioS, Date0, Date11).size() < vL
 }
 else {
 	JOptionPane.showMessageDialog(frmReservarInstalacin,
-		    "No puedes reservar más de"+Integer.toString(vLogin.getHorasDiaMax())+" el mismo dia",
+		    "No puedes reservar más de "+Integer.toString(vLogin.getHorasDiaMax())+"h el mismo dia",
 		    "Error Reservando",
 		    JOptionPane.ERROR_MESSAGE);
 	

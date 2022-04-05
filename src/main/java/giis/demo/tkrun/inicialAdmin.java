@@ -194,7 +194,7 @@ public class inicialAdmin {
 			    try {
 
 			    	 if(dia==vLogin.getDia_comprobar()) {
-			  		  // System.out.println("Holaaa");
+			  		    System.out.println("Holaaa");
 			         	modeloReservas.añadeacuota1();
 			         	modeloReservas.añadeacuota2();
 			  	   }
@@ -213,18 +213,21 @@ public class inicialAdmin {
 			            
 		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
 		            Iterator<Object[]> iterador = listaPagos.iterator();
-		            
+		            System.out.println("Hola2");
 		    		while(iterador.hasNext()) {
 		    			Object[] vector = iterador.next();		    	
 		    			bw.write("El socio "+vector[0]+" con el id: "+vector[1]+" ,debe pagar la cuota: "+vector[2]+
 		    					"$ junto con el coste de reservas: "+vector[3]+"$ y el coste de las actividades: "+vector[4]+"$\n");
 		    		}
 		    		
+		    		 bw.close();
+		    		/*
 		            
+		    		
 		            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 		            final Runnable runnable = new Runnable() {
-		                int countdownStarter = 86400;
+		                int countdownStarter = 0;
 
 		                public void run() {
 
@@ -247,7 +250,7 @@ public class inicialAdmin {
 		            };
 		            scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);		                  				    
 				    bw.close();
-			       
+			       */
 		            
 		        } catch (Exception e1) {
 		            e1.printStackTrace();

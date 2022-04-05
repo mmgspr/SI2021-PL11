@@ -21,11 +21,11 @@ INSERT INTO clientes(dni, id_socio, nombre, fecha_nacimiento, moroso, contraseñ
 
 ('54487543A',NULL,'Daniel', null, 0, null, null , null, null, '123456789', null ), 
 
-('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H',30.30, 12.20, 0.0, '603666826', 'Carretera carbonera, 71, 5G'), 
+('46739273H',2,'Roberto', '1972-7-15', 0, '46739273H',30.30, 22.95, 0.0, '603666826', 'Carretera carbonera, 71, 5G'), 
 
 ('52347843G',NULL,'Martín', null, 0, null, null, null, null, '987654321', null ),
 
-('58428791E',3,'Mario', null, 1, '58428791E',30.30, 0.0, 0.0, '603666829', 'Fray ceferino, 35, 1A'),
+('58428791E',3,'Mario', null, 0, '58428791E',30.30, 0.0, 0.0, '603666829', 'Fray ceferino, 35, 1A'),
 
 ('a', 0, 'Dani', null, 0, 'a', 30.30, 0.0, 0.0, '403666829', 'Fray ceferino, 35, 2A') ;
 
