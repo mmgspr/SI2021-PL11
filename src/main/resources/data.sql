@@ -106,6 +106,8 @@ INSERT INTO pagos(id_pago, fecha, persona, inscripcion, reserva) VALUES
 
 (1, '2022-03-14', '46739273H', NULL, 6),
 
+(2, '2022-03-14', '46739273H', NULL, 3),
+
 (3, '2022-03-10', '54487543A', 3, 0),
 
 (4, '2022-02-26', '58438791C', 2, 0),
@@ -116,7 +118,7 @@ INSERT INTO pagos(id_pago, fecha, persona, inscripcion, reserva) VALUES
 
 (7, '2022-03-25', '46739273H', 4, 0);
 
--- (2, '2022-03-14', '46739273H', NULL, 3),
+
 
 
 
