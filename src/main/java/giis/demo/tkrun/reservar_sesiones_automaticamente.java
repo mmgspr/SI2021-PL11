@@ -182,7 +182,7 @@ public class reservar_sesiones_automaticamente {
 									msg=msg+"Se ha cancelado una reserva del socio con id '"+id_socio+"' en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
 									try {
 							            String ruta = "src/main/resources/Reserva"+modeloReservas.getIdReservaF(comp,instalacion)+"Socio"+id_socio+".txt";
-							            String contenido = "Se le ha cancelado la reserva con fecha '"+ comp +"' en la instalación '"+modeloInstalaciones.getNombreInstalacion(instalacion)+"' por causas administrativas.\nSe le devolverá el importe a final de mes si ya estaba pagada.\n";
+							            String contenido = "Se le ha cancelado la reserva con fecha '"+ comp +"' en la instalación '"+modeloInstalaciones.getNombreInstalacion(instalacion)+"' por causas administrativas.\n";
 							            File file = new File(ruta);
 							            // Si el archivo no existe es creado
 							            if (!file.exists()) {
