@@ -177,8 +177,6 @@ public class reservar_sesiones_automaticamente {
 								else {
 									id_socio=modeloReservas.getSocioReserva(comp,instalacion);
 									//System.out.println(id_socio);
-									modeloReservas.eliminarReserva(Integer.parseInt(instalacion), comp);
-									modeloReservas.nuevaReserva(0, Integer.parseInt(instalacion), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
 									msg=msg+"Se ha cancelado una reserva del socio con id '"+id_socio+"' en la fecha '"+comp+"' y ha sido reservada para esta actividad.\n";
 									try {
 							            String ruta = "src/main/resources/Reserva"+modeloReservas.getIdReservaF(comp,instalacion)+"Socio"+id_socio+".txt";
@@ -196,6 +194,8 @@ public class reservar_sesiones_automaticamente {
 							        } catch (Exception e1) {
 							            e1.printStackTrace();
 							        }
+									modeloReservas.eliminarReserva(Integer.parseInt(instalacion), comp);
+									modeloReservas.nuevaReserva(0, Integer.parseInt(instalacion), sdf.format(dateHoy), comp, "0", modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
 								}
 								//SUMAMOS UNA HORA
 								c_hora.setTime(hi);
