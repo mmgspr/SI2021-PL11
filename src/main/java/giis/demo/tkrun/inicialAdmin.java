@@ -41,6 +41,7 @@ public class inicialAdmin {
 	private reserva_actividad_admin vReservaActividad;
 	private RegistrarCliente vRegistrarCliente;
 	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
+	private Generar_Informe_Actividades vGenerar_Informe_Actividades;
 	
 	// Variables para parametrizacion
 	private Parametrizacion vParametrizacion;
@@ -300,6 +301,17 @@ public class inicialAdmin {
 		btnParametros.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnParametros.setBounds(305, 193, 181, 24);
 		panel.add(btnParametros);
+		
+		JButton btnNewButton_1 = new JButton("Generar Informe Actividades");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vGenerar_Informe_Actividades = new Generar_Informe_Actividades();
+				vGenerar_Informe_Actividades.getfrmGenerarInformeActividades().setVisible(true);
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnNewButton_1.setBounds(10, 226, 207, 21);
+		panel.add(btnNewButton_1);
 
 	}
 

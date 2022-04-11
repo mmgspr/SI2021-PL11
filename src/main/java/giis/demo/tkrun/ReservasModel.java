@@ -392,6 +392,41 @@ public List<Object[]> nuevaCuota1() {
 					return l.get(0)[0].toString();
 				}
 				
+				//SQL para ver el socio de una reserva
+				public static final String SQL_DETALLES_ACTIVIDADES = "SELECT nombre,  fecha_ini, fecha_fin, instalacion, id_actividad FROM actividades WHERE fecha_ini >= ? OR fecha_fin <= ?;"
+						+ "";
+				public List<Object[]> getActividades(String fechaIni, String fechaFin){
+					
+					 List<Object[]> l = db.executeQueryArray(SQL_DETALLES_ACTIVIDADES, fechaIni, fechaFin);
+					return l;
+				}
+				
+				//SQL para ver el socio de una reserva
+				public static final String SQL_AFORO_ACTIVIDADES = "SELECT aforo FROM actividades  WHERE id_actividad=?; ";
+				public String getAforoActividades(int id){
+					
+					List<Object[]> l = db.executeQueryArray(SQL_AFORO_ACTIVIDADES,id);
+					return l.get(0)[0].toString();
+				}
+				
+				//SQL para ver el socio de una reserva
+				public static final String SQL_AFORO_SOCIOS = "SELECT  COUNT(id_reserva) FROM reservas WHERE ( (actividad = ?) AND (persona >=0) AND (fecha_reserva >= ?) );";
+				public String getAforoSocios(String fecha, String actividad){
+					
+					List<Object[]> l = db.executeQueryArray(SQL_AFORO_SOCIOS, actividad, fecha);
+					return l.get(0)[0].toString();
+				}
+				//SQL para ver el socio de una reserva
+				public static final String SQL_AFORO_NO_SOCIOS = "SELECT COUNT(id_reserva) FROM reservas WHERE actividad =? AND persona is null AND fecha_reserva >= ?;";
+				public String getAforoNoSocios(String actividad, String fecha){
+					
+					List<Object[]> l = db.executeQueryArray(SQL_AFORO_NO_SOCIOS, actividad, fecha);
+					return l.get(0)[0].toString();
+				}
+				
+				
+				
+				
 				
 
 }
