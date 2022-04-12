@@ -410,21 +410,33 @@ public List<Object[]> nuevaCuota1() {
 				}
 				
 				//SQL para ver el socio de una reserva
-				public static final String SQL_AFORO_SOCIOS = "SELECT  COUNT(id_reserva) FROM reservas WHERE ( (actividad = ?) AND (persona >=0) AND (fecha_reserva >= ?) );";
-				public String getAforoSocios(String fecha, int actividad){
+				public static final String SQL_AFORO_SOCIOS = "SELECT  COUNT(id_reserva) FROM reservas WHERE ( (actividad = ?) AND (persona >=0) AND (fecha_reserva >= ?) AND (fecha_reserva <= ?) );";
+				public String getAforoSocios(String fecha, int actividad, String fechaFin){
 					
-					List<Object[]> l = db.executeQueryArray(SQL_AFORO_SOCIOS, actividad, fecha);
+					List<Object[]> l = db.executeQueryArray(SQL_AFORO_SOCIOS, actividad, fecha, fechaFin);
 					return  l.get(0)[0].toString();
 				}
 				//SQL para ver el socio de una reserva
-				public static final String SQL_AFORO_NO_SOCIOS = "SELECT COUNT(id_reserva) FROM reservas WHERE ((actividad =?) AND (persona is null) AND (fecha_reserva >= ?));";
-				public String getAforoNoSocios(String fecha, int actividad){
+				public static final String SQL_AFORO_NO_SOCIOS = "SELECT COUNT(id_reserva) FROM reservas WHERE ((actividad =?) AND (persona is null) AND (fecha_reserva >= ?) AND (fecha_reserva <= ?));";
+				public String getAforoNoSocios(String fecha, int actividad, String fechaFin){
 					
-					List<Object[]> l = db.executeQueryArray(SQL_AFORO_NO_SOCIOS, actividad, fecha);
+					List<Object[]> l = db.executeQueryArray(SQL_AFORO_NO_SOCIOS, actividad, fecha, fechaFin);
 					return l.get(0)[0].toString();
 				}
-				
-				
+				//SQL para ver el socio de una reserva
+				public static final String SQL_RESERVAS_SOCIOS = "SELECT COUNT(id_reserva) FROM reservas WHERE ((persona =?) AND (fecha_reserva >= ?) AND (fecha_reserva <= ?));";
+				public String getReservasSocio(String fecha, int actividad, String fechaFin){
+					
+					List<Object[]> l = db.executeQueryArray(SQL_RESERVAS_SOCIOS, actividad, fecha, fechaFin);
+					return l.get(0)[0].toString();
+				}
+				//SQL para ver el socio de una reserva
+				public static final String SQL_SOCIOS = "SELECT id_socio FROM clientes WHERE (id_socio is not null);";
+				public List<Object[]> getSocios(){
+					
+					List<Object[]> l = db.executeQueryArray(SQL_SOCIOS);
+					return l;
+				}
 				
 				
 				

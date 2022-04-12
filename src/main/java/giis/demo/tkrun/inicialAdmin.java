@@ -42,6 +42,7 @@ public class inicialAdmin {
 	private RegistrarCliente vRegistrarCliente;
 	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
 	private Generar_Informe_Actividades vGenerar_Informe_Actividades;
+	private Generar_Informe_Reservas vGenerar_Informe_Reservas;
 	
 	// Variables para parametrizacion
 	private Parametrizacion vParametrizacion;
@@ -312,6 +313,17 @@ public class inicialAdmin {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton_1.setBounds(10, 226, 207, 21);
 		panel.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Generar Informe Reservas");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vGenerar_Informe_Reservas = new Generar_Informe_Reservas();
+				vGenerar_Informe_Reservas.getfrmGenerarInformeReservas().setVisible(true);
+			}
+		});
+		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnNewButton_2.setBounds(305, 227, 181, 21);
+		panel.add(btnNewButton_2);
 
 	}
 

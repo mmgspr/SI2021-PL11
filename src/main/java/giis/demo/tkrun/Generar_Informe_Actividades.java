@@ -60,9 +60,9 @@ public class Generar_Informe_Actividades {
 	 */
 	private void initialize() {
 		frmGenerarInformeActividades = new JFrame();
+		frmGenerarInformeActividades.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmGenerarInformeActividades.setTitle("Generar Informe Actividades");
 		frmGenerarInformeActividades.setBounds(100, 100, 583, 370);
-		frmGenerarInformeActividades.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmGenerarInformeActividades.getContentPane().add(panel, BorderLayout.CENTER);
@@ -116,6 +116,11 @@ public class Generar_Informe_Actividades {
 		ButtonComprobar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmGenerarInformeActividades.dispose();
+			}
+		});
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -196,7 +201,8 @@ public class Generar_Informe_Actividades {
 		// TODO Auto-generated method stub
 		return this.frmGenerarInformeActividades;
 	}
-	public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
+	
+public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 		
 		
 		List<Object[]> listaActividades=modeloReservas.getActividades(Inicio, Fin);	
@@ -207,20 +213,20 @@ public class Generar_Informe_Actividades {
 		while(iterador.hasNext()) {
 			Object[] vector = new Object[6]; 
 			vector=iterador.next();		    
-		    int Aforo;		    
+		    int Aforo;
 		    int id=  Math.toIntExact((long)vector[4]);
-		    String OcupadoSS=modeloReservas.getAforoSocios(Inicio, id);
-		    String OcupadoNSS=modeloReservas.getAforoNoSocios(Inicio, id);
+		    String OcupadoSS=modeloReservas.getAforoSocios(Inicio, id, Fin);
+		    String OcupadoNSS=modeloReservas.getAforoNoSocios(Inicio, id, Fin);
 		    
 		    int OcupadoS=Integer.parseInt(OcupadoSS);
 		    int OcupadoNS=Integer.parseInt(OcupadoNSS);
 		    
 		    Aforo=modeloReservas.getAforoActividades(id);
-		    System.out.println("OcupadoS"+OcupadoS);
-		    System.out.println("OcupadoNS"+OcupadoNS);
+		    //System.out.println("OcupadoS"+OcupadoS);
+		    //System.out.println("OcupadoNS"+OcupadoNS);
 		    double POS = (1.00*OcupadoS/Aforo);
 		    double PONS = (1.00*OcupadoNS/Aforo);
-		    System.out.println("%NS"+PONS);
+		    //System.out.println("%NS"+PONS);
 			for(int j=0;j<5;j++) {
 			  matriz[i][j]= vector[j];
 			  matriz[i][5]=Aforo;	
@@ -236,13 +242,12 @@ public class Generar_Informe_Actividades {
 				
 				,
 				new String[] {
-					"Actividad", "Fecha Inicio", "Fecha Fin", "Instalacion", "ID", "Aforo", "%Ocupado Socio", "%Ocupado No Socio"
+						"Actividad", "Fecha Inicio", "Fecha Fin", "Instalacion", "ID", "Aforo", "%Ocupado Socio", "%Ocupado No Socio"
 				}
 				
 			));
 		
 	}
-	
 	
 	
 }
