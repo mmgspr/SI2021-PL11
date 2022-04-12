@@ -185,7 +185,7 @@ public class Generar_Informe_Actividades {
 			new Object[][] {
 			},
 			new String[] {
-				"Actividades", "Fecha Inicio", "Fecha Fin", "Instalaci\u00F3n", "ID", "Aforo"
+				"Actividades", "Fecha Inicio", "Fecha Fin", "Instalaci\u00F3n", "ID", "Aforo", "%Ocupado Socio", "%Ocupado No Socio"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -201,25 +201,33 @@ public class Generar_Informe_Actividades {
 		
 		List<Object[]> listaActividades=modeloReservas.getActividades(Inicio, Fin);	
 	  
-		Object[][] matriz = new Object[listaActividades.size()][6];					
+		Object[][] matriz = new Object[listaActividades.size()][8];					
 		Iterator<Object[]> iterador = listaActividades.iterator();	
+		int i=0;
 		while(iterador.hasNext()) {
-			Object[] vector = new Object[5]; 
-			vector=iterador.next();
-		    int i=0;
-		    String Aforo;
-		    
+			Object[] vector = new Object[6]; 
+			vector=iterador.next();		    
+		    int Aforo;		    
 		    int id=  Math.toIntExact((long)vector[4]);
+		    String OcupadoSS=modeloReservas.getAforoSocios(Inicio, id);
+		    String OcupadoNSS=modeloReservas.getAforoNoSocios(Inicio, id);
+		    
+		    int OcupadoS=Integer.parseInt(OcupadoSS);
+		    int OcupadoNS=Integer.parseInt(OcupadoNSS);
+		    
 		    Aforo=modeloReservas.getAforoActividades(id);
-			
-			
+		    System.out.println("OcupadoS"+OcupadoS);
+		    System.out.println("OcupadoNS"+OcupadoNS);
+		    double POS = (1.00*OcupadoS/Aforo);
+		    double PONS = (1.00*OcupadoNS/Aforo);
+		    System.out.println("%NS"+PONS);
 			for(int j=0;j<5;j++) {
-				
 			  matriz[i][j]= vector[j];
-			  matriz[i][5]=Aforo;
-		
-			i++;
+			  matriz[i][5]=Aforo;	
+			  matriz[i][6]=POS;
+			  matriz[i][7]=PONS;
 		}
+			i++;
 		}
 		table.setModel(new DefaultTableModel(
 				
@@ -228,7 +236,7 @@ public class Generar_Informe_Actividades {
 				
 				,
 				new String[] {
-					"Actividad", "Fecha Inicio", "Fecha Fin", "Instalacion", "ID"
+					"Actividad", "Fecha Inicio", "Fecha Fin", "Instalacion", "ID", "Aforo", "%Ocupado Socio", "%Ocupado No Socio"
 				}
 				
 			));
