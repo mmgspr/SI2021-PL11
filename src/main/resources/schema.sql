@@ -133,7 +133,7 @@ CREATE TABLE inscripciones(
 
     foreign key (persona) references clientes(dni), 
 
-    foreign key (actividad) references actividades(id_actividad), 
+    foreign key (actividad) references actividades(id_actividad) ON DELETE CASCADE, 
 
     fecha datetime 
 
@@ -151,7 +151,7 @@ CREATE TABLE sesiones(
     
     actividad integer unsigned,
     
-    foreign key (actividad) references actividades(id_actividad) 
+    foreign key (actividad) references actividades(id_actividad)  ON DELETE CASCADE
 
 ); 
 
@@ -165,7 +165,7 @@ CREATE TABLE pagos(
     
     inscripcion integer unsigned unique,
     
-    foreign key (inscripcion) references inscripciones(id_inscripcion), 
+    foreign key (inscripcion) references inscripciones(id_inscripcion) ON DELETE CASCADE, 
     
     reserva integer unsigned,
     

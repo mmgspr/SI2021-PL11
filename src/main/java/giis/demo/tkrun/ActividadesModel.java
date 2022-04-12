@@ -47,7 +47,10 @@ public class ActividadesModel {
 		lista = db.executeQueryArray(SQL_ID_ACTIVIDAD+"'"+nombre+"'");
 		return (long)lista.get(0)[0]; 	
 	}
-	
+	public static final String SQL_ELIMINAR_ACTIVIDAD = "DELETE FROM actividades WHERE id_actividad=?";
+	public void eliminarActividad(long id) {
+		db.executeUpdate(SQL_ELIMINAR_ACTIVIDAD, id);
+	}
 	//Método para obtener la fecha inicial de una actividad
 		public static final String SQL_FECHA_INICIAL_ACTIVIDAD = "SELECT fecha_ini FROM actividades WHERE nombre=";
 		
