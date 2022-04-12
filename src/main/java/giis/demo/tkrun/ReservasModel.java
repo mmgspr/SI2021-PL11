@@ -297,6 +297,11 @@ public List<Object[]> nuevaCuota1() {
 
 		db.executeUpdate(SQL_ELIMINAR_RESERVA_ID,id);
 	}
+	public static final String SQL_ELIMINAR_RESERVA_ACTIVIDAD = "DELETE from reservas WHERE actividad = ?;";
+	public void eliminarReservaActividad(long id_actividad) {
+
+		db.executeUpdate(SQL_ELIMINAR_RESERVA_ACTIVIDAD,id_actividad);
+	}
 	
 			
 	//Método para obtener el nombre de las actividades que se encuentran en un periodo determinado	

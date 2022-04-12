@@ -11,13 +11,19 @@ import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class inscripcion_socio {
 
@@ -26,10 +32,20 @@ public class inscripcion_socio {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private ReservasModel modeloReservas = new ReservasModel();
+	private PagosModel modeloPagos = new PagosModel();
+	private ClientesModel modeloClientes = new ClientesModel();
+	private InstalacionesModel modeloInstalaciones = new InstalacionesModel();
+	private InscripcionesModel modeloInscripciones = new InscripcionesModel();
+	private ActividadesModel modeloActividades = new ActividadesModel();
+	private PeriodosInscripcionModel modeloPeriodosInscripcion = new PeriodosInscripcionModel();
 	
 	int id_socio;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+	String hoy = sdf.format(dateHoy);
+	List<String> todasAct = new ArrayList<String>();
+	
 
 	/**
 	 * Launch the application.
@@ -72,9 +88,44 @@ public class inscripcion_socio {
 		lblNewLabel.setBounds(10, 11, 71, 14);
 		panel.add(lblNewLabel);
 		
+		
+		
+		//PERIODOS DE INSCRIPCION ABIERTOS
+		List<Object[]> modPer=modeloPeriodosInscripcion.getFechasSocio(hoy);
+		Iterator<Object[]> iteradorPer = modPer.iterator();
+		while(iteradorPer.hasNext()) {
+			//ACTIVIDADES DE CADA PERIODO
+			List<Object[]> modAct=modeloActividades.getActividadesPeriodoIns(iteradorPer.next()[0].toString());
+			Iterator<Object[]> iteradorAct = modAct.iterator();
+			while(iteradorAct.hasNext()) {
+				//Problema
+				//System.out.println(iteradorAct.next()[0].toString());
+				todasAct.add(iteradorAct.next()[0].toString());
+			}
+		}
+		//METEMOS ACTIVIDADES EN VECTOR
+		String [] actividades=new String[todasAct.size()];
+		Iterator<String> iteradorTodas = todasAct.iterator();
+		int iTodas=0;
+		while(iteradorTodas.hasNext()) {
+			//todasAct.add(iteradorTodas.next());
+			actividades[iTodas]=iteradorTodas.next();	
+			//System.out.println(actividades[iTodas]);
+			iTodas++;
+		}
+		
 		JComboBox comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Cambio");
+			}
+		});
+		comboBox.setModel(new DefaultComboBoxModel(actividades));
 		comboBox.setBounds(81, 7, 129, 22);
 		panel.add(comboBox);
+		
+		
+		
 		
 		JButton btnNewButton = new JButton("Cancelar");
 		btnNewButton.setBounds(10, 227, 89, 23);
@@ -142,5 +193,13 @@ public class inscripcion_socio {
 		buttonGroup.add(rdbtnAadirAMi);
 		rdbtnAadirAMi.setBounds(10, 182, 129, 23);
 		panel.add(rdbtnAadirAMi);
+		
+		System.out.println("Inicial");
+		//textPane.setText(modeloActividades.get);
+		
+		
+		
+		
+		
 	}
 }

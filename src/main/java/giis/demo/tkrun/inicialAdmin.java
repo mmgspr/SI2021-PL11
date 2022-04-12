@@ -41,6 +41,7 @@ public class inicialAdmin {
 	private reserva_actividad_admin vReservaActividad;
 	private RegistrarCliente vRegistrarCliente;
 	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
+	
 	private Generar_Informe_Actividades vGenerar_Informe_Actividades;
 	private Generar_Informe_Reservas vGenerar_Informe_Reservas;
 	

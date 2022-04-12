@@ -32,4 +32,8 @@ public class SesionesModel {
 			return db.executeQueryArray(SQL_SESIONES_ACTIVIDAD + actividad + "'");
 		}
 		
+		public static final String SQL_ELIMINAR_SESIONES_ACTIVIDAD = "DELETE FROM sesiones WHERE actividad=?";
+		public void eliminarSesiones(long actividad) {
+			db.executeUpdate(SQL_ELIMINAR_SESIONES_ACTIVIDAD, actividad);
+		}
 }
