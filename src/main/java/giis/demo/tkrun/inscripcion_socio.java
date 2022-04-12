@@ -195,7 +195,7 @@ public class inscripcion_socio {
 		panel.add(rdbtnAadirAMi);
 		
 		System.out.println("Inicial");
-		textPane.setText(modeloActividades.get);
+		//textPane.setText(modeloActividades.get);
 		
 		
 		
