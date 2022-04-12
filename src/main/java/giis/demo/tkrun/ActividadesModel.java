@@ -92,5 +92,7 @@ public class ActividadesModel {
 				lista = db.executeQueryArray(SQL_INSTALACION_ACTIVIDAD+"'"+nombre+"'");
 				return lista.get(0)[0].toString(); 	
 			}
+			
+			
 	
 }
