@@ -24,6 +24,7 @@ public class inicialSocio {
 	private Lista_Reservas vLista_Reservas;
 	private JLabel lblBienvenido;
 	private ver_pagos_socio vVerPagosSocio;
+	private inscripcion_socio vInscripcionSocio;
 	/**
 	 * Launch the application.
 	 */
@@ -132,6 +133,17 @@ public class inicialSocio {
 		btnNewButton_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_2_1.setBounds(25, 250, 207, 23);
 		panel.add(btnNewButton_1_2_1);
+		
+		JButton btnNewButton_1_2_1_1 = new JButton("Inscribirse actividad");
+		btnNewButton_1_2_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vInscripcionSocio = new inscripcion_socio(vLogin);
+				vInscripcionSocio.getFrmInscripcinActividadSocio().setVisible(true);
+			}
+		});
+		btnNewButton_1_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_2_1_1.setBounds(298, 250, 207, 23);
+		panel.add(btnNewButton_1_2_1_1);
 		
 	}
 	

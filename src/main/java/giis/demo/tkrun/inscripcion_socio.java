@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import java.awt.Font;
+import java.awt.Window;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -40,6 +41,7 @@ public class inscripcion_socio {
 	private InscripcionesModel modeloInscripciones = new InscripcionesModel();
 	private ActividadesModel modeloActividades = new ActividadesModel();
 	private PeriodosInscripcionModel modeloPeriodosInscripcion = new PeriodosInscripcionModel();
+	private Login vLogin;
 	
 	int id_socio;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -69,6 +71,12 @@ public class inscripcion_socio {
 	 */
 	public inscripcion_socio() {
 		initialize();
+	}
+	
+	public inscripcion_socio(Login login) {
+		initialize();
+		this.vLogin = login;
+		this.id_socio=this.vLogin.getId_socio();
 	}
 
 	/**
@@ -261,5 +269,9 @@ public class inscripcion_socio {
 		btnNewButton_1.setBounds(295, 227, 129, 23);
 		panel.add(btnNewButton_1);
 		
+	}
+	
+	public Window getFrmInscripcinActividadSocio() {
+		return this.frmInscripcinActividadSocio;
 	}
 }

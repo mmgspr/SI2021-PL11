@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -126,6 +127,10 @@ public class inscripcion_admin_no_socio {
 		JButton btnNewButton_1 = new JButton("Inscribirse");
 		btnNewButton_1.setBounds(333, 227, 89, 23);
 		panel.add(btnNewButton_1);
+	}
+	
+	public Window getFrmInscripcinAdministradorNo() {
+		return this.frmInscripcinAdministradorNo;
 	}
 
 }
