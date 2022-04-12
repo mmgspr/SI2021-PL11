@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
@@ -114,26 +115,12 @@ public class inscripcion_socio {
 			iTodas++;
 		}
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Cambio");
-			}
-		});
-		comboBox.setModel(new DefaultComboBoxModel(actividades));
-		comboBox.setBounds(81, 7, 129, 22);
-		panel.add(comboBox);
 		
 		
 		
 		
-		JButton btnNewButton = new JButton("Cancelar");
-		btnNewButton.setBounds(10, 227, 89, 23);
-		panel.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Inscribirse");
-		btnNewButton_1.setBounds(335, 227, 89, 23);
-		panel.add(btnNewButton_1);
+		
 		
 		JLabel lblDescripcin = new JLabel("- Descripción:");
 		lblDescripcin.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -194,12 +181,85 @@ public class inscripcion_socio {
 		rdbtnAadirAMi.setBounds(10, 182, 129, 23);
 		panel.add(rdbtnAadirAMi);
 		
-		System.out.println("Inicial");
-		//textPane.setText(modeloActividades.get);
+		JComboBox comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//System.out.println("Cambio");
+				textPane.setText(modeloActividades.getDescripcionActividad(comboBox.getSelectedItem().toString()));
+				textField.setText(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
+				textField_1.setText(modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString()));
+				textField_2.setText(modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString()));
+			}
+		});
+		comboBox.setModel(new DefaultComboBoxModel(actividades));
+		comboBox.setBounds(81, 7, 129, 22);
+		panel.add(comboBox);
 		
+		//System.out.println("Inicial");
+		textPane.setText(modeloActividades.getDescripcionActividad(comboBox.getSelectedItem().toString()));
+		textField.setText(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
+		textField_1.setText(modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString()));
+		textField_2.setText(modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString()));
 		
+		JButton btnNewButton = new JButton("Cancelar");
+		btnNewButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				frmInscripcinActividadSocio.dispose();
+			}
+		});
+		btnNewButton.setBounds(10, 227, 89, 23);
+		panel.add(btnNewButton);
 		
-		
+		JButton btnNewButton_1 = new JButton("Inscribirse");
+		btnNewButton_1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				//Comprobar que no este inscrito ya
+				boolean a;
+				if(true) {
+					//No esta inscrito ya
+					
+					//Comprobar si hay plazas
+					boolean b;
+					if(false) {
+						//No hay plazas
+						//Método Dani lista de espera
+						
+					}
+					else {
+						//Hay plazas
+						System.out.println("Revisar bucle plazas y que no esté inscrito");
+						if(rdbtnNewRadioButton.isSelected()) {
+							//Pagar ahora
+							
+							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nRecibo:\n-Importe: "+textField.getText()+" €\n-Fecha: "+hoy,"Inscrito",JOptionPane.INFORMATION_MESSAGE);
+							frmInscripcinActividadSocio.dispose();
+						}
+						else {
+							//Añadir a cuota
+							
+							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nImporte: "+textField.getText()+" €\nSe pasará el importe a tu próxima cuota.","Inscrito",JOptionPane.INFORMATION_MESSAGE);
+							frmInscripcinActividadSocio.dispose();
+						}
+						
+						
+					}
+				}
+				else {
+					//Ya esta inscrito
+					JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Ya estás inscrito en esta actividad.","Error",JOptionPane.ERROR_MESSAGE);
+					frmInscripcinActividadSocio.dispose();
+				}
+				
+				
+				
+				
+				
+				
+				
+			}
+		});
+		btnNewButton_1.setBounds(295, 227, 129, 23);
+		panel.add(btnNewButton_1);
 		
 	}
 }
