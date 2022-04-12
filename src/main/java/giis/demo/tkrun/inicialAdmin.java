@@ -41,6 +41,7 @@ public class inicialAdmin {
 	private reserva_actividad_admin vReservaActividad;
 	private RegistrarCliente vRegistrarCliente;
 	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
+	private CancelarActividad vCancelarActividad;
 	
 	// Variables para parametrizacion
 	private Parametrizacion vParametrizacion;
@@ -300,6 +301,16 @@ public class inicialAdmin {
 		btnParametros.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnParametros.setBounds(305, 193, 181, 24);
 		panel.add(btnParametros);
+		JButton btnNewButton_1 = new JButton("Cancelar Actividad");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vCancelarActividad=new CancelarActividad();
+				vCancelarActividad.getFrmCancelarActividad().setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(10, 227, 207, 23);
+		panel.add(btnNewButton_1);
 
 	}
 
