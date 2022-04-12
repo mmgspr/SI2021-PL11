@@ -92,5 +92,14 @@ public class ActividadesModel {
 				lista = db.executeQueryArray(SQL_INSTALACION_ACTIVIDAD+"'"+nombre+"'");
 				return lista.get(0)[0].toString(); 	
 			}
+			
+			//Método para obtener las actividades de un periodo de inscripcion
+			public static final String SQL_ACTIVIDADES_PERIODO_INS = "SELECT nombre FROM actividades WHERE periodo_inscripcion=";
+				
+			public List<Object[]> getActividadesPeriodoIns(String periodo){
+				List<Object[]> lista;
+				lista = db.executeQueryArray(SQL_ACTIVIDADES_PERIODO_INS+"'"+periodo+"'");
+				return lista; 	
+			}
 	
 }

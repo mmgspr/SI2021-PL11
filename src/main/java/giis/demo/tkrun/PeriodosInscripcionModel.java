@@ -47,7 +47,21 @@ public class PeriodosInscripcionModel {
 			lista = db.executeQueryArray(SQL_SIGUIENTE_ID);
 			return (long)lista.get(0)[0] + 1;
 		}
+		
+		//SQL para obtener las fechas de un periodo de inscripcion abierto socio
+				public static final String SQL_FECHAS_SOCIO = "SELECT id_periodo_inscripcion FROM periodos_inscripcion WHERE fecha_ini_socio<=? AND fecha_fin_no_socio>=?";
+								
+				public List<Object[]> getFechasSocio(String fecha){
+					return db.executeQueryArray(SQL_FECHAS_SOCIO,fecha,fecha);	
+				}
+				
+				//SQL para obtener las fechas de un periodo de inscripcion abierto socio
+				public static final String SQL_FECHAS_NO_SOCIO = "SELECT id_periodo_inscripcion FROM periodos_inscripcion WHERE fecha_fin_socio<=? AND fecha_fin_no_socio>=?";
+								
+				public List<Object[]> getFechasNoSocio(String fecha){
+					return db.executeQueryArray(SQL_FECHAS_NO_SOCIO,fecha,fecha);	
+				}
 	
-	
+				
 
 }
