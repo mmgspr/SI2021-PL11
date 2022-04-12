@@ -101,6 +101,8 @@ CREATE TABLE actividades(
     descripcion varchar(200), 
 
     aforo integer, 
+    
+    plazas integer,
 
     precio_socio decimal(10,2), 
 
