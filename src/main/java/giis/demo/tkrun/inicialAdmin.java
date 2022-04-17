@@ -41,6 +41,10 @@ public class inicialAdmin {
 	private reserva_actividad_admin vReservaActividad;
 	private RegistrarCliente vRegistrarCliente;
 	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
+	private inscripcion_admin_no_socio vInscripcionAdminNoSocio;
+	
+	private Generar_Informe_Actividades vGenerar_Informe_Actividades;
+	private Generar_Informe_Reservas vGenerar_Informe_Reservas;
 	
 	// Variables para parametrizacion
 	private Parametrizacion vParametrizacion;
@@ -285,8 +289,7 @@ public class inicialAdmin {
 			public void actionPerformed(ActionEvent e) {
 				vReservarSesionesAutomaticamente = new reservar_sesiones_automaticamente();
 				vReservarSesionesAutomaticamente.getFrmReservarSesionesAutomticamente().setVisible(true);
-			}
-		});
+			}		});
 		btnNewButton_1_5_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_5_1.setBounds(10, 91, 207, 23);
 		panel.add(btnNewButton_1_5_1);
@@ -295,11 +298,52 @@ public class inicialAdmin {
 		btnParametros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vParametrizacion.getFrmParametrizacion().setVisible(true);
-			}
-		});
+			}		});
 		btnParametros.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnParametros.setBounds(305, 193, 181, 24);
 		panel.add(btnParametros);
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		JButton btnNewButton_1 = new JButton("Generar Informe Actividades");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vGenerar_Informe_Actividades = new Generar_Informe_Actividades();
+				vGenerar_Informe_Actividades.getfrmGenerarInformeActividades().setVisible(true);
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnNewButton_1.setBounds(10, 226, 207, 21);
+		panel.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Generar Informe Reservas");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vGenerar_Informe_Reservas = new Generar_Informe_Reservas();
+				vGenerar_Informe_Reservas.getfrmGenerarInformeReservas().setVisible(true);
+			}
+		});
+		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnNewButton_2.setBounds(305, 227, 181, 21);
+		panel.add(btnNewButton_2);
+		
+		JButton btnInscribirNoSocio = new JButton("Inscribir no socio");
+		btnInscribirNoSocio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vInscripcionAdminNoSocio = new inscripcion_admin_no_socio();
+				vInscripcionAdminNoSocio.getFrmInscripcinAdministradorNo().setVisible(true);
+			}
+		});
+		btnInscribirNoSocio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnInscribirNoSocio.setBounds(10, 258, 207, 23);
+		panel.add(btnInscribirNoSocio);
 
 	}
 

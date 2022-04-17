@@ -25,16 +25,16 @@ public class ActividadesModel {
 	}
 	
 	//Método para instertar una nueva actividad
-			public static final String SQL_NUEVA_ACTIVIDAD = "INSERT INTO actividades(id_actividad, nombre, descripcion, aforo, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			public static final String SQL_NUEVA_ACTIVIDAD = "INSERT INTO actividades(id_actividad, nombre, descripcion, aforo, plazas, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			public void nuevaActividad(String nombre, String descripcion, String aforo, String precio_socio, String precio_no_socio, String fecha_ini, String fecha_fin, String deporte, String instalacion, String periodo_inscripcion) {
 				long id;
 				id = siguienteIdActividad();
-				db.executeUpdate(SQL_NUEVA_ACTIVIDAD,id, nombre, descripcion, aforo, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion);
+				db.executeUpdate(SQL_NUEVA_ACTIVIDAD,id, nombre, descripcion, aforo, aforo, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion);
 			}
 			public long nuevaActividadRetornaId(String nombre, String descripcion, String aforo, String precio_socio, String precio_no_socio, String fecha_ini, String fecha_fin, String deporte, String instalacion, String periodo_inscripcion) {
 				long id;
 				id = siguienteIdActividad();
-				db.executeUpdate(SQL_NUEVA_ACTIVIDAD,id, nombre, descripcion, aforo, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion);
+				db.executeUpdate(SQL_NUEVA_ACTIVIDAD,id, nombre, descripcion, aforo, aforo, precio_socio, precio_no_socio, fecha_ini, fecha_fin, deporte, instalacion, periodo_inscripcion);
 				return id;
 			}
 	
@@ -47,7 +47,10 @@ public class ActividadesModel {
 		lista = db.executeQueryArray(SQL_ID_ACTIVIDAD+"'"+nombre+"'");
 		return (long)lista.get(0)[0]; 	
 	}
-	
+	public static final String SQL_ELIMINAR_ACTIVIDAD = "DELETE FROM actividades WHERE id_actividad=?";
+	public void eliminarActividad(long id) {
+		db.executeUpdate(SQL_ELIMINAR_ACTIVIDAD, id);
+	}
 	//Método para obtener la fecha inicial de una actividad
 		public static final String SQL_FECHA_INICIAL_ACTIVIDAD = "SELECT fecha_ini FROM actividades WHERE nombre=";
 		
@@ -90,6 +93,42 @@ public class ActividadesModel {
 			public String getInstalacionActividad(String nombre){
 				List<Object[]> lista;
 				lista = db.executeQueryArray(SQL_INSTALACION_ACTIVIDAD+"'"+nombre+"'");
+				return lista.get(0)[0].toString(); 	
+			}
+			
+			//Método para obtener las actividades de un periodo de inscripcion
+			public static final String SQL_ACTIVIDADES_PERIODO_INS = "SELECT nombre FROM actividades WHERE periodo_inscripcion=";
+				
+			public List<Object[]> getActividadesPeriodoIns(String periodo){
+				List<Object[]> lista;
+				lista = db.executeQueryArray(SQL_ACTIVIDADES_PERIODO_INS+"'"+periodo+"'");
+				return lista; 	
+			}
+			
+			//Método para obtener la descripcion de una actividad
+			public static final String SQL_DESCRIPCION_ACTIVIDAD = "SELECT descripcion FROM actividades WHERE nombre=";
+			
+			public String getDescripcionActividad(String nombre){
+				List<Object[]> lista;
+				lista = db.executeQueryArray(SQL_DESCRIPCION_ACTIVIDAD+"'"+nombre+"'");
+				return lista.get(0)[0].toString(); 	
+			}
+			
+			//Método para obtener el precio de socio de una actividad
+			public static final String SQL_PRECIO_ACTIVIDAD_SOCIO = "SELECT precio_socio FROM actividades WHERE nombre=";
+			
+			public String getPrecioActividadSocio(String nombre){
+				List<Object[]> lista;
+				lista = db.executeQueryArray(SQL_PRECIO_ACTIVIDAD_SOCIO+"'"+nombre+"'");
+				return lista.get(0)[0].toString(); 	
+			}
+			
+			//Método para obtener el precio de no socio de una actividad
+			public static final String SQL_PRECIO_ACTIVIDAD_NO_SOCIO = "SELECT precio_no_socio FROM actividades WHERE nombre=";
+			
+			public String getPrecioActividadNoSocio(String nombre){
+				List<Object[]> lista;
+				lista = db.executeQueryArray(SQL_PRECIO_ACTIVIDAD_NO_SOCIO+"'"+nombre+"'");
 				return lista.get(0)[0].toString(); 	
 			}
 	
