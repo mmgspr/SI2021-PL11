@@ -11,18 +11,60 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.file.Files;
 
 public class GestionColas {
 	
-	public static int crearCola(int idActividad) {
+	private static ArrayList<Integer> socios;
+	private static ArrayList<String> clientes;
+	private static FileOutputStream fos = null;
+	private static ObjectOutputStream oos= null;
+	private static FileInputStream fis= null;
+	private static ObjectInputStream ois = null;
+	private static FileOutputStream fosAux = null;
+	private static ObjectOutputStream oosAux= null;
+	private static FileInputStream fisAux= null;
+	private static ObjectInputStream oisAux = null;
+	private static String ruta;
+	private static String rutaTmp;
+    private static File file, tmp;
+	
+	public static int inicializa() {
+		//colas
+		socios = new ArrayList<Integer>();
+		clientes = new ArrayList<String>();
+		//fichero
+		try {
+			ruta = "src/main/resources/listas.txt";
+			ruta = "src/main/resources/tmp.txt";
+	        file = new File(ruta);
+	        tmp = new File(rutaTmp);
+	        // Si el archivo no existe es creado
+	        if (!file.exists()) {
+	            file.createNewFile();
+	        }
+	        if (!tmp.exists()) {
+	            tmp.createNewFile();
+	        }
+			//controladores
+			fos = new FileOutputStream(file);
+	        oos = new ObjectOutputStream(fos); 
+	        fis = new FileInputStream(file);
+	        ois = new ObjectInputStream(fis);
+	        fosAux = new FileOutputStream(tmp);
+	        oosAux = new ObjectOutputStream(fosAux); 
+	        fisAux = new FileInputStream(tmp);
+	        oisAux = new ObjectInputStream(fisAux);
+		}catch(Exception e) {
+			System.out.println("Error al inicializar las colas o el fichero.");
+			return -1;
+		}
 		
-		ArrayList<Integer> socios = new ArrayList<Integer>();
-		ArrayList<String> clientes = new ArrayList<String>();
-		
-		return 1;
+		return 0;
 	}
 	
-	private static void serializa(ObjectOutputStream oos ,ArrayList<Integer> socios,ArrayList<String> clientes, int idActividad) {
+	
+	private static void serializa(ObjectOutputStream oosArg, ArrayList<Integer> socios,ArrayList<String> clientes, int idActividad) {
 //		try {
 //			 String ruta = "src/main/resources/listas";
 //	         String contenido = "Actividad: "+idActividad;
@@ -40,9 +82,9 @@ public class GestionColas {
 //	         ObjectOutputStream oos = new ObjectOutputStream(fos);        
 			   
 		     try {
-				oos.writeInt(idActividad);
-				oos.writeObject(socios);
-				oos.writeObject(clientes);
+				oosArg.writeInt(idActividad);
+				oosArg.writeObject(socios);
+				oosArg.writeObject(clientes);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -56,7 +98,7 @@ public class GestionColas {
 //	    }
 	}
 	
-	private static ArrayList<?>[] desserializa(ObjectInputStream ois , int idActividad) {
+	private static ArrayList<?>[] desserializa(int idActividad) {
 		ArrayList[] retorno = null;
 		int actividad=-1;
 		ArrayList<Integer> socios = null;
@@ -98,31 +140,111 @@ public class GestionColas {
 		return retorno;
 	}
 	
-	public static void main(String[] args) {
-		FileOutputStream fos = null;
-		ObjectOutputStream oos= null;
-		FileInputStream fis= null;
-		ObjectInputStream ois = null;
+	public static void borrarFichero() {
 		try {
-		String ruta = "src/main/resources/listas.txt";
-        File file = new File(ruta);
-        // Si el archivo no existe es creado
-        if (!file.exists()) {
-            file.createNewFile();
-        }
+			//cerrar los anteriores
+			oos.close();
+			fos.close();
+			ois.close();
+			fis.close();
+			//crear nuevos	
+			fos = new FileOutputStream(file);
+		    oos = new ObjectOutputStream(fos); 
+		    fis = new FileInputStream(file);
+		    ois = new ObjectInputStream(fis);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	//esta funcion copia el fichero entero menos una actividad en concreto para poder modificarla
+	//se copia en un fichero temporal aparte
+	public static void copiarFichero(int idActividad) {
+		int actividad;
+		ArrayList<Integer> sociosAux;
+		ArrayList<String> clientesAux;
+		try {
+			while(true) {
+				//leer
+				actividad = oisAux.readInt();
+				sociosAux = (ArrayList<Integer>)oisAux.readObject();
+				clientesAux = (ArrayList<String>)oisAux.readObject();
+				//escribir en el nuevo (EL DE LA ACTIVIDAD QUE NOS PASAN NO)
+				if(actividad != idActividad) {
+					serializa(oosAux,sociosAux,clientesAux,actividad);
+				}
+			}
+		}catch(EOFException e){
+			
+		}catch(Exception e) {
+			
+		}
+		
+	}
+	
+	private static void eliminaActividad(int idActividad) {
+		copiarFichero(idActividad);
+		borrarFichero();
+		try {
+			Files.copy(tmp.toPath(), file.toPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static int anadeSocio(int idSocio, int idActividad) {
+		ArrayList<?>[] colas = desserializa(idActividad);
+		//no hay cola para esa actividad, luego hay que crearla
+		if(colas == null) {
+			socios = new ArrayList<Integer>();
+			clientes = new ArrayList<String>();
+		}
+		else {
+			socios = (ArrayList<Integer>) colas[0];
+			clientes = (ArrayList<String>) colas[1];
+			
+		}
+		//añadir al socio a la cola
+		socios.add(idSocio);
+		//borrar del fichero las lineas antiguas(guardar sin lineas, borrar entero y volver a copiar)
+		eliminaActividad(idActividad);
+		//escribir en el fichero las nuevas colas con el socio añadido
+		serializa(oos,socios,clientes,idActividad);
+		
+		return 0;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static int anadeCliente(String tlf, int idActividad) {
+		ArrayList<?>[] colas = desserializa(idActividad);
+		if(colas == null) {
+			socios = new ArrayList<Integer>();
+			clientes = new ArrayList<String>();
+		}
+		else {
+			socios = (ArrayList<Integer>) colas[0];
+			clientes = (ArrayList<String>) colas[1];
+		}
+		//añadir al socio a la cola
+		clientes.add(tlf);
+		//borrar del fichero las lineas antiguas(guardar sin lineas, borrar entero y volver a copiar)
+		eliminaActividad(idActividad);
+		//escribir en el fichero las nuevas colas con el socio añadido
+		serializa(oos,socios,clientes,idActividad);
+		
+		return 0;
+	}
+	
+	public static void main(String[] args) {
+		
 //        FileWriter fw = new FileWriter(file);
 //        BufferedWriter bw = new BufferedWriter(fw);
 //        bw.write(contenido);
-//		    bw.close();
-        
-        fos = new FileOutputStream(file);
-        oos = new ObjectOutputStream(fos); 
-        fis = new FileInputStream(file);
-        ois = new ObjectInputStream(fis);
-		} catch (Exception e1) {
-	        e1.printStackTrace();
-	    }
-		
+//		    bw.close();		
 		
 		ArrayList<Integer> socios = new ArrayList<Integer>();
 		socios.add(1);
@@ -140,15 +262,21 @@ public class GestionColas {
 		clientes2.add("second2");
 		clientes2.add("tercero2");
 		
-		serializa( oos, socios2, clientes2, 5);
-		serializa( oos, socios, clientes, 3);
-		desserializa(ois,2);
+		serializa(oos, socios2, clientes2, 5);
+		serializa(oos, socios, clientes, 3);
+		
+		anadeSocio(10,5);
+		anadeCliente("603441826",3);
+		anadeSocio(2,7);
+		
 		System.out.println("hecho");
 		
 		 
 		 try {
 			oos.close();
 			fos.close();
+			ois.close();
+			fis.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
