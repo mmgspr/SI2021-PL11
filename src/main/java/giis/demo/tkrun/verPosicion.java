@@ -109,7 +109,13 @@ public class verPosicion {
 				//bucle para recorer el vector
 				for(int j=0;j<2;j++) matriz[i][j]= vector[j];	
 				matriz[i][2] = "hola";
-				matriz[i][3] = "mundo";
+				GestionColas.inicializa();
+				//GestionColas.ver();
+				//System.out.println("prueba "+ Long.toString((long)vector[1]));
+				String pos = GestionColas.posicion(Long.toString((long)vector[1]), id_socio) + " personas delante en la cola";
+				if(pos.equals("-1 personas delante en la cola")) matriz[i][3] = "-----";
+				else matriz[i][3] = pos;
+				
 				
 				i++;
 			}

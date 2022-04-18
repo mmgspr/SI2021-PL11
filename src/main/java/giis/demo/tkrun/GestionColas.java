@@ -397,6 +397,20 @@ public class GestionColas {
     	return 0;
     }
     
+    public static int posicion(String actividad, int socio) {
+    	int retorno = -1;
+    
+    	for(ArrayList<ArrayList<Integer>> i : superLista ) {
+    		if(Integer.toString(i.get(0).get(0)).equals(actividad)) {
+    			for (Integer j : i.get(1)) {
+    				retorno ++;
+    				if (j == socio) return retorno ;
+    			}
+    		}
+    	}
+    	return retorno;
+    }
+    
     public static void ver() {
     	for (ArrayList<ArrayList<Integer>> i : superLista) {
     		System.out.println("Actividad " + i.get(0).get(0));
@@ -476,9 +490,10 @@ public class GestionColas {
 		anadeSocio(7,3);
 		anadeSocio(7,6);
 		anadeCliente(673548725,4);
-		anadeCliente(603441826,4);*/
+		anadeCliente(603441826,4);
 		anadeCliente(673548725,6);
-		anadeCliente(673548725,8);
+		anadeCliente(673548725,8);*/
+		anadeSocio(2,1);
 		/*System.out.println(superLista.get(0).get(0).get(0));
 		System.out.println(superLista.get(0).get(1).get(0) +" "+ superLista.get(0).get(1).get(1));
 		System.out.println(superLista.get(0).get(2).get(0));
