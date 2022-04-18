@@ -13,6 +13,11 @@ public class InscripcionesModel {
 			
 			return db.executeQueryArray(SQL_TODAS_INSCRIPCIONES_SOCIO, persona, ini, fin);
 		}
+		public static final String SQL_TODAS_INSCRIPCIONES_SOCIO2 = "SELECT id_inscripcion, actividad FROM inscripciones WHERE persona=? ORDER BY id_inscripcion DESC";
+		public List<Object[]> getTodasInscripcionesSocio2(String persona, String ini){ 
+			
+			return db.executeQueryArray(SQL_TODAS_INSCRIPCIONES_SOCIO2, persona);
+		}
 		public static final String SQL_ELIMINAR_INSCRIPCIONES_ACTIVIDAD = "DELETE FROM inscripciones WHERE actividad=?";
 		public void eliminarInscripciones(long actividad) {
 			db.executeUpdate(SQL_ELIMINAR_INSCRIPCIONES_ACTIVIDAD, actividad);
