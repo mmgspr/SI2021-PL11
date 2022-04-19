@@ -141,7 +141,7 @@ public class ActividadesModel {
 			
 			public static final String SQL_RESTAR_PLAZA = "UPDATE actividades SET plazas=? WHERE nombre=?";
 			public void restarPlaza(String nombre){
-				int plazas=Integer.parseInt(getPlazasActividad(nombre));
+				int plazas=Integer.parseInt(getPlazasActividad(nombre))-1;
 				db.executeUpdate(SQL_RESTAR_PLAZA,plazas,nombre);
 			}
 	

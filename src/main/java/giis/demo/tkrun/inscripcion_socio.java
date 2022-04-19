@@ -246,7 +246,7 @@ public class inscripcion_socio {
 								//-Añadir a cuota
 								double cuota = modeloReservas.nuevaCuota(id_socio);
 		                        double precio = Double.parseDouble(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
-		                        modeloReservas.añadeacuota(cuota+precio, id_socio);
+		                        modeloReservas.añadeCuotaAct(cuota+precio, id_socio);
 								JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nImporte: "+textField.getText()+" €\nSe añadirá el importe a tu próxima cuota.","Inscrito",JOptionPane.INFORMATION_MESSAGE);
 								frmInscripcinActividadSocio.dispose();
 							}
