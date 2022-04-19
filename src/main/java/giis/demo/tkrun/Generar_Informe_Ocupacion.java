@@ -62,7 +62,7 @@ public class Generar_Informe_Ocupacion {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 700, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JDateChooser dateChooserFin = new JDateChooser();
 		
@@ -195,5 +195,13 @@ public class Generar_Informe_Ocupacion {
 		vector[2]=porcentaje;
 		
 		return vector;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 }

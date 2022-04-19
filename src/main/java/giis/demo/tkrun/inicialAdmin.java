@@ -46,6 +46,7 @@ public class inicialAdmin {
 	
 	private Generar_Informe_Actividades vGenerar_Informe_Actividades;
 	private Generar_Informe_Reservas vGenerar_Informe_Reservas;
+	private Generar_Informe_Ocupacion vGenInforme_Ocupacion;
 	
 	// Variables para parametrizacion
 	private Parametrizacion vParametrizacion;
@@ -354,8 +355,19 @@ public class inicialAdmin {
 			}
 		});
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_3.setBounds(305, 259, 181, 23);
+		btnNewButton_3.setBounds(10, 292, 207, 23);
 		panel.add(btnNewButton_3);
+		
+		JButton btnNewButton_2_1 = new JButton("Generar Informe Ocupación");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vGenInforme_Ocupacion = new Generar_Informe_Ocupacion();
+				vGenInforme_Ocupacion.getFrame().setVisible(true);
+			}
+		});
+		btnNewButton_2_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnNewButton_2_1.setBounds(305, 260, 181, 21);
+		panel.add(btnNewButton_2_1);
 
 	}
 }
