@@ -255,6 +255,7 @@ public class inscripcion_socio {
 							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"No puedes inscribirte a la actividad ya que no hay plazas disponibles.\nPasarás a lista de espera.","Error",JOptionPane.ERROR_MESSAGE);
 							//Añadir a lista de espera de socios
 							
+							
 						}
 					}
 				}

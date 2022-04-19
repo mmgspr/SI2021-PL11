@@ -39,6 +39,28 @@ public class InscripcionesModel {
 			lista = db.executeQueryArray(SQL_ID_INSCRIPCION, actividad, persona);
 			return lista.get(0)[0].toString();
 		}
+		
+		//Método para obtener siguiente id
+		public static final String SQL_SIGUIENTE_ID = "SELECT MAX(id_inscripcion) from inscripciones;";
+		public long siguienteIdInscripcion() {
+			List<Object[]> lista;
+			lista = db.executeQueryArray(SQL_SIGUIENTE_ID);
+			return (long)lista.get(0)[0] + 1;
+		}
+		
+		//Método para instertar una nueva inscripcion
+		public static final String SQL_NUEVA_INSCRIPCION = "INSERT INTO actividades(id_inscripcion, persona, actividad, fecha) VALUES (?, ?, ?, ?);";
+		public void nuevaInscripcion(String persona, String actividad, String fecha) {
+			long id;
+			id = siguienteIdInscripcion();
+			db.executeUpdate(SQL_NUEVA_INSCRIPCION,id, persona, actividad, fecha);
+		}
+		public long nuevaInscripcionRetornaId(String persona, String actividad, String fecha) {
+			long id;
+			id = siguienteIdInscripcion();
+			db.executeUpdate(SQL_NUEVA_INSCRIPCION,id, persona, actividad, fecha);
+			return id;
+		}
 	
 	
 
