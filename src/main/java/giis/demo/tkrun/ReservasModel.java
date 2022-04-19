@@ -187,6 +187,11 @@ private Database db = new Database();
 				}
 				return false;
 			}
+			
+	public static final String SQL_PORCENTAJE_OCUPACION = "SELECT COUNT(id_reserva) FROM reservas WHERE ((instalacion=?) AND (fecha_reserva>=?) AND (fecha_reserva<=?))";
+	public long getTotalReservasInstalacion(long id, String ini, String fin) {
+		return (long) db.executeQueryArray(SQL_PORCENTAJE_OCUPACION, id, ini, fin).get(0)[0];
+	}
 		
 	//SQL para comprobar si una instalacion está reservada por actividad
 	//retorna 0 si puedes reservar, 1 si está reservada por un cliente y puedes tmb, y -1 si no puedes reservar
@@ -444,6 +449,10 @@ public List<Object[]> nuevaCuota1() {
 				}
 				
 				
-				
+				//Método para actualizar la cuota de un cliente
+				public static final String SQL_SUMA_CUOTA_ACT = "UPDATE clientes SET cuotaActividades=? WHERE (id_socio=?);";
+				public void añadeCuotaAct(double cuota, int id_socio) {	
+					db.executeUpdate(SQL_SUMA_CUOTA_ACT,cuota, id_socio);
+				}
 
 }
