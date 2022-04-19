@@ -22,6 +22,16 @@ public class InscripcionesModel {
 		public void eliminarInscripciones(long actividad) {
 			db.executeUpdate(SQL_ELIMINAR_INSCRIPCIONES_ACTIVIDAD, actividad);
 		}
+		
+		public static final String SQL_PERSONA_ACTIVIDAD = "SELECT id_inscripcion FROM inscripciones WHERE actividad=? AND persona=?";
+		public boolean personaActividadInscripciones(long actividad, String persona) {
+			List<Object[]> lista;
+			lista = db.executeQueryArray(SQL_PERSONA_ACTIVIDAD, actividad, persona);
+			if(lista.size()==0) {
+				return false;
+			}
+			else return true;
+		}
 	
 
 }

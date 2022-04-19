@@ -131,5 +131,18 @@ public class ActividadesModel {
 				lista = db.executeQueryArray(SQL_PRECIO_ACTIVIDAD_NO_SOCIO+"'"+nombre+"'");
 				return lista.get(0)[0].toString(); 	
 			}
+			
+			public static final String SQL_PLAZAS_ACTIVIDAD = "SELECT plazas FROM actividades WHERE nombre=";
+			public String getPlazasActividad(String nombre){
+				List<Object[]> lista;
+				lista = db.executeQueryArray(SQL_PLAZAS_ACTIVIDAD+"'"+nombre+"'");
+				return lista.get(0)[0].toString(); 	
+			}
+			
+			public static final String SQL_RESTAR_PLAZA = "UPDATE actividades SET plazas=? WHERE nombre=?";
+			public void restarPlaza(String nombre){
+				int plazas=Integer.parseInt(getPlazasActividad(nombre));
+				db.executeUpdate(SQL_RESTAR_PLAZA,plazas,nombre);
+			}
 	
 }

@@ -251,6 +251,8 @@ public class inscripcion_socio {
 						}
 						else {
 							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"No puedes inscribirte a la actividad ya que no hay plazas disponibles.\nPasarás a lista de espera.","Error",JOptionPane.ERROR_MESSAGE);
+							//Añadir a lista de espera de socios
+							
 						}
 					}
 				}
@@ -280,14 +282,21 @@ public class inscripcion_socio {
 	//Funcion para comprobar si ya está inscrito o en lista
 	public boolean estaInscrito(int id_socio, String nombre_actividad) {
 		boolean b=false;
-		
+		b=modeloInscripciones.personaActividadInscripciones(modeloActividades.getIdActividad(nombre_actividad),modeloClientes.getDNI(""+id_socio));
+		if(!b) {
+			//Metodo Dani para comprobar si esta en lista
+			
+		}
 		return b;
 	}
 	
 	//Funcion para comprobar si hay plazas en la actividad
 	public boolean hayPlazas(String nombre_actividad) {
 		boolean b=true;
-			
+		String plazas=modeloActividades.getPlazasActividad(nombre_actividad);
+		if(plazas.equals("0")) {
+			b=false;
+		}
 		return b;
 	}
 }
