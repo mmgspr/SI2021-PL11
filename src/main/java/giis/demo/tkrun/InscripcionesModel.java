@@ -32,6 +32,14 @@ public class InscripcionesModel {
 			}
 			else return true;
 		}
+		
+		public static final String SQL_ID_INSCRIPCION = "SELECT id_inscripcion FROM inscripciones WHERE actividad=? AND persona=?";
+		public String getIdInscripcion(String persona, long actividad) {
+			List<Object[]> lista;
+			lista = db.executeQueryArray(SQL_ID_INSCRIPCION, actividad, persona);
+			return lista.get(0)[0].toString();
+		}
+	
 	
 
 }
