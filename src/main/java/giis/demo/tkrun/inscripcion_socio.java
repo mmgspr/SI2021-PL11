@@ -221,46 +221,44 @@ public class inscripcion_socio {
 		JButton btnNewButton_1 = new JButton("Inscribirse");
 		btnNewButton_1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				//Comprobar que no este inscrito ya
-				boolean a;
-				if(true) {
-					//No esta inscrito ya
-					
-					//Comprobar si hay plazas
-					boolean b;
-					if(false) {
-						//No hay plazas
-						//Método Dani lista de espera
-						
-					}
-					else {
-						//Hay plazas
-						System.out.println("Revisar bucle plazas y que no esté inscrito");
-						if(rdbtnNewRadioButton.isSelected()) {
-							//Pagar ahora
-							
-							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nRecibo:\n-Importe: "+textField.getText()+" €\n-Fecha: "+hoy,"Inscrito",JOptionPane.INFORMATION_MESSAGE);
-							frmInscripcinActividadSocio.dispose();
-						}
-						else {
-							//Añadir a cuota
-							
-							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nImporte: "+textField.getText()+" €\nSe pasará el importe a tu próxima cuota.","Inscrito",JOptionPane.INFORMATION_MESSAGE);
-							frmInscripcinActividadSocio.dispose();
-						}
-						
-						
-					}
+				//Comprobar que no sea moroso
+				if(esMoroso(id_socio)) {
+					JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"No puedes inscribirte a la actividad ya que tienes deudas.","Error",JOptionPane.ERROR_MESSAGE);				
 				}
 				else {
-					//Ya esta inscrito
-					JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Ya estás inscrito en esta actividad.","Error",JOptionPane.ERROR_MESSAGE);
-					frmInscripcinActividadSocio.dispose();
+					//Comprobar que no este inscrito o en lista de espera
+					if(estaInscrito(id_socio,comboBox.getSelectedItem().toString())) {
+						JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Ya estás inscrito o en la lista de espera de esta actividad.","Error",JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						if(hayPlazas(comboBox.getSelectedItem().toString())) {
+							//Restar plaza
+							modeloActividades.restarPlaza(comboBox.getSelectedItem().toString());
+							//Crear inscripcion
+							long id_ins=modeloInscripciones.nuevaInscripcionRetornaId(modeloClientes.getDNI(""+id_socio), ""+modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()), hoy);
+							if(rdbtnNewRadioButton.isSelected()) {
+								//-Pagar ahora
+								modeloPagos.anadirPago(hoy, modeloClientes.getDNI(""+id_socio), ""+id_ins, ""+0);
+								JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nRecibo:\n-Importe: "+textField.getText()+" €\n-Fecha: "+hoy,"Inscrito",JOptionPane.INFORMATION_MESSAGE);
+								frmInscripcinActividadSocio.dispose();
+							}
+							else {
+								//-Añadir a cuota
+								double cuota = modeloReservas.nuevaCuota(id_socio);
+		                        double precio = Double.parseDouble(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
+		                        modeloReservas.añadeCuotaAct(cuota+precio, id_socio);
+								JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nImporte: "+textField.getText()+" €\nSe añadirá el importe a tu próxima cuota.","Inscrito",JOptionPane.INFORMATION_MESSAGE);
+								frmInscripcinActividadSocio.dispose();
+							}
+						}
+						else {
+							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"No puedes inscribirte a la actividad ya que no hay plazas disponibles.\nPasarás a lista de espera.","Error",JOptionPane.ERROR_MESSAGE);
+							//Añadir a lista de espera de socios
+							
+							
+						}
+					}
 				}
-				
-				
-				
-				
 				
 				
 				
@@ -273,5 +271,35 @@ public class inscripcion_socio {
 	
 	public Window getFrmInscripcinActividadSocio() {
 		return this.frmInscripcinActividadSocio;
+	}
+	
+	//Funcion para comprobar si es moroso
+	public boolean esMoroso(int id_socio) {
+		boolean b=false;
+		if(modeloClientes.DebeDinero(""+id_socio)==1) {
+			b=true;
+		}
+		return b;
+	}
+	
+	//Funcion para comprobar si ya está inscrito o en lista
+	public boolean estaInscrito(int id_socio, String nombre_actividad) {
+		boolean b=false;
+		b=modeloInscripciones.personaActividadInscripciones(modeloActividades.getIdActividad(nombre_actividad),modeloClientes.getDNI(""+id_socio));
+		if(!b) {
+			//Metodo Dani para comprobar si esta en lista
+			
+		}
+		return b;
+	}
+	
+	//Funcion para comprobar si hay plazas en la actividad
+	public boolean hayPlazas(String nombre_actividad) {
+		boolean b=true;
+		String plazas=modeloActividades.getPlazasActividad(nombre_actividad);
+		if(plazas.equals("0")) {
+			b=false;
+		}
+		return b;
 	}
 }
