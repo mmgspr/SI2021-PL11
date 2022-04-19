@@ -235,10 +235,10 @@ public class inscripcion_socio {
 							//Restar plaza
 							modeloActividades.restarPlaza(comboBox.getSelectedItem().toString());
 							//Crear inscripcion
-							
+							long id_ins=modeloInscripciones.nuevaInscripcionRetornaId(modeloClientes.getDNI(""+id_socio), ""+modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()), hoy);
 							if(rdbtnNewRadioButton.isSelected()) {
 								//-Pagar ahora
-								modeloPagos.anadirPago(hoy, modeloClientes.getDNI(""+id_socio), modeloInscripciones.getIdInscripcion(modeloClientes.getDNI(""+id_socio),modeloActividades.getIdActividad(comboBox.getSelectedItem().toString())), ""+0);
+								modeloPagos.anadirPago(hoy, modeloClientes.getDNI(""+id_socio), ""+id_ins, ""+0);
 								JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nRecibo:\n-Importe: "+textField.getText()+" €\n-Fecha: "+hoy,"Inscrito",JOptionPane.INFORMATION_MESSAGE);
 								frmInscripcinActividadSocio.dispose();
 							}
