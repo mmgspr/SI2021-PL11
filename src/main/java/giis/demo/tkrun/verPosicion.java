@@ -121,8 +121,9 @@ public class verPosicion {
 			while(it2.hasNext()) {
 				//el vector es el siguiente elemento de la lista (una inscripcion en concreto del cliente)
 				vector=it2.next();
-				//bucle para recorer el vector
-				for(int j=0;j<2;j++) matriz[i][j]= vector[j];	
+				
+				matriz[i][0]= "-----";
+				matriz[i][1]= vector[1];	
 				matriz[i][2] = "No";
 				GestionColas.inicializa();
 				//GestionColas.ver();
