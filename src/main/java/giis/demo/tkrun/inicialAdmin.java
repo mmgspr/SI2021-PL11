@@ -42,6 +42,7 @@ public class inicialAdmin {
 	private RegistrarCliente vRegistrarCliente;
 	private reservar_sesiones_automaticamente vReservarSesionesAutomaticamente;
 	private inscripcion_admin_no_socio vInscripcionAdminNoSocio;
+	private CancelarActividad vCancelarActividad;
 	
 	private Generar_Informe_Actividades vGenerar_Informe_Actividades;
 	private Generar_Informe_Reservas vGenerar_Informe_Reservas;
@@ -330,7 +331,7 @@ public class inicialAdmin {
 				vGenerar_Informe_Reservas.getfrmGenerarInformeReservas().setVisible(true);
 			}
 		});
-		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_2.setBounds(305, 227, 181, 21);
 		panel.add(btnNewButton_2);
 		
@@ -344,9 +345,17 @@ public class inicialAdmin {
 		btnInscribirNoSocio.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnInscribirNoSocio.setBounds(10, 258, 207, 23);
 		panel.add(btnInscribirNoSocio);
+		
+		JButton btnNewButton_3 = new JButton("Cancelar Actividad");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vCancelarActividad = new CancelarActividad();
+				vCancelarActividad.getFrmCancelarActividad().setVisible(true);
+			}
+		});
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_3.setBounds(305, 259, 181, 23);
+		panel.add(btnNewButton_3);
 
 	}
-
-	
-	
 }
