@@ -26,6 +26,7 @@ public class inscripcion_admin_no_socio {
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+	private JTextField textField_3;
 
 	/**
 	 * Launch the application.
@@ -127,10 +128,19 @@ public class inscripcion_admin_no_socio {
 		JButton btnNewButton_1 = new JButton("Inscribirse");
 		btnNewButton_1.setBounds(333, 227, 89, 23);
 		panel.add(btnNewButton_1);
+		
+		JLabel lblDni = new JLabel("• DNI:");
+		lblDni.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblDni.setBounds(10, 178, 77, 14);
+		panel.add(lblDni);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(53, 176, 85, 20);
+		panel.add(textField_3);
+		textField_3.setColumns(10);
 	}
 	
 	public Window getFrmInscripcinAdministradorNo() {
 		return this.frmInscripcinAdministradorNo;
 	}
-
 }
