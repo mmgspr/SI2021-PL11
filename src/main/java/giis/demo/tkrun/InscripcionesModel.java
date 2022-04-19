@@ -49,7 +49,7 @@ public class InscripcionesModel {
 		}
 		
 		//Método para instertar una nueva inscripcion
-		public static final String SQL_NUEVA_INSCRIPCION = "INSERT INTO actividades(id_inscripcion, persona, actividad, fecha) VALUES (?, ?, ?, ?);";
+		public static final String SQL_NUEVA_INSCRIPCION = "INSERT INTO inscripciones(id_inscripcion, persona, actividad, fecha) VALUES (?, ?, ?, ?);";
 		public void nuevaInscripcion(String persona, String actividad, String fecha) {
 			long id;
 			id = siguienteIdInscripcion();
