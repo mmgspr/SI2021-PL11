@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS pagos;
 DROP TABLE IF EXISTS sesiones;
 DROP TABLE IF EXISTS reservas;
 DROP TABLE IF EXISTS inscripciones;
+DROP TABLE IF EXISTS esperas;
 DROP TABLE IF EXISTS actividades;
 DROP TABLE IF EXISTS socios;
 DROP TABLE IF EXISTS periodos_inscripcion;
@@ -138,6 +139,22 @@ CREATE TABLE inscripciones(
     fecha datetime 
 
    ); 
+   
+CREATE TABLE esperas( 
+
+    id_espera integer unsigned unique not null primary key, 
+
+    persona varchar(9),
+    
+    actividad integer unsigned,
+
+    foreign key (persona) references clientes(dni), 
+
+    foreign key (actividad) references actividades(id_actividad) ON DELETE CASCADE, 
+
+    fecha datetime 
+
+   );
    
 CREATE TABLE sesiones( 
 

@@ -1,6 +1,7 @@
 DELETE FROM sesiones;
 DELETE FROM reservas;
 DELETE FROM inscripciones;
+DELETE FROM esperas;
 DELETE FROM actividades;
 DELETE FROM periodos_inscripcion;
 DELETE FROM instalaciones;
@@ -91,6 +92,15 @@ INSERT INTO inscripciones(id_inscripcion, persona, actividad, fecha) VALUES
 (4,'46739273H', 1, '2022-2-23 17:15:10'),
 
 (5,'46739273H', 2, '2022-3-30 20:28:15');
+
+INSERT INTO esperas(id_espera, persona, actividad, fecha) VALUES 
+
+(1,'46739273H', 3, '2022-2-23 19:15:10'), 
+
+(2,'58438791C', 3,'2022-2-25 19:50:41'), 
+
+(3,'58438791C', 2,'2022-2-25 20:50:41');
+
 
 
 INSERT INTO sesiones(id_sesion, dia, hora_ini, hora_fin, actividad) VALUES 

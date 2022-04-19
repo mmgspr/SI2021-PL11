@@ -486,14 +486,14 @@ public class GestionColas {
 //		}
 		inicializa();
 		//superLista = new ArrayList<ArrayList<ArrayList<Integer>>>();
-		/*anadeSocio(7,4);
-		anadeSocio(7,3);
-		anadeSocio(7,6);
-		anadeCliente(673548725,4);
-		anadeCliente(603441826,4);
-		anadeCliente(673548725,6);
-		anadeCliente(673548725,8);*/
-		anadeSocio(2,1);
+//		anadeSocio(2,3);
+//		anadeSocio(1,3);
+//		anadeSocio(1,2);
+//		anadeCliente(673548725,4);
+//		anadeCliente(603441826,4);
+//		anadeCliente(673548725,6);
+//		anadeCliente(673548725,8);
+//		anadeSocio(2,1);
 		/*System.out.println(superLista.get(0).get(0).get(0));
 		System.out.println(superLista.get(0).get(1).get(0) +" "+ superLista.get(0).get(1).get(1));
 		System.out.println(superLista.get(0).get(2).get(0));

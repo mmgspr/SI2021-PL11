@@ -25,6 +25,7 @@ public class verPosicion {
 	private JLabel SinInscripcionesLabel;
 	
 	private InscripcionesModel modeloInscripciones = new InscripcionesModel();
+	private EsperasModel modeloEsperas = new EsperasModel();
 	private ClientesModel modeloClientes = new ClientesModel();
 	
 	private int id_socio;
@@ -96,27 +97,39 @@ public class verPosicion {
 		String dni = modeloClientes.getDNI(Integer.toString(id_socio));
 		//Obtenemos una lista con las inscripciones del socio
 		List<Object[]> listaInscripciones = modeloInscripciones.getTodasInscripcionesSocio2(dni, hoy);	
+		List<Object[]> listaEsperas = modeloEsperas.getTodasEsperasSocio2(dni, hoy);	
 			
 		//si la lista no está vacia, mostramos los elementos
-		if(!listaInscripciones.isEmpty()) {
-			matriz = new Object[listaInscripciones.size()][4];					
-			Iterator<Object[]> it = listaInscripciones.iterator();				
+		if(!listaInscripciones.isEmpty() && !listaEsperas.isEmpty()) {
+			matriz = new Object[listaInscripciones.size()+listaEsperas.size()][4];					
+			Iterator<Object[]> it = listaInscripciones.iterator();	
 			int i=0;
 			Object[] vector = new Object[2];
+			//bucle para recorrer las inscripciones
 			while(it.hasNext()) {
 				//el vector es el siguiente elemento de la lista (una inscripcion en concreto del cliente)
 				vector=it.next();
 				//bucle para recorer el vector
 				for(int j=0;j<2;j++) matriz[i][j]= vector[j];	
-				matriz[i][2] = "hola";
+				matriz[i][2] = "Sí"; 
+				matriz[i][3] = "-----";
+				
+				i++;
+			}
+			//bucle para recorrer las esperas
+			Iterator<Object[]> it2 = listaEsperas.iterator();
+			while(it2.hasNext()) {
+				//el vector es el siguiente elemento de la lista (una inscripcion en concreto del cliente)
+				vector=it2.next();
+				//bucle para recorer el vector
+				for(int j=0;j<2;j++) matriz[i][j]= vector[j];	
+				matriz[i][2] = "No";
 				GestionColas.inicializa();
 				//GestionColas.ver();
 				//System.out.println("prueba "+ Long.toString((long)vector[1]));
 				String pos = GestionColas.posicion(Long.toString((long)vector[1]), id_socio) + " personas delante en la cola";
-				if(pos.equals("-1 personas delante en la cola")) matriz[i][3] = "-----";
-				else matriz[i][3] = pos;
-				
-				
+				matriz[i][3] = pos;
+								
 				i++;
 			}
 			
