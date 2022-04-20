@@ -112,6 +112,7 @@ public class inscripcion_admin_no_socio {
 		
 		
 		
+		
 		JLabel lblDescripcin = new JLabel("- Descripción:");
 		lblDescripcin.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblDescripcin.setBounds(20, 43, 89, 14);
@@ -181,7 +182,7 @@ public class inscripcion_admin_no_socio {
 		textField_3 = new JTextField();
 		textField_3.setBounds(53, 176, 85, 20);
 		panel.add(textField_3);
-		textField_3.setColumns(10);
+		textField_3.setColumns(10); 
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.addActionListener(new ActionListener() {
