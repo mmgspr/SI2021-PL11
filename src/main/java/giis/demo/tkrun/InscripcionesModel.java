@@ -61,6 +61,10 @@ public class InscripcionesModel {
 			db.executeUpdate(SQL_NUEVA_INSCRIPCION,id, persona, actividad, fecha);
 			return id;
 		}
+		public static final String SQL_PERSONAS_ACTIVIDAD = "SELECT persona FROM inscripciones WHERE actividad=? ";
+		public List<Object[]> getPersonasActividad(long actividad){
+			return db.executeQueryArray(SQL_PERSONAS_ACTIVIDAD, actividad);
+		}
 	
 	
 
