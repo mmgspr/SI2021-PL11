@@ -225,8 +225,7 @@ public class inscripcion_admin_no_socio {
 			public void actionPerformed(ActionEvent e) {
 				String dni=textField_3.getText();
 				//Comprobar DNI
-				if(false) {
-					
+				if(!comprobarDNI(dni)) {
 					JOptionPane.showMessageDialog(frmInscripcinAdministradorNo,"El DNI introducido no es correcto.","Error",JOptionPane.ERROR_MESSAGE);				
 				}
 				else {
@@ -296,5 +295,21 @@ public class inscripcion_admin_no_socio {
 			b=false;
 		}
 		return b;
+	}
+	
+	//Funcion para comprobar que sea correcto el DNI
+	public boolean comprobarDNI(String dni) {
+		if(dni.length()!=9) {
+			return false;
+		}
+		for(int i=0; i<8;i++) {
+			if(dni.charAt(i)<'0' || dni.charAt(i)>'9') {
+				return false;
+			}
+		}
+		if(dni.charAt(8)<'A' || dni.charAt(8)>'Z') {
+			return false;
+		}
+		return true;	
 	}
 }
