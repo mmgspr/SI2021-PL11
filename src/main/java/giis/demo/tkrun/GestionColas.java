@@ -16,9 +16,9 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class GestionColas {
-	private static ArrayList<ArrayList<ArrayList<Integer>>> superLista ;
-	private static ArrayList<Integer> socios;
-	private static ArrayList<Integer> clientes;
+	private static ArrayList<ArrayList<ArrayList<String>>> superLista ;
+	private static ArrayList<String> socios;
+	private static ArrayList<String> clientes;
 	
 	private static FileOutputStream fos = null;
 	private static ObjectOutputStream oos= null;
@@ -303,12 +303,12 @@ public class GestionColas {
             if (file.exists()) {
             	fis = new FileInputStream(file);
     	        ois = new ObjectInputStream(fis);
-            	superLista = (ArrayList<ArrayList<ArrayList<Integer>>>) ois.readObject();
+            	superLista = (ArrayList<ArrayList<ArrayList<String>>>) ois.readObject();
             	ois.close();
     			fis.close();
             }
             else {
-            	superLista = new ArrayList<ArrayList<ArrayList<Integer>>>();
+            	superLista = new ArrayList<ArrayList<ArrayList<String>>>();
             }
     	}catch(Exception e) {
     		e.printStackTrace();
@@ -337,26 +337,26 @@ public class GestionColas {
     	return 0;
     }
     
-    public static int anadeSocio(int idSocio, int idActividad) {
+    public static int anadeSocio(String idSocio, int idActividad) {
     	boolean encontrado= false;
-    	ArrayList<ArrayList<Integer>> anadir;
-    	ArrayList<Integer> anadir2;
-    	ArrayList<Integer> anadir3;
-    	ArrayList<Integer> anadir4;
+    	ArrayList<ArrayList<String>> anadir;
+    	ArrayList<String> anadir2;
+    	ArrayList<String> anadir3;
+    	ArrayList<String> anadir4;
     	for(int i = 0;i<superLista.size();i++) {
-    		if(superLista.get(i).get(0).get(0) == idActividad) {
+    		if(superLista.get(i).get(0).get(0).equals(Integer.toString(idActividad))) {
     			superLista.get(i).get(1).add(idSocio);
     			encontrado = true;
     			break;
     		}
     	}
     	if (!encontrado) {
-    		anadir2 = new ArrayList<Integer>();
-    		anadir2.add(idActividad);
-    		anadir3 = new ArrayList<Integer>();
+    		anadir2 = new ArrayList<String>();
+    		anadir2.add(Integer.toString(idActividad));
+    		anadir3 = new ArrayList<String>();
     		anadir3.add(idSocio);
-    		anadir4 = new ArrayList<Integer>();
-    		anadir = new ArrayList<ArrayList<Integer>>();
+    		anadir4 = new ArrayList<String>();
+    		anadir = new ArrayList<ArrayList<String>>();
     		anadir.add(anadir2);
     		anadir.add(anadir3);
     		anadir.add(anadir4);
@@ -367,26 +367,26 @@ public class GestionColas {
     	return 0;
     }
     
-    public static int anadeCliente(int tlf, int idActividad) {
+    public static int anadeCliente(String dni, int idActividad) {
     	boolean encontrado= false;
-    	ArrayList<ArrayList<Integer>> anadir;
-    	ArrayList<Integer> anadir2;
-    	ArrayList<Integer> anadir3;
-    	ArrayList<Integer> anadir4;
+    	ArrayList<ArrayList<String>> anadir;
+    	ArrayList<String> anadir2;
+    	ArrayList<String> anadir3;
+    	ArrayList<String> anadir4;
     	for(int i = 0;i<superLista.size();i++) {
-    		if(superLista.get(i).get(0).get(0) == idActividad) {
-    			superLista.get(i).get(2).add(tlf);
+    		if(superLista.get(i).get(0).get(0).equals(Integer.toString(idActividad))) {
+    			superLista.get(i).get(2).add(dni);
     			encontrado = true;
     			break;
     		}
     	}
     	if (!encontrado) {
-    		anadir2 = new ArrayList<Integer>();
-    		anadir2.add(idActividad);
-    		anadir3 = new ArrayList<Integer>();
-    		anadir4 = new ArrayList<Integer>();
-    		anadir4.add(tlf);
-    		anadir = new ArrayList<ArrayList<Integer>>();
+    		anadir2 = new ArrayList<String>();
+    		anadir2.add(Integer.toString(idActividad));
+    		anadir3 = new ArrayList<String>();
+    		anadir4 = new ArrayList<String>();
+    		anadir4.add(dni);
+    		anadir = new ArrayList<ArrayList<String>>();
     		anadir.add(anadir2);
     		anadir.add(anadir3);
     		anadir.add(anadir4);
@@ -397,14 +397,14 @@ public class GestionColas {
     	return 0;
     }
     
-    public static int posicion(String actividad, int socio) {
+    public static int posicion(String actividad, String socio) {
     	int retorno = -1;
     
-    	for(ArrayList<ArrayList<Integer>> i : superLista ) {
-    		if(Integer.toString(i.get(0).get(0)).equals(actividad)) {
-    			for (Integer j : i.get(1)) {
+    	for(ArrayList<ArrayList<String>> i : superLista ) {
+    		if(i.get(0).get(0).equals(actividad)) {
+    			for (String j : i.get(1)) {
     				retorno ++;
-    				if (j == socio) return retorno ;
+    				if (j.equals(socio)) return retorno ;
     			}
     		}
     	}
@@ -412,14 +412,14 @@ public class GestionColas {
     }
     
     public static void ver() {
-    	for (ArrayList<ArrayList<Integer>> i : superLista) {
+    	for (ArrayList<ArrayList<String>> i : superLista) {
     		System.out.println("Actividad " + i.get(0).get(0));
     		System.out.print("Socios: ");
-    		for(Integer j : i.get(1)) {
+    		for(String j : i.get(1)) {
     			System.out.print(j + ", ");
     		}
     		System.out.print("Clientes: ");
-    		for(Integer j : i.get(2)) {
+    		for(String j : i.get(2)) {
     			System.out.print(j + ", ");
     		}
     		System.out.println("");
@@ -486,9 +486,9 @@ public class GestionColas {
 //		}
 		inicializa();
 		//superLista = new ArrayList<ArrayList<ArrayList<Integer>>>();
-		anadeSocio(2,3);
-		anadeSocio(1,3);
-		anadeSocio(1,2);
+		anadeSocio(""+2,3);
+		anadeSocio(""+1,3);
+		anadeSocio(""+1,2);
 //		anadeCliente(673548725,4);
 //		anadeCliente(603441826,4);
 //		anadeCliente(673548725,6);
