@@ -72,6 +72,7 @@ public class CancelarActividad {
 		JButton btnCancelarActividad = new JButton("Cancelar Actividad");
 		btnCancelarActividad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				avisar();
 				cancelarActividad();
 			}
 		});
@@ -158,6 +159,21 @@ public class CancelarActividad {
 		JOptionPane.showMessageDialog(frmCancelarActividad, "Se ha eliminado la actividad '"+ actividad + "'.");
 		rellenaComboBox();
 	}
+	
+	public void avisar() {
+		String actividad=comboBox.getSelectedItem().toString();
+		long id_actividad=modeloActividades.getIdActividad(actividad);
+		List<Object[]> lista = modeloInscripciones.getPersonasActividad(id_actividad);
+		String mensaje = "";
+		for(int i=0; i<lista.size(); i++) {
+			mensaje+=lista.get(i)[0].toString() + "\n";
+		}
+		JOptionPane.showMessageDialog(frmCancelarActividad,
+			    mensaje,
+			    "Clientes previamente inscritos",
+			    JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	public JFrame getFrmCancelarActividad() {
 		return frmCancelarActividad;
 	}
