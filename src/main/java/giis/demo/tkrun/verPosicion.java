@@ -17,6 +17,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Window;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class verPosicion {
 
@@ -71,7 +74,7 @@ public class verPosicion {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 752, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
@@ -91,6 +94,16 @@ public class verPosicion {
 		panel.add(SinInscripcionesLabel);
 		
 		RellenarTabla(table);
+		
+		JButton btnNewButton = new JButton("Aceptar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton.setBounds(562, 226, 131, 23);
+		panel.add(btnNewButton);
 	}
 	
 	public void RellenarTabla(JTable tabla) {

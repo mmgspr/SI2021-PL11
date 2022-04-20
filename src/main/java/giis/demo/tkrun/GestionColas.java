@@ -491,14 +491,15 @@ public class GestionColas {
 //		}
 		inicializa();
 		//superLista = new ArrayList<ArrayList<ArrayList<Integer>>>();
-//		anadeSocio(""+2,3);
 //		anadeSocio(""+1,3);
+//		anadeSocio(""+2,3);
+//		anadeSocio(""+3,3);
 //		anadeSocio(""+1,2);
 //		anadeSocio(""+3,2);
-//		anadeCliente(673548725,4);
-//		anadeCliente(603441826,4);
-//		anadeCliente(673548725,6);
-//		anadeCliente(673548725,8);
+//		anadeCliente(""+673548725,4);
+//		anadeCliente(""+603441826,4);
+//		anadeCliente(""+673548725,6);
+//		anadeCliente(""+673548725,8);
 //		anadeSocio(2,1);
 		/*System.out.println(superLista.get(0).get(0).get(0));
 		System.out.println(superLista.get(0).get(1).get(0) +" "+ superLista.get(0).get(1).get(1));
