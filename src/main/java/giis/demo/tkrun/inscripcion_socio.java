@@ -257,7 +257,7 @@ public class inscripcion_socio {
 							//Añadir a lista de espera de socios
 							GestionColas.inicializa();
 							modeloEsperas.nuevaEspera(""+modeloClientes.getDNI(""+id_socio), ""+modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()), hoy);
-							GestionColas.anadeSocio(id_socio,(int) modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
+							GestionColas.anadeSocio(""+id_socio,(int) modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
 							GestionColas.serializa();
 							}
 					}
