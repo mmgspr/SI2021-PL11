@@ -128,7 +128,7 @@ public class verPosicion {
 				GestionColas.inicializa();
 				//GestionColas.ver();
 				//System.out.println("prueba "+ Long.toString((long)vector[1]));
-				String pos = GestionColas.posicion(Long.toString((long)vector[1]), ""+id_socio) + " personas delante en la cola";
+				String pos = GestionColas.posicion(Long.toString((long)vector[1]), Integer.toString(id_socio)) + " personas delante en la cola";
 				matriz[i][3] = pos;
 								
 				i++;

@@ -344,7 +344,8 @@ public class GestionColas {
     	ArrayList<String> anadir3;
     	ArrayList<String> anadir4;
     	for(int i = 0;i<superLista.size();i++) {
-    		if(superLista.get(i).get(0).get(0).equals(Integer.toString(idActividad))) {
+    		Object a = superLista.get(i).get(0).get(0);
+    		if((a).equals(Integer.toString(idActividad))) {
     			superLista.get(i).get(1).add(idSocio);
     			encontrado = true;
     			break;
@@ -374,7 +375,8 @@ public class GestionColas {
     	ArrayList<String> anadir3;
     	ArrayList<String> anadir4;
     	for(int i = 0;i<superLista.size();i++) {
-    		if(superLista.get(i).get(0).get(0).equals(Integer.toString(idActividad))) {
+    		Object a = superLista.get(i).get(0).get(0);
+    		if(a.equals(Integer.toString(idActividad))) {
     			superLista.get(i).get(2).add(dni);
     			encontrado = true;
     			break;
@@ -401,7 +403,8 @@ public class GestionColas {
     	int retorno = -1;
     
     	for(ArrayList<ArrayList<String>> i : superLista ) {
-    		if(i.get(0).get(0).equals(actividad)) {
+    		Object a = (i.get(0).get(0));
+    		if(a.equals(actividad)) {
     			for (String j : i.get(1)) {
     				retorno ++;
     				if (j.equals(socio)) return retorno ;
@@ -413,9 +416,11 @@ public class GestionColas {
     
     public static void ver() {
     	for (ArrayList<ArrayList<String>> i : superLista) {
-    		System.out.println("Actividad " + i.get(0).get(0));
+    		Object b = i.get(0).get(0);
+    		System.out.println("Actividad " + b);
     		System.out.print("Socios: ");
-    		for(String j : i.get(1)) {
+    		ArrayList<String> c = i.get(1);
+    		for(Object j : c) {
     			System.out.print(j + ", ");
     		}
     		System.out.print("Clientes: ");
@@ -486,9 +491,10 @@ public class GestionColas {
 //		}
 		inicializa();
 		//superLista = new ArrayList<ArrayList<ArrayList<Integer>>>();
-		anadeSocio(""+2,3);
-		anadeSocio(""+1,3);
-		anadeSocio(""+1,2);
+//		anadeSocio(""+2,3);
+//		anadeSocio(""+1,3);
+//		anadeSocio(""+1,2);
+//		anadeSocio(""+3,2);
 //		anadeCliente(673548725,4);
 //		anadeCliente(603441826,4);
 //		anadeCliente(673548725,6);
