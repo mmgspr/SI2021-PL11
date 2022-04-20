@@ -100,7 +100,7 @@ public class verPosicion {
 		List<Object[]> listaEsperas = modeloEsperas.getTodasEsperasSocio2(dni, hoy);	
 			
 		//si la lista no está vacia, mostramos los elementos
-		if(!listaInscripciones.isEmpty() && !listaEsperas.isEmpty()) {
+		if(listaInscripciones != null && listaEsperas != null) {
 			matriz = new Object[listaInscripciones.size()+listaEsperas.size()][4];					
 			Iterator<Object[]> it = listaInscripciones.iterator();	
 			int i=0;

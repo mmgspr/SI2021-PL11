@@ -41,6 +41,7 @@ public class inscripcion_socio {
 	private InscripcionesModel modeloInscripciones = new InscripcionesModel();
 	private ActividadesModel modeloActividades = new ActividadesModel();
 	private PeriodosInscripcionModel modeloPeriodosInscripcion = new PeriodosInscripcionModel();
+	private EsperasModel modeloEsperas = new EsperasModel();
 	private Login vLogin;
 	
 	int id_socio;
@@ -254,9 +255,11 @@ public class inscripcion_socio {
 						else {
 							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"No puedes inscribirte a la actividad ya que no hay plazas disponibles.\nPasarás a lista de espera.","Error",JOptionPane.ERROR_MESSAGE);
 							//Añadir a lista de espera de socios
-							
-							
-						}
+							GestionColas.inicializa();
+							modeloEsperas.nuevaEspera(""+modeloClientes.getDNI(""+id_socio), ""+modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()), hoy);
+							GestionColas.anadeSocio(id_socio,(int) modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
+							GestionColas.serializa();
+							}
 					}
 				}
 				
@@ -288,6 +291,7 @@ public class inscripcion_socio {
 		b=modeloInscripciones.personaActividadInscripciones(modeloActividades.getIdActividad(nombre_actividad),modeloClientes.getDNI(""+id_socio));
 		if(!b) {
 			//Metodo Dani para comprobar si esta en lista
+			b=modeloEsperas.personaActividadEsperas(modeloActividades.getIdActividad(nombre_actividad),modeloClientes.getDNI(""+id_socio));
 			
 		}
 		return b;
