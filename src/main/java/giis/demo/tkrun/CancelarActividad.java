@@ -20,6 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class CancelarActividad {
 
@@ -29,7 +31,8 @@ public class CancelarActividad {
 	private ReservasModel modeloReservas=new ReservasModel();
 	private SesionesModel modeloSesiones=new SesionesModel();
 	private InscripcionesModel modeloInscripciones=new InscripcionesModel();
-	private JTextArea textArea;
+	private JTextArea textArea, txtArea2;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -72,7 +75,6 @@ public class CancelarActividad {
 		JButton btnCancelarActividad = new JButton("Cancelar Actividad");
 		btnCancelarActividad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				avisar();
 				cancelarActividad();
 			}
 		});
@@ -84,13 +86,30 @@ public class CancelarActividad {
 		JLabel lblNewLabel = new JLabel("Selecciona una actividad:");
 		
 		comboBox = new JComboBox();
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				avisar();
+			}
+		});
 		rellenaComboBox();
+		
+		txtArea2 = new JTextArea();
+		txtArea2.setEditable(false);
+		avisar();
+		JLabel lblNewLabel_1 = new JLabel("Socios:");
 		
 		GroupLayout groupLayout = new GroupLayout(frmCancelarActividad.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(205)
+					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(260, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(95)
+							.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 376, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(22)
 							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
@@ -99,17 +118,19 @@ public class CancelarActividad {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblMensaje, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))))
-					.addPreferredGap(ComponentPlacement.RELATED, 362, Short.MAX_VALUE)
-					.addComponent(btnCancelarActividad)
-					.addGap(18))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(205)
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(260, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(95)
-					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 470, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(119, Short.MAX_VALUE))
+					.addGap(46)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel_1)
+							.addContainerGap())
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+								.addComponent(btnCancelarActividad)
+								.addGap(18))
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(txtArea2, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(50, Short.MAX_VALUE)))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -119,10 +140,14 @@ public class CancelarActividad {
 					.addGap(13)
 					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(41)
-					.addComponent(lblMensaje)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMensaje)
+						.addComponent(lblNewLabel_1))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(txtArea2)
+						.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancelarActividad)
 						.addComponent(btnNewButton))
@@ -168,10 +193,8 @@ public class CancelarActividad {
 		for(int i=0; i<lista.size(); i++) {
 			mensaje+=lista.get(i)[0].toString() + "\n";
 		}
-		JOptionPane.showMessageDialog(frmCancelarActividad,
-			    mensaje,
-			    "Clientes previamente inscritos",
-			    JOptionPane.PLAIN_MESSAGE);
+		txtArea2.setText(mensaje);
+		
 	}
 	
 	public JFrame getFrmCancelarActividad() {
