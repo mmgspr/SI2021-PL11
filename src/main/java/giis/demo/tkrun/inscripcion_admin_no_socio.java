@@ -7,14 +7,20 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 public class inscripcion_admin_no_socio {
@@ -24,9 +30,20 @@ public class inscripcion_admin_no_socio {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	
+	private ReservasModel modeloReservas = new ReservasModel();
+	private PagosModel modeloPagos = new PagosModel();
+	private ClientesModel modeloClientes = new ClientesModel();
+	private InstalacionesModel modeloInstalaciones = new InstalacionesModel();
+	private InscripcionesModel modeloInscripciones = new InscripcionesModel();
+	private ActividadesModel modeloActividades = new ActividadesModel();
+	private PeriodosInscripcionModel modeloPeriodosInscripcion = new PeriodosInscripcionModel();
+	private EsperasModel modeloEsperas = new EsperasModel();
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 	private JTextField textField_3;
+	String hoy = sdf.format(dateHoy);
+	List<String> todasAct = new ArrayList<String>();
 
 	/**
 	 * Launch the application.
@@ -64,14 +81,36 @@ public class inscripcion_admin_no_socio {
 		frmInscripcinAdministradorNo.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
+		//PERIODOS DE INSCRIPCION ABIERTOS
+				List<Object[]> modPer=modeloPeriodosInscripcion.getFechasNoSocio(hoy);
+				Iterator<Object[]> iteradorPer = modPer.iterator();
+				while(iteradorPer.hasNext()) {
+					//ACTIVIDADES DE CADA PERIODO
+					List<Object[]> modAct=modeloActividades.getActividadesPeriodoIns(iteradorPer.next()[0].toString());
+					Iterator<Object[]> iteradorAct = modAct.iterator();
+					while(iteradorAct.hasNext()) {
+						//Problema
+						//System.out.println(iteradorAct.next()[0].toString());
+						todasAct.add(iteradorAct.next()[0].toString());
+					}
+				}
+				//METEMOS ACTIVIDADES EN VECTOR
+				String [] actividades=new String[todasAct.size()];
+				Iterator<String> iteradorTodas = todasAct.iterator();
+				int iTodas=0;
+				while(iteradorTodas.hasNext()) {
+					//todasAct.add(iteradorTodas.next());
+					actividades[iTodas]=iteradorTodas.next();	
+					//System.out.println(actividades[iTodas]);
+					iTodas++;
+				}
+		
 		JLabel lblNewLabel = new JLabel("• Actividad:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setBounds(10, 11, 77, 14);
 		panel.add(lblNewLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(91, 8, 129, 22);
-		panel.add(comboBox);
+		
 		
 		JLabel lblDescripcin = new JLabel("- Descripción:");
 		lblDescripcin.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -122,6 +161,11 @@ public class inscripcion_admin_no_socio {
 		panel.add(textField_2);
 		
 		JButton btnNewButton = new JButton("Cancelar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton.setBounds(10, 227, 89, 23);
 		panel.add(btnNewButton);
 		
@@ -138,6 +182,31 @@ public class inscripcion_admin_no_socio {
 		textField_3.setBounds(53, 176, 85, 20);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			//System.out.println("Cambio");
+			textPane.setText(modeloActividades.getDescripcionActividad(comboBox.getSelectedItem().toString()));
+			textField.setText(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
+			textField_1.setText(modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString()));
+			textField_2.setText(modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString()));
+		}
+		});
+		comboBox.setModel(new DefaultComboBoxModel(actividades));
+		comboBox.setBounds(91, 8, 129, 22);
+		panel.add(comboBox);
+		
+		//System.out.println("Inicial");
+		textPane.setText(modeloActividades.getDescripcionActividad(comboBox.getSelectedItem().toString()));
+		textField.setText(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
+		textField_1.setText(modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString()));
+		textField_2.setText(modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString()));
+		
+		
+		
+		
+		
 	}
 	
 	public Window getFrmInscripcinAdministradorNo() {
