@@ -20,4 +20,6 @@ public class EsperasModel {
 	public void eliminarEsperas(long actividad) {
 		db.executeUpdate(SQL_ELIMINAR_ESPERAS_ACTIVIDAD, actividad);
 	}
+	
+	
 }
