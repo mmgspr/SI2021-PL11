@@ -49,6 +49,7 @@ public class inscripcion_socio {
 	Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 	String hoy = sdf.format(dateHoy);
 	List<String> todasAct = new ArrayList<String>();
+	private JTextField textField_3;
 	
 
 	/**
@@ -174,6 +175,12 @@ public class inscripcion_socio {
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 		
+		textField_3 = new JTextField();
+		textField_3.setEditable(false);
+		textField_3.setBounds(67, 125, 65, 19);
+		panel.add(textField_3);
+		textField_3.setColumns(10);
+		
 		JLabel lblNewLabel_1 = new JLabel("€");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(145, 102, 18, 14);
@@ -198,6 +205,7 @@ public class inscripcion_socio {
 				textField.setText(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
 				textField_1.setText(modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString()));
 				textField_2.setText(modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString()));
+				textField_3.setText(modeloActividades.getPlazasActividad(comboBox.getSelectedItem().toString()));
 			}
 		});
 		comboBox.setModel(new DefaultComboBoxModel(actividades));
@@ -209,6 +217,7 @@ public class inscripcion_socio {
 		textField.setText(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
 		textField_1.setText(modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString()));
 		textField_2.setText(modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString()));
+		textField_3.setText(modeloActividades.getPlazasActividad(comboBox.getSelectedItem().toString()));
 		
 		JButton btnNewButton = new JButton("Cancelar");
 		btnNewButton.addActionListener(new ActionListener(){
@@ -269,6 +278,13 @@ public class inscripcion_socio {
 		});
 		btnNewButton_1.setBounds(295, 227, 129, 23);
 		panel.add(btnNewButton_1);
+		
+		JLabel lblPlazas = new JLabel("- Plazas:");
+		lblPlazas.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPlazas.setBounds(20, 128, 65, 14);
+		panel.add(lblPlazas);
+		
+		
 		
 	}
 	
