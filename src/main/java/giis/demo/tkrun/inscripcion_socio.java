@@ -88,7 +88,7 @@ public class inscripcion_socio {
 		frmInscripcinActividadSocio = new JFrame();
 		frmInscripcinActividadSocio.setTitle("Inscripción actividad socio");
 		frmInscripcinActividadSocio.setBounds(100, 100, 450, 300);
-		frmInscripcinActividadSocio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmInscripcinActividadSocio.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmInscripcinActividadSocio.getContentPane().add(panel, BorderLayout.CENTER);

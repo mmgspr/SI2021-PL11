@@ -78,7 +78,7 @@ public class inscripcion_admin_no_socio {
 		frmInscripcinAdministradorNo = new JFrame();
 		frmInscripcinAdministradorNo.setTitle("Inscripción administrador no socio");
 		frmInscripcinAdministradorNo.setBounds(100, 100, 450, 300);
-		frmInscripcinAdministradorNo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmInscripcinAdministradorNo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmInscripcinAdministradorNo.getContentPane().add(panel, BorderLayout.CENTER);
