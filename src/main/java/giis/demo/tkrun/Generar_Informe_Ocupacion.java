@@ -29,7 +29,6 @@ import java.awt.event.ActionEvent;
 public class Generar_Informe_Ocupacion {
 
 	private JFrame frame;
-	private JComboBox comboBox;
 	private InstalacionesModel modeloInstalaciones = new InstalacionesModel();
 	private ReservasModel modeloReservas = new ReservasModel();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -76,12 +75,6 @@ public class Generar_Informe_Ocupacion {
 		JLabel LabelPeriodo = new JLabel("Inicio de Periodo:");
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JLabel lblNewLabel_1 = new JLabel("Selecciona una instalacion:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		comboBox = new JComboBox();
-		rellenaCombo();
-		
 		JButton btnNewButton = new JButton("Generar informe");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,7 +96,7 @@ public class Generar_Informe_Ocupacion {
 					Object[] vector;
 					try {
 						String ruta = "src/main/resources/OcupacionInstalaciones_del_"+fecha_ini+"_al_"+fecha_fin;
-			            String titulo = "Informe sobre la ocupación de las instalaciones '"+comboBox.getSelectedItem().toString() +"'\n";
+			            String titulo = "Informe sobre la ocupación de las instalaciones.\n";
 
 			            File file = new File(ruta);
 			            // Si el archivo no existe es creado
@@ -133,60 +126,43 @@ public class Generar_Informe_Ocupacion {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(260)
+					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+					.addGap(247))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(132)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(36)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(44)
-									.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(LabelPeriodo, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-									.addGap(18)
-									.addComponent(dateChooserInicio, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(comboBox, 0, 259, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(8)
-									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-									.addGap(51)
-									.addComponent(dateChooserFin, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED))))
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+							.addGap(134))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(241)
-							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-							.addGap(127)))
-					.addGap(139))
+							.addComponent(LabelPeriodo, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(dateChooserInicio, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+						.addComponent(dateChooserFin, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+					.addGap(218))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(23)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(dateChooserFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(dateChooserInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(36)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_1)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+					.addGap(52)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(dateChooserInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+							.addComponent(dateChooserFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(56)
 					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-					.addGap(64))
+					.addGap(36))
 		);
 		frame.getContentPane().setLayout(groupLayout);
-	}
-	
-	public void rellenaCombo() {
-		List<Object[]> lista = modeloInstalaciones.getInstalaciones();
-		for(int i = 0; i<lista.size(); i++) {
-			comboBox.addItem(lista.get(i)[0]);
-		}
 	}
 	public Object[] calcula(long id, Date ini, Date fin) {
 		double porcentaje =0.0;
