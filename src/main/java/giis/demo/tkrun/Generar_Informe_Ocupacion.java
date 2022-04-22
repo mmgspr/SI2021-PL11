@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -90,19 +91,20 @@ public class Generar_Informe_Ocupacion {
 				if(ini == null || fin == null || ini.after(fin)) {
 					JOptionPane.showMessageDialog(frame,
 						    "El periodo introducido es erroneo.",
-						    "Error",
+						    "ERROR",
 						    JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					long id = (long) modeloInstalaciones.getIdInstalacion(comboBox.getSelectedItem().toString()).get(0)[0];
-					Object[] vector= calcula(id, ini, fin);
+					List<Object[]> instalaciones = modeloInstalaciones.getInstalaciones(); 
+					
+					
 					String fecha_ini = sdf2.format(ini);
 					String fecha_fin = sdf2.format(fin);
+					Object[] vector;
 					try {
-						String ruta = "src/main/resources/InformeInstalación_"+id+"_del_"+fecha_ini+"_al_"+fecha_fin;
-			            String titulo = "Informe sobre la ocupación de la instalación '"+comboBox.getSelectedItem().toString() +"'\n";
-			            String contenido = "El porcentaje de ocupación es de: "+ (double) vector[2] * 100 + "%.\n" + "Total horas: "+ (long) vector[1]+ " Horas ocupadas: "+ (long) vector[0];
-			            
+						String ruta = "src/main/resources/OcupacionInstalaciones_del_"+fecha_ini+"_al_"+fecha_fin;
+			            String titulo = "Informe sobre la ocupación de las instalaciones '"+comboBox.getSelectedItem().toString() +"'\n";
+
 			            File file = new File(ruta);
 			            // Si el archivo no existe es creado
 			            if (!file.exists()) {
@@ -111,9 +113,17 @@ public class Generar_Informe_Ocupacion {
 			            FileWriter fw = new FileWriter(file);
 			            BufferedWriter bw = new BufferedWriter(fw);
 			            bw.write(titulo);
-			            bw.write(contenido);
-					    bw.close();
-					    
+			            Iterator<Object[]> itr = instalaciones.iterator();
+			            while(itr.hasNext()) {
+			            	long id = (long) itr.next()[0];
+							vector = calcula(id, ini, fin);
+				            String nombre  = modeloInstalaciones.getNombreInstalacion(id+"");
+				            String contenido = "\nInforme instalacion '"+nombre+"'\nEl porcentaje de ocupación es de: "+ (double) vector[3] * 100 + "%.\n" + "Total horas: "+ (long) vector[2]+ " Reservas: "+ (long) vector[0] + " Actividades: " + (long) vector[1] + "\n";
+				            
+				            bw.write(contenido);
+						    
+			            }
+			            bw.close();
 			        } catch (Exception e1) {
 			            e1.printStackTrace();
 			        }
@@ -180,10 +190,11 @@ public class Generar_Informe_Ocupacion {
 	}
 	public Object[] calcula(long id, Date ini, Date fin) {
 		double porcentaje =0.0;
-		Object[] vector = new Object[3];
+		Object[] vector = new Object[4];
 		String fecha_ini = sdf.format(ini);
 		String fecha_fin = sdf.format(fin);
 		long reservas =modeloReservas.getTotalReservasInstalacion(id, fecha_ini, fecha_fin);
+		long actividades =modeloReservas.getTotalReservasActividadInstalacion(id, fecha_ini, fecha_fin);
 		long diferencia = fin.getTime() - ini.getTime();
 		TimeUnit time = TimeUnit.DAYS;
 		long total = time.convert(diferencia, TimeUnit.MILLISECONDS);
@@ -191,8 +202,9 @@ public class Generar_Informe_Ocupacion {
 		porcentaje = reservas*1.0/(total*13);
 
 		vector[0]=reservas;
-		vector[1]=total*13;
-		vector[2]=porcentaje;
+		vector[1]=actividades;
+		vector[2]=total*13;
+		vector[3]=porcentaje;
 		
 		return vector;
 	}
