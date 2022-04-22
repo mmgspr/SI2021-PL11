@@ -115,9 +115,9 @@ public class Generar_Informe_Ocupacion {
 			            bw.write(titulo);
 			            Iterator<Object[]> itr = instalaciones.iterator();
 			            while(itr.hasNext()) {
-			            	long id = (long) itr.next()[0];
+			            	String nombre =itr.next()[0].toString();
+			            	long id = (long)modeloInstalaciones.getIdInstalacion(nombre).get(0)[0];
 							vector = calcula(id, ini, fin);
-				            String nombre  = modeloInstalaciones.getNombreInstalacion(id+"");
 				            String contenido = "\nInforme instalacion '"+nombre+"'\nEl porcentaje de ocupación es de: "+ (double) vector[3] * 100 + "%.\n" + "Total horas: "+ (long) vector[2]+ " Reservas: "+ (long) vector[0] + " Actividades: " + (long) vector[1] + "\n";
 				            
 				            bw.write(contenido);
