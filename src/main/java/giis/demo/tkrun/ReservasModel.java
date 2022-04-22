@@ -455,7 +455,7 @@ public List<Object[]> nuevaCuota1() {
 				
 				//Método para actualizar la cuota de un cliente
 				public static final String SQL_SUMA_CUOTA_ACT = "UPDATE clientes SET cuotaActividades=? WHERE (id_socio=?);";
-				public void añadeCuotaAct(String cuota, int id_socio) {	
+				public void añadeCuotaAct(double cuota, int id_socio) {	
 					db.executeUpdate(SQL_SUMA_CUOTA_ACT,cuota, id_socio);
 				}
 

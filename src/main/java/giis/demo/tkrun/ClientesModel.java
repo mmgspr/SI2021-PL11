@@ -125,10 +125,10 @@ public class ClientesModel {
 				
 				//SQL para obtener la cuota de act. de un socio a partir de su id de socio
 				public static final String SQL_CUOTA_ACT = "SELECT cuotaActividades FROM clientes WHERE id_socio =";
-				public String getCuotaAct(String id){
+				public double getCuotaAct(String id){
 					List<Object[]> lista;
 					lista = db.executeQueryArray(SQL_CUOTA_ACT+"'"+id+"'");
-					return lista.get(0)[0].toString();
+					return (double)lista.get(0)[0];
 				}
 	
 			
