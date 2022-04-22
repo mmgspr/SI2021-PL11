@@ -41,6 +41,7 @@ public class inscripcion_socio {
 	private InscripcionesModel modeloInscripciones = new InscripcionesModel();
 	private ActividadesModel modeloActividades = new ActividadesModel();
 	private PeriodosInscripcionModel modeloPeriodosInscripcion = new PeriodosInscripcionModel();
+	private EsperasModel modeloEsperas = new EsperasModel();
 	private Login vLogin;
 	
 	int id_socio;
@@ -48,6 +49,7 @@ public class inscripcion_socio {
 	Date dateHoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 	String hoy = sdf.format(dateHoy);
 	List<String> todasAct = new ArrayList<String>();
+	private JTextField textField_3;
 	
 
 	/**
@@ -86,7 +88,7 @@ public class inscripcion_socio {
 		frmInscripcinActividadSocio = new JFrame();
 		frmInscripcinActividadSocio.setTitle("Inscripción actividad socio");
 		frmInscripcinActividadSocio.setBounds(100, 100, 450, 300);
-		frmInscripcinActividadSocio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmInscripcinActividadSocio.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		frmInscripcinActividadSocio.getContentPane().add(panel, BorderLayout.CENTER);
@@ -173,6 +175,12 @@ public class inscripcion_socio {
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 		
+		textField_3 = new JTextField();
+		textField_3.setEditable(false);
+		textField_3.setBounds(67, 125, 65, 19);
+		panel.add(textField_3);
+		textField_3.setColumns(10);
+		
 		JLabel lblNewLabel_1 = new JLabel("€");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(145, 102, 18, 14);
@@ -197,6 +205,7 @@ public class inscripcion_socio {
 				textField.setText(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
 				textField_1.setText(modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString()));
 				textField_2.setText(modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString()));
+				textField_3.setText(modeloActividades.getPlazasActividad(comboBox.getSelectedItem().toString()));
 			}
 		});
 		comboBox.setModel(new DefaultComboBoxModel(actividades));
@@ -208,6 +217,7 @@ public class inscripcion_socio {
 		textField.setText(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
 		textField_1.setText(modeloActividades.getFechaIniActividad(comboBox.getSelectedItem().toString()));
 		textField_2.setText(modeloActividades.getFechaFinActividad(comboBox.getSelectedItem().toString()));
+		textField_3.setText(modeloActividades.getPlazasActividad(comboBox.getSelectedItem().toString()));
 		
 		JButton btnNewButton = new JButton("Cancelar");
 		btnNewButton.addActionListener(new ActionListener(){
@@ -244,7 +254,8 @@ public class inscripcion_socio {
 							}
 							else {
 								//-Añadir a cuota
-								double cuota = modeloReservas.nuevaCuota(id_socio);
+								//Falta crear consulta para sumar cuota
+								double cuota = modeloClientes.getCuotaAct(""+id_socio);
 		                        double precio = Double.parseDouble(modeloActividades.getPrecioActividadSocio(comboBox.getSelectedItem().toString()));
 		                        modeloReservas.añadeCuotaAct(cuota+precio, id_socio);
 								JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"Te has inscrito en esta actividad.\nImporte: "+textField.getText()+" €\nSe añadirá el importe a tu próxima cuota.","Inscrito",JOptionPane.INFORMATION_MESSAGE);
@@ -254,9 +265,11 @@ public class inscripcion_socio {
 						else {
 							JOptionPane.showMessageDialog(frmInscripcinActividadSocio,"No puedes inscribirte a la actividad ya que no hay plazas disponibles.\nPasarás a lista de espera.","Error",JOptionPane.ERROR_MESSAGE);
 							//Añadir a lista de espera de socios
-							
-							
-						}
+							GestionColas.inicializa();
+							modeloEsperas.nuevaEspera(""+modeloClientes.getDNI(""+id_socio), ""+modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()), hoy);
+							GestionColas.anadeSocio(""+id_socio,(int) modeloActividades.getIdActividad(comboBox.getSelectedItem().toString()));
+							GestionColas.serializa();
+							}
 					}
 				}
 				
@@ -266,6 +279,13 @@ public class inscripcion_socio {
 		});
 		btnNewButton_1.setBounds(295, 227, 129, 23);
 		panel.add(btnNewButton_1);
+		
+		JLabel lblPlazas = new JLabel("- Plazas:");
+		lblPlazas.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPlazas.setBounds(20, 128, 65, 14);
+		panel.add(lblPlazas);
+		
+		
 		
 	}
 	
@@ -288,6 +308,7 @@ public class inscripcion_socio {
 		b=modeloInscripciones.personaActividadInscripciones(modeloActividades.getIdActividad(nombre_actividad),modeloClientes.getDNI(""+id_socio));
 		if(!b) {
 			//Metodo Dani para comprobar si esta en lista
+			b=modeloEsperas.personaActividadEsperas(modeloActividades.getIdActividad(nombre_actividad),modeloClientes.getDNI(""+id_socio));
 			
 		}
 		return b;

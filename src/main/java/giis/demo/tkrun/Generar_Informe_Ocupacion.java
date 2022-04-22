@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +29,6 @@ import java.awt.event.ActionEvent;
 public class Generar_Informe_Ocupacion {
 
 	private JFrame frame;
-	private JComboBox comboBox;
 	private InstalacionesModel modeloInstalaciones = new InstalacionesModel();
 	private ReservasModel modeloReservas = new ReservasModel();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -75,12 +75,6 @@ public class Generar_Informe_Ocupacion {
 		JLabel LabelPeriodo = new JLabel("Inicio de Periodo:");
 		LabelPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JLabel lblNewLabel_1 = new JLabel("Selecciona una instalacion:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		comboBox = new JComboBox();
-		rellenaCombo();
-		
 		JButton btnNewButton = new JButton("Generar informe");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,19 +84,20 @@ public class Generar_Informe_Ocupacion {
 				if(ini == null || fin == null || ini.after(fin)) {
 					JOptionPane.showMessageDialog(frame,
 						    "El periodo introducido es erroneo.",
-						    "Error",
+						    "ERROR",
 						    JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					long id = (long) modeloInstalaciones.getIdInstalacion(comboBox.getSelectedItem().toString()).get(0)[0];
-					Object[] vector= calcula(id, ini, fin);
+					List<Object[]> instalaciones = modeloInstalaciones.getInstalaciones(); 
+					
+					
 					String fecha_ini = sdf2.format(ini);
 					String fecha_fin = sdf2.format(fin);
+					Object[] vector;
 					try {
-						String ruta = "src/main/resources/InformeInstalación_"+id+"_del_"+fecha_ini+"_al_"+fecha_fin;
-			            String titulo = "Informe sobre la ocupación de la instalación '"+comboBox.getSelectedItem().toString() +"'\n";
-			            String contenido = "El porcentaje de ocupación es de: "+ (double) vector[2] * 100 + "%.\n" + "Total horas: "+ (long) vector[1]+ " Horas ocupadas: "+ (long) vector[0];
-			            
+						String ruta = "src/main/resources/OcupacionInstalaciones_del_"+fecha_ini+"_al_"+fecha_fin;
+			            String titulo = "Informe sobre la ocupación de las instalaciones.\n";
+
 			            File file = new File(ruta);
 			            // Si el archivo no existe es creado
 			            if (!file.exists()) {
@@ -111,9 +106,17 @@ public class Generar_Informe_Ocupacion {
 			            FileWriter fw = new FileWriter(file);
 			            BufferedWriter bw = new BufferedWriter(fw);
 			            bw.write(titulo);
-			            bw.write(contenido);
-					    bw.close();
-					    
+			            Iterator<Object[]> itr = instalaciones.iterator();
+			            while(itr.hasNext()) {
+			            	String nombre =itr.next()[0].toString();
+			            	long id = (long)modeloInstalaciones.getIdInstalacion(nombre).get(0)[0];
+							vector = calcula(id, ini, fin);
+				            String contenido = "\nInforme instalacion '"+nombre+"'\nEl porcentaje de ocupación es de: "+ (double) vector[3] * 100 + "%.\n" + "Total horas en el periodo: "+ (long) vector[2]+ " \nReservas: "+ (long) vector[0] + " Actividades: " + (long) vector[1] + "\n";
+				            
+				            bw.write(contenido);
+						    
+			            }
+			            bw.close();
 			        } catch (Exception e1) {
 			            e1.printStackTrace();
 			        }
@@ -123,76 +126,61 @@ public class Generar_Informe_Ocupacion {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(260)
+					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+					.addGap(247))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(132)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(36)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(44)
-									.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(LabelPeriodo, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-									.addGap(18)
-									.addComponent(dateChooserInicio, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(comboBox, 0, 259, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(8)
-									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-									.addGap(51)
-									.addComponent(dateChooserFin, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED))))
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+							.addGap(134))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(241)
-							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-							.addGap(127)))
-					.addGap(139))
+							.addComponent(LabelPeriodo, GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(dateChooserInicio, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+						.addComponent(dateChooserFin, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+					.addGap(218))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(23)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(dateChooserFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-						.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(dateChooserInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(36)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_1)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+					.addGap(52)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(LabelPeriodo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(dateChooserInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+							.addComponent(dateChooserFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(56)
 					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-					.addGap(64))
+					.addGap(36))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
-	
-	public void rellenaCombo() {
-		List<Object[]> lista = modeloInstalaciones.getInstalaciones();
-		for(int i = 0; i<lista.size(); i++) {
-			comboBox.addItem(lista.get(i)[0]);
-		}
-	}
 	public Object[] calcula(long id, Date ini, Date fin) {
 		double porcentaje =0.0;
-		Object[] vector = new Object[3];
+		Object[] vector = new Object[4];
 		String fecha_ini = sdf.format(ini);
 		String fecha_fin = sdf.format(fin);
 		long reservas =modeloReservas.getTotalReservasInstalacion(id, fecha_ini, fecha_fin);
+		long actividades =modeloReservas.getTotalReservasActividadInstalacion(id, fecha_ini, fecha_fin);
 		long diferencia = fin.getTime() - ini.getTime();
 		TimeUnit time = TimeUnit.DAYS;
 		long total = time.convert(diferencia, TimeUnit.MILLISECONDS);
 		
-		porcentaje = reservas*1.0/(total*13);
+		porcentaje = (reservas+actividades)*1.0/(total*13);
 
 		vector[0]=reservas;
-		vector[1]=total*13;
-		vector[2]=porcentaje;
+		vector[1]=actividades;
+		vector[2]=total*13;
+		vector[3]=porcentaje;
 		
 		return vector;
 	}

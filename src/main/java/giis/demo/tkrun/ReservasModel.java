@@ -188,9 +188,13 @@ private Database db = new Database();
 				return false;
 			}
 			
-	public static final String SQL_PORCENTAJE_OCUPACION = "SELECT COUNT(id_reserva) FROM reservas WHERE ((instalacion=?) AND (fecha_reserva>=?) AND (fecha_reserva<=?))";
+	public static final String SQL_PORCENTAJE_OCUPACION = "SELECT COUNT(id_reserva) FROM reservas WHERE ((instalacion=?) AND (fecha_reserva>=?) AND (fecha_reserva<=?) AND actividad=0)";
 	public long getTotalReservasInstalacion(long id, String ini, String fin) {
 		return (long) db.executeQueryArray(SQL_PORCENTAJE_OCUPACION, id, ini, fin).get(0)[0];
+	}
+	public static final String SQL_PORCENTAJE_OCUPACION_ACTIVIDAD = "SELECT COUNT(id_reserva) FROM reservas WHERE ((instalacion=?) AND (fecha_reserva>=?) AND (fecha_reserva<=?) AND actividad!=0)";
+	public long getTotalReservasActividadInstalacion(long id, String ini, String fin) {
+		return (long) db.executeQueryArray(SQL_PORCENTAJE_OCUPACION_ACTIVIDAD, id, ini, fin).get(0)[0];
 	}
 		
 	//SQL para comprobar si una instalacion está reservada por actividad

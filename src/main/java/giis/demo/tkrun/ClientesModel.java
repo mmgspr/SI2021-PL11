@@ -111,6 +111,25 @@ public class ClientesModel {
 				}
 	
 	*/
+		
+		//SQL para comprobar si un id es válido
+				public static final String SQL_EXISTE_DNI = "SELECT dni FROM clientes WHERE dni=";
+				public boolean existeDNI(String dni){
+					List<Object[]> lista;
+					lista = db.executeQueryArray(SQL_EXISTE_DNI+"'"+dni+"'");
+					if (lista.size() == 0){
+						return false;
+					}
+					return true;
+				}
+				
+				//SQL para obtener la cuota de act. de un socio a partir de su id de socio
+				public static final String SQL_CUOTA_ACT = "SELECT cuotaActividades FROM clientes WHERE id_socio =";
+				public double getCuotaAct(String id){
+					List<Object[]> lista;
+					lista = db.executeQueryArray(SQL_CUOTA_ACT+"'"+id+"'");
+					return (double)lista.get(0)[0];
+				}
 	
 			
 }

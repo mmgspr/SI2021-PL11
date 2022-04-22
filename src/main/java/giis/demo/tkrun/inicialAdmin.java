@@ -186,21 +186,14 @@ public class inicialAdmin {
 		buttonGenerar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//dia de hoy
-				
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String date = sdf.format(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 	            String[] vector1=date.split("-"); 
 			    int dia=Integer.parseInt(vector1[2].split("-")[0]);
-			   // System.out.println(dia);
-			   
-			    
-			    
 			    
 			    try {
 
 			    	 if(dia==vLogin.getDia_comprobar()) {
-			  		    System.out.println("Holaaa");
 			         	modeloReservas.añadeacuota1();
 			         	modeloReservas.añadeacuota2();
 			  	   }
@@ -219,57 +212,15 @@ public class inicialAdmin {
 			            
 		            List<Object[]> listaPagos=modeloReservas.nuevaCuota1();	
 		            Iterator<Object[]> iterador = listaPagos.iterator();
-		            System.out.println("Hola2");
 		    		while(iterador.hasNext()) {
 		    			Object[] vector = iterador.next();		    	
 		    			bw.write("El socio "+vector[0]+" con el id: "+vector[1]+" ,debe pagar la cuota: "+vector[2]+
 		    					"$ junto con el coste de reservas: "+vector[3]+"$ y el coste de las actividades: "+vector[4]+"$\n");
 		    		}
-		    		
 		    		 bw.close();
-		    		/*
-		            
-		    		
-		            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-		            final Runnable runnable = new Runnable() {
-		                int countdownStarter = 0;
-
-		                public void run() {
-
-		                    
-		                    countdownStarter--;
-
-		                    if (countdownStarter < 0) {		                     		                    	
-									try {
-										BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
-										bw.write("");
-										bw.close();
-									} catch (IOException e) {
-									
-										e.printStackTrace();
-									}
-																	 
-		                        scheduler.shutdown();
-		                    }
-		                }
-		            };
-		            scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);		                  				    
-				    bw.close();
-			       */
-		            
 		        } catch (Exception e1) {
 		            e1.printStackTrace();
 		        }
-			    
-			    
-			  
-			    
-			    
-			    
-				
-				
-				
 			}
 		});
 		buttonGenerar.setBounds(305, 159, 181, 24);
@@ -305,15 +256,6 @@ public class inicialAdmin {
 		btnParametros.setBounds(305, 193, 181, 24);
 		panel.add(btnParametros);
 	
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		JButton btnNewButton_1 = new JButton("Generar Informe Actividades");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
