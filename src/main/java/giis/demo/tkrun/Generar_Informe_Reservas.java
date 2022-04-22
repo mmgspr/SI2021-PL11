@@ -19,6 +19,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -30,7 +33,8 @@ public class Generar_Informe_Reservas {
 	private JFrame frmGenerarInformeReservas;
 	private JTable table;
 	private ReservasModel modeloReservas = new ReservasModel();
-
+	private String Inicio;
+	private String Fin;
 	/**
 	 * Launch the application.
 	 */
@@ -95,14 +99,16 @@ public class Generar_Informe_Reservas {
 				//fechaInicio
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String dateInicio = sdf.format(dateChooserInicio.getDate());
-				String Inicio = dateInicio;
+				Inicio = dateInicio;
 				
 				//FechaFin
 			    SimpleDateFormat sdfk = new SimpleDateFormat("yyyy-MM-dd");
 			    String dateFin = sdfk.format(dateChooserFin.getDate());
-				String Fin = dateFin;
+				Fin = dateFin;
 																
 				RellenarTablas(table, Inicio, Fin);
+				
+				
 				
 					 }
 					 
@@ -121,6 +127,48 @@ public class Generar_Informe_Reservas {
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JButton btnNewButton = new JButton("Generar Informe");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String ruta = "src/main/resources/InformeReservas_del_"+Inicio+"_al_"+Fin;
+		            String titulo = "Informe sobre las Reservas de los Socios\n";
+		            
+		            File file = new File(ruta);
+		            // Si el archivo no existe es creado
+		            if (!file.exists()) {
+		                file.createNewFile();
+		            }
+		            FileWriter fw = new FileWriter(file);
+		            BufferedWriter bw = new BufferedWriter(fw);
+		            bw.write(titulo);
+		            //bw.write(contenido);
+				    
+				    
+					List<Object[]> listaActividades=modeloReservas.getSocios();	
+					  
+					Object[][] matriz = new Object[listaActividades.size()][2];					
+					Iterator<Object[]> iterador = listaActividades.iterator();	
+					int i=0;
+					while(iterador.hasNext()) {
+						Object[] vector = new Object[1]; 
+						vector=iterador.next();	
+						int id=  Math.toIntExact((long)vector[0]);
+						String OcupadoSS=modeloReservas.getReservasSocio(Inicio, id, Fin);
+						int OcupadoS=Integer.parseInt(OcupadoSS);
+						for(int j=0;j<1;j++) {
+						  String contenido = "El socio con id: "+vector[j]+" tiene: "+OcupadoS+"reservas en activo\n";						  
+						  bw.write(contenido);
+					}
+						i++;
+					}
+					bw.close();
+				    
+		        } catch (Exception e1) {
+		            e1.printStackTrace();
+		        }
+				
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -179,7 +227,7 @@ public class Generar_Informe_Reservas {
 			new Object[][] {
 			},
 			new String[] {
-				"Id Socio", "N\u00BA Reservas"
+				"Id Socio", "Nombre", "N\u00BA Reservas"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -192,18 +240,18 @@ public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 		
 		List<Object[]> listaActividades=modeloReservas.getSocios();	
 	  
-		Object[][] matriz = new Object[listaActividades.size()][2];					
+		Object[][] matriz = new Object[listaActividades.size()][3];					
 		Iterator<Object[]> iterador = listaActividades.iterator();	
 		int i=0;
 		while(iterador.hasNext()) {
-			Object[] vector = new Object[1]; 
+			Object[] vector = new Object[2]; 
 			vector=iterador.next();	
 			int id=  Math.toIntExact((long)vector[0]);
 			String OcupadoSS=modeloReservas.getReservasSocio(Inicio, id, Fin);
 			int OcupadoS=Integer.parseInt(OcupadoSS);
-			for(int j=0;j<1;j++) {
+			for(int j=0;j<2;j++) {
 			  matriz[i][j]= vector[j];
-			  matriz[i][1]=OcupadoS;
+			  matriz[i][2]=OcupadoS;
 			  
 		}
 			i++;
@@ -215,7 +263,7 @@ public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 				
 				,
 				new String[] {
-					"ID Socio", "Nº Reservas"
+					"ID Socio","Nombre", "Nº Reservas"
 				}
 				
 			));
