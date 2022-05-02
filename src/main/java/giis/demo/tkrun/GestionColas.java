@@ -491,7 +491,8 @@ public class GestionColas {
 //		}
 		inicializa();
 		//superLista = new ArrayList<ArrayList<ArrayList<Integer>>>();
-//		anadeSocio(""+1,3);
+//		anadeSocio(""+2,5);
+//		anadeCliente("52347843G",5);
 //		anadeSocio(""+2,3);
 //		anadeSocio(""+3,3);
 //		anadeSocio(""+1,2);
