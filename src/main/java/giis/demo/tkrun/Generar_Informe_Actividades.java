@@ -20,6 +20,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -31,7 +34,8 @@ public class Generar_Informe_Actividades {
 	private JFrame frmGenerarInformeActividades;
 	private JTable table;
 	private ReservasModel modeloReservas = new ReservasModel();
-
+    private String Inicio;
+    private String Fin;
 	/**
 	 * Launch the application.
 	 */
@@ -98,12 +102,12 @@ public class Generar_Informe_Actividades {
 				//fechaInicio
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String dateInicio = sdf.format(dateChooserInicio.getDate());
-				String Inicio = dateInicio;
+				Inicio = dateInicio;
 				
 				//FechaFin
 			    SimpleDateFormat sdfk = new SimpleDateFormat("yyyy-MM-dd");
 			    String dateFin = sdfk.format(dateChooserFin.getDate());
-				String Fin = dateFin;
+				Fin = dateFin;
 																
 				RellenarTablas(table, Inicio, Fin);
 				
@@ -129,9 +133,60 @@ public class Generar_Informe_Actividades {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-						
+				try {
+					String ruta = "src/main/resources/InformeActividades_del_"+Inicio+"_al_"+Fin;
+		            String titulo = "Informe sobre las Actividades de los Socios\n";
+		            
+		            File file = new File(ruta);
+		            // Si el archivo no existe es creado
+		            if (!file.exists()) {
+		                file.createNewFile();
+		            }
+		            FileWriter fw = new FileWriter(file);
+		            BufferedWriter bw = new BufferedWriter(fw);
+		            bw.write(titulo);
+		            //bw.write(contenido);
+		            List<Object[]> listaActividades=modeloReservas.getActividades(Inicio, Fin);	
+		      	  
+		    		Object[][] matriz = new Object[listaActividades.size()][9];					
+		    		Iterator<Object[]> iterador = listaActividades.iterator();	
+		    		int i=0;
+		    		while(iterador.hasNext()) {
+		    			Object[] vector = new Object[6]; 
+		    			vector=iterador.next();		    
+		    		    int Aforo;
+		    		    int id=  Math.toIntExact((long)vector[4]);
+		    		    String OcupadoSS=modeloReservas.getAforoSocios(Inicio, id, Fin);
+		    		    String OcupadoNSS=modeloReservas.getAforoNoSocios(Inicio, id, Fin);
+		    		    
+		    		    int OcupadoS=Integer.parseInt(OcupadoSS);
+		    		    int OcupadoNS=Integer.parseInt(OcupadoNSS);
+		    		    
+		    		    Aforo=modeloReservas.getAforoActividades(id);
+		    		    String Lista_Espera=modeloReservas.getListaDeEspera(id);
+		    		   
+		    		    
+		    		    //System.out.println("OcupadoS"+OcupadoS);
+		    		    //System.out.println("OcupadoNS"+OcupadoNS);
+		    		    double POS = (1.00*OcupadoS/Aforo);
+		    		    double PONS = (1.00*OcupadoNS/Aforo);
+		    		    //System.out.println("%NS"+PONS);
+		    			
+		    				String contenido="La Actividad "+vector[0]+" que tiene como fecha de inicio "+vector[1]+" y de fin "+vector[2]+
+		    						" en la instalación "+vector[3]+ " y que tiene como ID "+vector[4]+ " posee un aforo de "+Aforo+" con un "+POS+ 
+		    						" ocupado por socios y un " +PONS+ " ocupado por no socios y una lista de espera con "+Lista_Espera+" personas \n";
+		    			 
+		    			  bw.write(contenido);
+		    		
+		    			i++;
+		    		}
+				    
 				
-				
+					bw.close();
+				    
+		        } catch (Exception e1) {
+		            e1.printStackTrace();
+		        }
 				
 			}
 		});
@@ -207,7 +262,7 @@ public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 		
 		List<Object[]> listaActividades=modeloReservas.getActividades(Inicio, Fin);	
 	  
-		Object[][] matriz = new Object[listaActividades.size()][8];					
+		Object[][] matriz = new Object[listaActividades.size()][9];					
 		Iterator<Object[]> iterador = listaActividades.iterator();	
 		int i=0;
 		while(iterador.hasNext()) {
@@ -222,6 +277,9 @@ public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 		    int OcupadoNS=Integer.parseInt(OcupadoNSS);
 		    
 		    Aforo=modeloReservas.getAforoActividades(id);
+		    String Lista_Espera=modeloReservas.getListaDeEspera(id);
+		   
+		    
 		    //System.out.println("OcupadoS"+OcupadoS);
 		    //System.out.println("OcupadoNS"+OcupadoNS);
 		    double POS = (1.00*OcupadoS/Aforo);
@@ -232,6 +290,7 @@ public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 			  matriz[i][5]=Aforo;	
 			  matriz[i][6]=POS;
 			  matriz[i][7]=PONS;
+			  matriz[i][8]=Lista_Espera;
 		}
 			i++;
 		}
@@ -242,7 +301,7 @@ public void RellenarTablas(JTable tabla, String Inicio, String Fin) {
 				
 				,
 				new String[] {
-						"Actividad", "Fecha Inicio", "Fecha Fin", "Instalacion", "ID", "Aforo", "%Ocupado Socio", "%Ocupado No Socio"
+						"Actividad", "Fecha Inicio", "Fecha Fin", "Instalacion", "ID", "Aforo", "%Ocupado Socio", "%Ocupado No Socio", "Nº Personas Lista de Espera"
 				}
 				
 			));
