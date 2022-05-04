@@ -156,7 +156,7 @@ public class Generar_Informe_Reservas {
 						String OcupadoSS=modeloReservas.getReservasSocio(Inicio, id, Fin);
 						int OcupadoS=Integer.parseInt(OcupadoSS);
 						for(int j=0;j<1;j++) {
-						  String contenido = "El socio con id: "+vector[j]+" tiene: "+OcupadoS+"reservas en activo\n";						  
+						  String contenido = "El socio "+vector[1]+" con id: "+vector[0]+" tiene: "+OcupadoS+" reservas en activo\n";						  
 						  bw.write(contenido);
 					}
 						i++;
